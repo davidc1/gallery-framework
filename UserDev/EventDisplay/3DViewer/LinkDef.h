@@ -30,6 +30,11 @@
 #pragma link C++ class evd::RecoBase3D<evd::MCShower3D>+;
 #pragma link C++ class evd::DrawMCShower3D+;
 
+#pragma link C++ class evd::MCTruth3D+;
+#pragma link C++ class std::vector<evd::MCTruth3D>+;
+#pragma link C++ class evd::RecoBase3D<evd::MCTruth3D>+;
+#pragma link C++ class evd::DrawMCTruth3D+;
+
 // #pragma link C++ class evd::Spacepoint3D+;
 #pragma link C++ class std::vector<evd::Spacepoint3D>+;
 #pragma link C++ class evd::RecoBase3D<evd::Spacepoint3D>+;

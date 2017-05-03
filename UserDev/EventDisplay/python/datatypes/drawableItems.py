@@ -6,6 +6,7 @@ import wire
 import cluster
 import endpoint2d
 import vertex
+import mctruth
 import mctrack
 import mcshower
 import spacepoint
@@ -38,6 +39,7 @@ class drawableItems(object):
         self._drawableClasses.update({'Endpoint 2D': [endpoint2d.endpoint2d,"recob::EndPoint2D"]})
         self._drawableClasses.update({'Vertex': [vertex.vertex,"recob::Vertex"]})
         self._drawableClasses.update({'SPS': [spacepoint.spacepoint,"recob::SpacePoint"]})
+        self._drawableClasses.update({'MCTrack': [mctrack.mctrack,"sim::MCTrack"]})
 
     def getListOfTitles(self):
         return self._drawableClasses.keys()
@@ -69,6 +71,7 @@ try:
             self._drawableClasses.update({'Opflash': [opflash.opflash3D,"recob::OpFlash"]})
             self._drawableClasses.update({'MCTrack': [mctrack.mctrack3D,"sim::MCTrack"]})
             self._drawableClasses.update({'MCShower': [mcshower.mcshower3D,"sim::MCShower"]})
+            self._drawableClasses.update({'MCTruth': [mctruth.mctruth3D,"simb::MCTruth"]})
             self._drawableClasses.update({'Simch': [simch.simch3D,"sim::SimChannel"]})
 
         def getListOfTitles(self):

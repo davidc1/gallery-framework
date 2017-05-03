@@ -127,3 +127,94 @@ class mctruth(recoBase):
                                      startY + longDistY))
 
         return points
+
+
+
+from database import recoBase3D
+
+try:
+    import pyqtgraph.opengl as gl
+    import numpy as np
+    class mctruth3D(recoBase3D):
+
+        def __init__(self):
+            super(mctruth3D, self).__init__()
+            self._productName = 'mctruth3D'
+            self._process = evd.DrawMCTruth3D()
+            self.init()
+
+        def getLabel(self):
+            info = self._process.getData()
+            # Determine type of incoming neutrino:
+            inneut = {
+            12 : "nue",
+            -12 : "nuebar",
+            14 : "numu",
+            -14 : "numubar"
+            }.get(info.incoming_lepton_pdg())
+
+            # print info.target_pdg()
+
+            # target = {
+            # 2212 : "p",
+            # 2112 : "n",
+            # 1000180400 : "Ar"
+            # }.get(info.target_pdg())
+
+            return inneut + " + "
+
+        def drawObjects(self, view_manager):
+            geom = view_manager._geometry
+            view = view_manager.getView()
+
+            self
+            mcts = self._process.getData()
+
+            for mct in mcts:
+
+                # Stupid thing right now:
+                # make a 3 lines around the vertex
+
+                print 'nux', mct.NuX()
+                print 'nuy', mct.NuY()
+                print 'nuz', mct.NuZ()
+
+                xline = np.ndarray((2, 3))
+                yline = np.ndarray((2, 3))
+                zline = np.ndarray((2, 3))
+
+                length = 5
+
+                for line in xline, yline, zline:
+                    for point in line:
+                        point[0] = mct.NuX()
+                        point[1] = mct.NuY()
+                        point[2] = mct.NuZ()
+
+                xline[0][0] += length/2
+                xline[1][0] -= length/2
+                yline[0][1] += length/2
+                yline[1][1] -= length/2
+                zline[0][2] += length/2
+                zline[1][2] -= length/2
+
+                # Make the 3 lines for the vertex:
+
+                # pts = np.vstack([x, y, z]).transpose()
+                # pen = pg.mkPen((255, 0, 0), width=2)
+                xglline = gl.GLLinePlotItem(pos=xline, width=3,
+                                            color=(0.6, 0.51, 1.0, 1.0))
+                yglline = gl.GLLinePlotItem(pos=yline, width=3,
+                                            color=(0.6, 0.51, 1.0, 1.0))
+                zglline = gl.GLLinePlotItem(pos=zline, width=3,
+                                            color=(0.6, 0.51, 1.0, 1.0))
+                view.addItem(xglline)
+                view.addItem(yglline)
+                view.addItem(zglline)
+                self._drawnObjects.append(xglline)
+                self._drawnObjects.append(yglline)
+                self._drawnObjects.append(zglline)
+
+except Exception, e:
+    pass
+
