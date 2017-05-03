@@ -175,10 +175,6 @@ try:
                 # Stupid thing right now:
                 # make a 3 lines around the vertex
 
-                print 'nux', mct.NuX()
-                print 'nuy', mct.NuY()
-                print 'nuz', mct.NuZ()
-
                 xline = np.ndarray((2, 3))
                 yline = np.ndarray((2, 3))
                 zline = np.ndarray((2, 3))
@@ -203,11 +199,11 @@ try:
                 # pts = np.vstack([x, y, z]).transpose()
                 # pen = pg.mkPen((255, 0, 0), width=2)
                 xglline = gl.GLLinePlotItem(pos=xline, width=3,
-                                            color=(0.6, 0.51, 1.0, 1.0))
+                                            color=(0., 0.690, 0.545, 1.0))
                 yglline = gl.GLLinePlotItem(pos=yline, width=3,
-                                            color=(0.6, 0.51, 1.0, 1.0))
+                                            color=(0., 0.690, 0.545, 1.0))
                 zglline = gl.GLLinePlotItem(pos=zline, width=3,
-                                            color=(0.6, 0.51, 1.0, 1.0))
+                                            color=(0., 0.690, 0.545, 1.0))
                 view.addItem(xglline)
                 view.addItem(yglline)
                 view.addItem(zglline)
