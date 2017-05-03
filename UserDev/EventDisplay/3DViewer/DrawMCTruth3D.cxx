@@ -50,18 +50,25 @@ bool DrawMCTruth3D::analyze(gallery::Event * ev) {
   _data.reserve(mctruthHandle -> size());
 
 
-  // Populate the shower vector:
+  // Populate the mctruth vector:
   for (auto & mct : *mctruthHandle) {
 
     MCTruth3D temp;
 
     temp._origin = mct.Origin();
 
-    auto const & mc_nu = mct.GetNeutrino().Nu();
-    temp._nux   = mc_nu.Vx();
-    temp._nuy   = mc_nu.Vy();
-    temp._nuz   = mc_nu.Vz();
-    temp._nupdg = mc_nu.PdgCode();
+    if (temp._origin == simb::kBeamNeutrino) {
+      auto const & mc_nu = mct.GetNeutrino().Nu();
+      temp._nux   = mc_nu.Vx();
+      temp._nuy   = mc_nu.Vy();
+      temp._nuz   = mc_nu.Vz();
+      temp._nupdg = mc_nu.PdgCode();
+    } else {
+      temp._nux   = -9999.;
+      temp._nuy   = -9999.;
+      temp._nuz   = -9999.;
+      temp._nupdg = -9999;
+    }
 
     _data.push_back(temp);
   }
