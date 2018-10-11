@@ -1,5 +1,12 @@
 #!/bin/bash
 
+source /grid/fermiapp/products/uboone/setup_uboone.sh
+echo "Setting up uboonecode"
+setup uboonecode v07_05_00_02 -q e17:prof
+echo "Setting up larsoftobj"
+setup larsoftobj v07_02_02 -q c2:prof
+source /uboone/app/users/cadams/pystack2/setup.sh
+
 # # clean up previously set env
 # me="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 # `python $me/python/clean_env.py LD_LIBRARY_PATH`
