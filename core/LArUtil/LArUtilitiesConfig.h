@@ -1,9 +1,9 @@
 /**
- * \file LArUtilConfig.h
+ * \file LArUtilitiesConfig.h
  *
  * \ingroup LArUtil
  * 
- * \brief Class def header for a class LArUtilConfig
+ * \brief Class def header for a class LArUtilitiesConfig
  *
  * @author kazuhiro
  */
@@ -19,7 +19,7 @@
 #include "Base/messenger.h"
 #include "TString.h"
 
-
+/* DAVIDC
 namespace galleryfmwk{
   
   namespace geo {
@@ -39,22 +39,23 @@ namespace galleryfmwk{
     };
   };
 };
+*/
 
 namespace larutil {
   /**
-     \class LArUtilConfig
-     User defined class LArUtilConfig ... these comments are used to generate
+     \class LArUtilitiesConfig
+     User defined class LArUtilitiesConfig ... these comments are used to generate
      doxygen documentation!
   */
-  class LArUtilConfig {
+  class LArUtilitiesConfig {
     
   private:
     
     /// Default constructor
-    LArUtilConfig(){};
+    LArUtilitiesConfig(){};
     
     /// Default destructor
-    virtual ~LArUtilConfig(){};
+    virtual ~LArUtilitiesConfig(){};
     
     static galleryfmwk::geo::DetId_t _detector;
     

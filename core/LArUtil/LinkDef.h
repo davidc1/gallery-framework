@@ -27,7 +27,7 @@
 #pragma link C++ class larutil::PxLine+;
 #pragma link C++ class larutil::PxHit+;
 
-#pragma link C++ class larutil::LArUtilConfig+;
+#pragma link C++ class larutil::LArUtilitiesConfig+;
 #pragma link C++ class larutil::LArUtilManager+;
 #pragma link C++ class larutil::GeometryHelper+;
 // //ADD_NEW_CLASS ... do not change this line

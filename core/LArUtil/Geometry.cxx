@@ -24,7 +24,7 @@ Geometry::Geometry(bool default_load) : LArUtilBase()
   if (default_load) {
     _file_name = Form("%s/LArUtil/dat/%s",
                       getenv("GALLERY_FMWK_COREDIR"),
-                      kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str());
+                      kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str());
     _tree_name = kTREENAME_GEOMETRY;
     LoadData();
   }
@@ -122,7 +122,7 @@ bool Geometry::ReadTree()
   if (!(ch->GetBranch("fCryoHalfWidth")))  error_msg += "      fCryoHalfWidth\n";
   if (!(ch->GetBranch("fCryoHalfHeight"))) error_msg += "      fCryoHalfHeight\n";
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     if (!(ch->GetBranch("fCryostatBoundaries"))) error_msg += "       fCryostatBoundaries\n";
   }
   if (!(ch->GetBranch("fChannelToPlaneMap")))     error_msg += "      fChannelToPlaneMap\n";
@@ -141,7 +141,7 @@ bool Geometry::ReadTree()
 
   if (!(ch->GetBranch("fWirePitch")))       error_msg += "      fWirePitch\n";
   if (!(ch->GetBranch("fWireAngle")))       error_msg += "      fWireAngle\n";
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     if (!(ch->GetBranch("fOpChannelVtx")))    error_msg += "      fOpChannelVtx\n";
     if (!(ch->GetBranch("fOpChannel2OpDet"))) error_msg += "      fOpChannel2OpDet\n";
     if (!(ch->GetBranch("fOpDetVtx")))     error_msg += "      fOpDetVtx\n";
@@ -189,7 +189,7 @@ bool Geometry::ReadTree()
   ch->SetBranchAddress("fCryoHalfWidth", &fCryoHalfWidth);
   ch->SetBranchAddress("fCryoHalfHeight", &fCryoHalfHeight);
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     ch->SetBranchAddress("fCryostatBoundaries", &pCryostatBoundaries);
   }
 
@@ -210,7 +210,7 @@ bool Geometry::ReadTree()
   ch->SetBranchAddress("fWirePitch", &pWirePitch);
   ch->SetBranchAddress("fWireAngle", &pWireAngle);
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     ch->SetBranchAddress("fOpChannelVtx", &pOpChannelVtx);
     ch->SetBranchAddress("fOpDetVtx", &pOpDetVtx);
     ch->SetBranchAddress("fOpChannel2OpDet", &pOpChannel2OpDet);
@@ -218,7 +218,7 @@ bool Geometry::ReadTree()
   ch->GetEntry(0);
 
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     fCryostatBoundaries.resize(pCryostatBoundaries->size());
 
     for (size_t i = 0; i < pCryostatBoundaries->size(); ++i)
@@ -268,7 +268,7 @@ bool Geometry::ReadTree()
     fWireAngle.push_back(pWireAngle->at(i));
   }
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     // Copy op-channel-wise variables
     size_t n_opchannel = pOpChannelVtx->size();
     fOpChannelVtx.reserve(n_opchannel);

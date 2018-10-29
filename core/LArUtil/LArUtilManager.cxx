@@ -8,9 +8,9 @@ namespace larutil {
 bool LArUtilManager::Reconfigure(galleryfmwk::geo::DetId_t type)
 {
 
-  if (type == LArUtilConfig::Detector()) return true;
+  if (type == LArUtilitiesConfig::Detector()) return true;
 
-  bool status = LArUtilConfig::SetDetector(type);
+  bool status = LArUtilitiesConfig::SetDetector(type);
 
   if (!status) return status;
 
@@ -27,7 +27,7 @@ bool LArUtilManager::ReconfigureUtilities()
   Geometry* geom = (Geometry*)(Geometry::GetME(false));
   geom->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
-                         kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str()));
+                         kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str()));
   geom->SetTreeName(kTREENAME_GEOMETRY);
   status = status && geom->LoadData(true);
 
@@ -36,7 +36,7 @@ bool LArUtilManager::ReconfigureUtilities()
   LArProperties* larp = (LArProperties*)(LArProperties::GetME(false));
   larp->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
-                         kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str()));
+                         kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str()));
   larp->SetTreeName(kTREENAME_LARPROPERTIES);
   status = status && larp->LoadData(true);
 
@@ -45,7 +45,7 @@ bool LArUtilManager::ReconfigureUtilities()
   DetectorProperties* detp = (DetectorProperties*)(DetectorProperties::GetME(false));
   detp->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
-                         kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str()));
+                         kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str()));
   detp->SetTreeName(kTREENAME_DETECTORPROPERTIES);
   status = status && detp->LoadData(true);
 

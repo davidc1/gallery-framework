@@ -1,13 +1,13 @@
 #ifndef GALLERY_FMWK_LARUTILCONFIG_CXX
 #define GALLERY_FMWK_LARUTILCONFIG_CXX
 
-#include "LArUtilConfig.h"
+#include "LArUtilitiesConfig.h"
 
 namespace larutil {
 
-  galleryfmwk::geo::DetId_t LArUtilConfig::_detector = galleryfmwk::geo::kMicroBooNE;
+  galleryfmwk::geo::DetId_t LArUtilitiesConfig::_detector = galleryfmwk::geo::kMicroBooNE;
 
-  bool LArUtilConfig::SetDetector(galleryfmwk::geo::DetId_t type)
+  bool LArUtilitiesConfig::SetDetector(galleryfmwk::geo::DetId_t type)
   {
     if(_detector == type) return true;
     bool status = true;

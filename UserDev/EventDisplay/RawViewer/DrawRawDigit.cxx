@@ -34,7 +34,7 @@ bool DrawRawDigit::initialize() {
   }
   initDataHolder();
 
-  if (larutil::LArUtilConfig::Detector() == galleryfmwk::geo::kMicroBooNE) {
+  if (larutil::LArUtilitiesConfig::Detector() == galleryfmwk::geo::kMicroBooNE) {
     _noise_filter.init();
   }
 
@@ -80,7 +80,7 @@ bool DrawRawDigit::analyze(gallery::Event *ev) {
   _planeData.clear();
   size_t _n_ticks = raw_digits->front().ADCs().size();
 
-  if (larutil::LArUtilConfig::Detector() == galleryfmwk::geo::kMicroBooNE) {
+  if (larutil::LArUtilitiesConfig::Detector() == galleryfmwk::geo::kMicroBooNE) {
     _noise_filter.set_n_time_ticks(_n_ticks);
   }
   initDataHolder();
@@ -98,7 +98,7 @@ bool DrawRawDigit::analyze(gallery::Event *ev) {
 
   for (auto const &rawdigit : *raw_digits) {
     unsigned int ch = rawdigit.Channel();
-    if (larutil::LArUtilConfig::Detector() == galleryfmwk::geo::kMicroBooNE &&
+    if (larutil::LArUtilitiesConfig::Detector() == galleryfmwk::geo::kMicroBooNE &&
         ch >= 8254)
       continue;
 
@@ -117,7 +117,7 @@ bool DrawRawDigit::analyze(gallery::Event *ev) {
   }
 
 
-  if (larutil::LArUtilConfig::Detector() == galleryfmwk::geo::kMicroBooNE) {
+  if (larutil::LArUtilitiesConfig::Detector() == galleryfmwk::geo::kMicroBooNE) {
     _noise_filter.set_data(&_temp_data_holder);
     if (_correct_data && ev->eventAuxiliary().isRealData()) {
       _noise_filter.clean_data();

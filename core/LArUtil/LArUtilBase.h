@@ -19,7 +19,7 @@
 #include <TChain.h>
 #include "Base/FrameworkConstants.h"
 #include "LArUtilConstants.h"
-#include "LArUtilConfig.h"
+#include "LArUtilitiesConfig.h"
 #include "LArUtilException.h"
 
 #include "Base/messenger.h"
