@@ -15,17 +15,17 @@ main_build: pre_build .depend $(DICT).cxx $(GALLERY_FMWK_LIBDIR)/$(SHLIB) $(GALL
 # default rule for making .o files from .cxx files
 %.o: %.cxx
 	@echo '<< compiling' $< '>>'
-	@$(CXX) $(CXXFLAGS) $(GALLERY_FMWK_BASIC_ROOTINC) $(INCFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) $(GALLERY_FMWK_BASIC_ROOTINC) $(INCFLAGS) -I$(CANVAS_ROOT_IO_INC) -c $<
 
 # root class dictionary
 $(DICT).cxx: $(HEADERS) LinkDef.h
 	@echo '<< generating dict >>'
-	@rootcling -f $(DICT).cxx -s $(GALLERY_FMWK_LIBDIR)/$(SHLIB) -rml $(SHLIB) -rmf $(GALLERY_FMWK_LIBDIR)/$(ROOTMAP) $(CINTFLAGS) -c $(INCFLAGS) $(HEADERS) LinkDef.h	
+	rootcling -f $(DICT).cxx -s $(GALLERY_FMWK_LIBDIR)/$(SHLIB) -rml $(SHLIB) -rmf $(GALLERY_FMWK_LIBDIR)/$(ROOTMAP) $(CINTFLAGS) -c $(INCFLAGS) $(HEADERS) LinkDef.h	
 
 # rule for making shareable library
 $(GALLERY_FMWK_LIBDIR)/$(SHLIB): $(OBJECTS) $(DICT).cxx $(DICT).o
 	@echo '<< generating $(SHLIB) >>'
-	@$(SOMAKER) -o $(GALLERY_FMWK_LIBDIR)/$(SHLIB) $(filter-out $(DICT).o, $(OBJECTS)) $(DICT).o $(SOFLAGS) $(LDFLAGS) $(GALLERY_FMWK_BASIC_ROOTLIBS) 
+	$(SOMAKER) -o $(GALLERY_FMWK_LIBDIR)/$(SHLIB) $(filter-out $(DICT).o, $(OBJECTS)) $(DICT).o $(SOFLAGS) $(LDFLAGS) $(GALLERY_FMWK_BASIC_ROOTLIBS) 
 
 # if ROOTMAP defined, define rule for making it
 $(GALLERY_FMWK_LIBDIR)/$(ROOTMAP): $(GALLERY_FMWK_LIBDIR)/$(SHLIB)
@@ -58,7 +58,7 @@ clearCINT:
 .depend: $(SOURCES) $(HEADERS)
 	@#rm .depend
 	@echo '<< checking dependencies >>'
-	@$(CXX) -M $(CXXFLAGS) $(GALLERY_FMWK_BASIC_ROOTINC) $(INCFLAGS) $(SOURCES) > .depend
+	$(CXX) -M $(CXXFLAGS) $(GALLERY_FMWK_BASIC_ROOTINC) $(INCFLAGS) -I$(CANVAS_ROOT_IO_INC) $(SOURCES) > .depend
 
 -include .depend
 
