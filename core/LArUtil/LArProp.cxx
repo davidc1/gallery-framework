@@ -1,15 +1,15 @@
-#ifndef GALLERY_FMWK_LARPROPERTIES_CXX
-#define GALLERY_FMWK_LARPROPERTIES_CXX
+#ifndef GALLERY_FMWK_LARPROP_CXX
+#define GALLERY_FMWK_LARPROP_CXX
 
-#include "LArProperties.h"
+#include "LArProp.h"
 
 namespace larutil {
 
-LArProperties* LArProperties::_me = 0;
+LArProp* LArProp::_me = 0;
 
-LArProperties::LArProperties(bool default_load) : LArUtilitiesBase()
+LArProp::LArProp(bool default_load) : LArUtilitiesBase()
 {
-    _name = "LArProperties";
+    _name = "LArProp";
     if (default_load) {
         _file_name = Form("%s/LArUtil/dat/%s",
                           getenv("GALLERY_FMWK_COREDIR"),
@@ -19,7 +19,7 @@ LArProperties::LArProperties(bool default_load) : LArUtilitiesBase()
     }
 }
 
-void LArProperties::ClearData()
+void LArProp::ClearData()
 {
     fEfield.clear();
     fTemperature = galleryfmwk::data::kINVALID_DOUBLE;
@@ -69,7 +69,7 @@ void LArProperties::ClearData()
     fReflectiveSurfaceDiffuseFractions.clear();
 }
 
-bool LArProperties::ReadTree()
+bool LArProp::ReadTree()
 {
     ClearData();
 
@@ -278,7 +278,7 @@ bool LArProperties::ReadTree()
     return true;
 }
 
-Double_t LArProperties::Density(Double_t temperature) const
+Double_t LArProp::Density(Double_t temperature) const
 {
     // Default temperature use internal value.
     if (temperature == 0.)
@@ -289,7 +289,7 @@ Double_t LArProperties::Density(Double_t temperature) const
     return density;
 }
 
-Double_t LArProperties::Efield(UInt_t planegap) const
+Double_t LArProp::Efield(UInt_t planegap) const
 {
     if (planegap >= fEfield.size())
         throw LArUtilException("requesting Electric field in a plane gap that is not defined");
@@ -298,7 +298,7 @@ Double_t LArProperties::Efield(UInt_t planegap) const
 }
 
 //------------------------------------------------------------------------------------//
-Double_t LArProperties::DriftVelocity(Double_t efield, Double_t temperature) const {
+Double_t LArProp::DriftVelocity(Double_t efield, Double_t temperature) const {
 
     // Drift Velocity as a function of Electric Field and LAr Temperature
     // from : W. Walkowiak, NIM A 449 (2000) 288-294
@@ -393,7 +393,7 @@ Double_t LArProperties::DriftVelocity(Double_t efield, Double_t temperature) con
 // parameters:
 //  dQdX in electrons/cm, charge (amplitude or integral obtained) divided by effective pitch for a given 3D track.
 // returns dEdX in MeV/cm
-Double_t LArProperties::BirksCorrection(Double_t dQdx) const
+Double_t LArProp::BirksCorrection(Double_t dQdx) const
 {
     // Correction for charge quenching using parameterization from
     // S.Amoruso et al., NIM A 523 (2004) 275
@@ -409,7 +409,7 @@ Double_t LArProperties::BirksCorrection(Double_t dQdx) const
     return dEdx;
 }
 
-Double_t LArProperties::BirksInverse(Double_t dEdx) const
+Double_t LArProp::BirksInverse(Double_t dEdx) const
 {
     // Correction for charge quenching using parameterization from
     // S.Amoruso et al., NIM A 523 (2004) 275
@@ -427,7 +427,7 @@ Double_t LArProperties::BirksInverse(Double_t dEdx) const
 }
 
 // Modified Box model correction
-Double_t LArProperties::ModBoxCorrection(Double_t dQdx) const
+Double_t LArProp::ModBoxCorrection(Double_t dQdx) const
 {
     // Modified Box model correction has better behavior than the Birks
     // correction at high values of dQ/dx.
@@ -442,7 +442,7 @@ Double_t LArProperties::ModBoxCorrection(Double_t dQdx) const
 }
 
 // Modified Box model correction
-Double_t LArProperties::ModBoxInverse(Double_t dEdx) const
+Double_t LArProp::ModBoxInverse(Double_t dEdx) const
 {
     // Modified Box model correction has better behavior than the Birks
     // correction at high values of dQ/dx.
@@ -474,7 +474,7 @@ Double_t LArProperties::ModBoxInverse(Double_t dEdx) const
 // Material parameters (stored in larproperties.fcl) are taken from
 // pdg web site http://pdg.lbl.gov/AtomicNuclearProperties/
 //
-Double_t LArProperties::Eloss(Double_t mom, Double_t mass, Double_t tcut) const
+Double_t LArProp::Eloss(Double_t mom, Double_t mass, Double_t tcut) const
 {
     // Some constants.
 
@@ -532,7 +532,7 @@ Double_t LArProperties::Eloss(Double_t mom, Double_t mass, Double_t tcut) const
 //
 // Based on Bichsel formula referred to but not given in pdg.
 //
-Double_t LArProperties::ElossVar(Double_t mom, Double_t mass) const
+Double_t LArProp::ElossVar(Double_t mom, Double_t mass) const
 {
     // Some constants.
 
@@ -552,7 +552,7 @@ Double_t LArProperties::ElossVar(Double_t mom, Double_t mass) const
 }
 
 //---------------------------------------------------------------------------------
-std::map<Double_t, Double_t> LArProperties::FastScintSpectrum() const
+std::map<Double_t, Double_t> LArProp::FastScintSpectrum() const
 {
     if (fFastScintSpectrum.size() != fFastScintEnergies.size()) {
         std::ostringstream msg;
@@ -570,7 +570,7 @@ std::map<Double_t, Double_t> LArProperties::FastScintSpectrum() const
 }
 
 //---------------------------------------------------------------------------------
-std::map<Double_t, Double_t> LArProperties::SlowScintSpectrum() const
+std::map<Double_t, Double_t> LArProp::SlowScintSpectrum() const
 {
     if (fSlowScintSpectrum.size() != fSlowScintEnergies.size()) {
         std::ostringstream msg;
@@ -588,7 +588,7 @@ std::map<Double_t, Double_t> LArProperties::SlowScintSpectrum() const
 }
 
 //---------------------------------------------------------------------------------
-std::map<Double_t, Double_t> LArProperties::RIndexSpectrum() const
+std::map<Double_t, Double_t> LArProp::RIndexSpectrum() const
 {
     if (fRIndexSpectrum.size() != fRIndexEnergies.size()) {
         std::ostringstream msg;
@@ -607,7 +607,7 @@ std::map<Double_t, Double_t> LArProperties::RIndexSpectrum() const
 
 
 //---------------------------------------------------------------------------------
-std::map<Double_t, Double_t> LArProperties::AbsLengthSpectrum() const
+std::map<Double_t, Double_t> LArProp::AbsLengthSpectrum() const
 {
     if (fAbsLengthSpectrum.size() != fAbsLengthEnergies.size()) {
         std::ostringstream msg;
@@ -625,7 +625,7 @@ std::map<Double_t, Double_t> LArProperties::AbsLengthSpectrum() const
 }
 
 //---------------------------------------------------------------------------------
-std::map<Double_t, Double_t> LArProperties::RayleighSpectrum() const
+std::map<Double_t, Double_t> LArProp::RayleighSpectrum() const
 {
     if (fRayleighSpectrum.size() != fRayleighEnergies.size()) {
         std::ostringstream msg;
@@ -643,7 +643,7 @@ std::map<Double_t, Double_t> LArProperties::RayleighSpectrum() const
 }
 
 //---------------------------------------------------------------------------------
-std::map<std::string, std::map<Double_t, Double_t> > LArProperties::SurfaceReflectances() const
+std::map<std::string, std::map<Double_t, Double_t> > LArProp::SurfaceReflectances() const
 {
     std::map<std::string, std::map<Double_t, Double_t> > ToReturn;
 
@@ -669,7 +669,7 @@ std::map<std::string, std::map<Double_t, Double_t> > LArProperties::SurfaceRefle
 }
 
 //---------------------------------------------------------------------------------
-std::map<std::string, std::map<Double_t, Double_t> > LArProperties::SurfaceReflectanceDiffuseFractions() const
+std::map<std::string, std::map<Double_t, Double_t> > LArProp::SurfaceReflectanceDiffuseFractions() const
 {
     std::map<std::string, std::map<Double_t, Double_t> > ToReturn;
 

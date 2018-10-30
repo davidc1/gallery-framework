@@ -14,7 +14,7 @@ void GeometryHelper::Reconfigure()
 
   geom = (larutil::Geometria*)(larutil::Geometria::GetME());
   detp = (larutil::DetProperties*)(larutil::DetProperties::GetME());
-  larp = (larutil::LArProperties*)(larutil::LArProperties::GetME());
+  larp = (larutil::LArProp*)(larutil::LArProp::GetME());
 
   fNPlanes = geom->Nplanes();
   vertangle.resize(fNPlanes);
@@ -376,7 +376,7 @@ double GeometryHelper::GetPitch(const TVector3& direction, const int& pl) const
 
   // if cosine is 0 the direction is perpendicular and the wire-spacing is infinite
   if (cos == 0)
-    return kDOUBLE_MAX;
+    return jDOUBLE_MAX;
 
   double pitch = minWireSpacing / cos;
   return pitch;
@@ -493,7 +493,7 @@ double GeometryHelper::GetTanAngleBetweenLines(const double& s1, const double& s
   // if the slopes are the same -> the angle is 0
   // if slope1 * slope2 == -1 -> perpendicular lines -> 90 degrees
   if (s1 * s2 == -1)
-    return kDOUBLE_MAX;
+    return jDOUBLE_MAX;
 
   return (s1 - s2) / (1 + s1 * s2);
 }

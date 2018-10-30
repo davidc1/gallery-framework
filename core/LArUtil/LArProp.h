@@ -1,10 +1,10 @@
 
 /**
- * \file LArProperties.h
+ * \file LArProp.h
  *
  * \ingroup LArUtil
  * 
- * \brief Class def header for a class LArProperties
+ * \brief Class def header for a class LArProp
  *
  * @author kazuhiro
  */
@@ -12,8 +12,8 @@
 /** \addtogroup LArUtil
 
     @{*/
-#ifndef GALLERY_FMWK_LARPROPERTIES_H
-#define GALLERY_FMWK_LARPROPERTIES_H
+#ifndef GALLERY_FMWK_LARPROP_H
+#define GALLERY_FMWK_LARPROP_H
 
 #include "LArUtilitiesBase.h"
 #include "LArUtilException.h"
@@ -23,20 +23,20 @@
 
 namespace larutil {
   /**
-     \class LArProperties
+     \class LArProp
 
   */
-  class LArProperties : public LArUtilitiesBase{
+  class LArProp : public LArUtilitiesBase{
 
   private:
 
     /// Singleton constructor
-    LArProperties(bool default_load=true);
+    LArProp(bool default_load=true);
 
     /// Default destructor
-    virtual ~LArProperties(){};
+    virtual ~LArProp(){};
 
-    static LArProperties* _me;
+    static LArProp* _me;
 
   protected:
 
@@ -46,9 +46,9 @@ namespace larutil {
   public:
 
     /// Singleton getter
-    static const LArProperties* GetME(bool default_load=true)
+    static const LArProp* GetME(bool default_load=true)
     {
-      if(!_me) _me = new LArProperties(default_load);
+      if(!_me) _me = new LArProp(default_load);
       return _me;
     }
     

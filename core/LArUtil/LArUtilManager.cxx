@@ -31,9 +31,9 @@ bool LArUtilManager::ReconfigureUtilities()
   geom->SetTreeName(kTREENAME_GEOMETRY);
   status = status && geom->LoadData(true);
 
-  // LArProperties
-  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring LArProperties");
-  LArProperties* larp = (LArProperties*)(LArProperties::GetME(false));
+  // LArProp
+  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring LArProp");
+  LArProp* larp = (LArProp*)(LArProp::GetME(false));
   larp->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
                          kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str()));

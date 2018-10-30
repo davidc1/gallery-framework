@@ -16,7 +16,7 @@
 
 #include <iostream>
 #include "Geometria.h"
-#include "LArProperties.h"
+#include "LArProp.h"
 #include "DetProperties.h"
 #include "GeometryHelper.h"
 

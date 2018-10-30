@@ -21,25 +21,25 @@
 #include <limits>
 
 #include "DetProperties.h"
-#include "LArProperties.h"
+#include "LArProp.h"
 
 namespace larutil {
 
 
 /// Utility: maximum value for double
-const double kDOUBLE_MAX = std::numeric_limits<double>::max();
+const double jDOUBLE_MAX = std::numeric_limits<double>::max();
 
 /// Utility: minimum value for double
-const double kDOUBLE_MIN = std::numeric_limits<double>::min();
+const double jDOUBLE_MIN = std::numeric_limits<double>::min();
 
 /// Utility: maximum value for int
-const int    kINT_MAX    = std::numeric_limits<int>::max();
+const int    jINT_MAX    = std::numeric_limits<int>::max();
 
 /// Utility: maximum value for unsigned int
-const unsigned int kUINT_MAX    = std::numeric_limits<unsigned int>::max();
+const unsigned int jUINT_MAX    = std::numeric_limits<unsigned int>::max();
 
 /// Utility: maximum value for size_t
-const size_t kSIZE_MAX   = std::numeric_limits<size_t>::max();
+const size_t jSIZE_MAX   = std::numeric_limits<size_t>::max();
 
 typedef PxHit Hit2D;
 typedef PxPoint Point2D;
@@ -534,7 +534,7 @@ private:
     // services to be used
     larutil::Geometria* geom;
     larutil::DetProperties* detp;
-    larutil::LArProperties* larp;
+    larutil::LArProp* larp;
 
     float fTimeToCm;
     float fWireToCm;
