@@ -4,7 +4,7 @@
 
 
 #include "DrawWire.h"
-#include "LArUtil/DetectorProperties.h"
+#include "LArUtil/DetProperties.h"
 
 namespace evd {
 

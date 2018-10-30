@@ -12,8 +12,8 @@ GeometryHelper* GeometryHelper::_me = 0;
 void GeometryHelper::Reconfigure()
 {
 
-  geom = (larutil::Geometry*)(larutil::Geometry::GetME());
-  detp = (larutil::DetectorProperties*)(larutil::DetectorProperties::GetME());
+  geom = (larutil::Geometria*)(larutil::Geometria::GetME());
+  detp = (larutil::DetProperties*)(larutil::DetProperties::GetME());
   larp = (larutil::LArProperties*)(larutil::LArProperties::GetME());
 
   fNPlanes = geom->Nplanes();
@@ -51,7 +51,7 @@ Point2D GeometryHelper::Point_3Dto2D(const TVector3 & _3D_position, unsigned int
 
   // The time position is the X coordinate, corrected for
   // trigger offset and the offset of the plane
-  // auto detp = DetectorProperties::GetME();
+  // auto detp = DetProperties::GetME();
   returnPoint.t = _3D_position.X();
   // Add in the trigger offset:
   // (Trigger offset is time that the data is recorded

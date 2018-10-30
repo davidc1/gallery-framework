@@ -16,11 +16,11 @@
 
 #include <iostream>
 #include "PxUtils.h"
-#include "Geometry.h"
+#include "Geometria.h"
 #include <climits>
 #include <limits>
 
-#include "DetectorProperties.h"
+#include "DetProperties.h"
 #include "LArProperties.h"
 
 namespace larutil {
@@ -532,8 +532,8 @@ public:
 private:
 
     // services to be used
-    larutil::Geometry* geom;
-    larutil::DetectorProperties* detp;
+    larutil::Geometria* geom;
+    larutil::DetProperties* detp;
     larutil::LArProperties* larp;
 
     float fTimeToCm;

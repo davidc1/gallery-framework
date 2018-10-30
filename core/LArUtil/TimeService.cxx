@@ -7,7 +7,7 @@ namespace larutil {
 
   TimeService* TimeService::_me = 0;
 
-  TimeService::TimeService(bool default_load) : LArUtilBase()
+  TimeService::TimeService(bool default_load) : LArUtilitiesBase()
   {
     ClearData();
     if(default_load) {

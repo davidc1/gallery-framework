@@ -24,7 +24,7 @@ bool LArUtilManager::ReconfigureUtilities()
 
   // Geometry
   galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring Geometry");
-  Geometry* geom = (Geometry*)(Geometry::GetME(false));
+  Geometria* geom = (Geometria*)(Geometria::GetME(false));
   geom->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
                          kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str()));
@@ -40,9 +40,9 @@ bool LArUtilManager::ReconfigureUtilities()
   larp->SetTreeName(kTREENAME_LARPROPERTIES);
   status = status && larp->LoadData(true);
 
-  // DetectorProperties
-  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring DetectorProperties");
-  DetectorProperties* detp = (DetectorProperties*)(DetectorProperties::GetME(false));
+  // DetProperties
+  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring DetProperties");
+  DetProperties* detp = (DetProperties*)(DetProperties::GetME(false));
   detp->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
                          kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str()));

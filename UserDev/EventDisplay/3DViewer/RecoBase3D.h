@@ -24,9 +24,9 @@ typedef _object PyObject;
 // #include "numpy/arrayobject.h"
 // #endif
 
-#include "LArUtil/Geometry.h"
+#include "LArUtil/Geometria.h"
 #include "LArUtil/GeometryHelper.h"
-#include "LArUtil/DetectorProperties.h"
+#include "LArUtil/DetProperties.h"
 
 
 /**
@@ -60,9 +60,9 @@ protected:
 
   void _init_base();
 
-  const larutil::Geometry * geoService;
+  const larutil::Geometria * geoService;
   const larutil::GeometryHelper * geoHelper;
-  const larutil::DetectorProperties * detProp;
+  const larutil::DetProperties * detProp;
 
   std::string _producer;
 
@@ -81,9 +81,9 @@ protected:
 
 template <class DATA_TYPE>
 RecoBase3D <DATA_TYPE>::RecoBase3D() {
-  geoService = larutil::Geometry::GetME();
+  geoService = larutil::Geometria::GetME();
   geoHelper = larutil::GeometryHelper::GetME();
-  detProp = larutil::DetectorProperties::GetME();
+  detProp = larutil::DetProperties::GetME();
   // Set up default values of the _wire and _time range
   _xRange.first  = 0;
   _xRange.second = 2 * geoService -> DetHalfWidth();

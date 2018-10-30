@@ -1,9 +1,9 @@
 /**
- * \file LArUtilBase.h
+ * \file LArUtilitiesBase.h
  *
  * \ingroup LArUtil
  * 
- * \brief Class def header for a class LArUtilBase
+ * \brief Class def header for a class LArUtilitiesBase
  *
  * @author kazuhiro
  */
@@ -29,20 +29,20 @@
 
 namespace larutil {
   /**
-     \class LArUtilBase
+     \class LArUtilitiesBase
      Base class for utility classes. Currently we take a simple approach of reading-in parameter
      values from TTree. This base class implements a way to read TTree and also store output TTree.
      DB access may be implemented here in future.
   */
-  class LArUtilBase {
+  class LArUtilitiesBase {
     
   public:
     
     /// Default constructor
-    LArUtilBase();
+    LArUtilitiesBase();
     
     /// Default destructor
-    virtual ~LArUtilBase(){};
+    virtual ~LArUtilitiesBase(){};
 
     /// Method to set data file name
     void SetFileName(const std::string filename)

@@ -16,14 +16,14 @@
 
 #include <iostream>
 #include "ElecClock.h"
-#include "LArUtilBase.h"
+#include "LArUtilitiesBase.h"
 namespace larutil {
   /**
      \class TimeService
      This class provides electronics various electronics clocks. Currently supports
      three types of clocks: TPC, Optical, and Trigger in order to support MicroBooNE experiments.
   */
-  class TimeService : public LArUtilBase{
+  class TimeService : public LArUtilitiesBase{
     
   protected:
     

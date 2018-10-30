@@ -7,6 +7,7 @@ namespace larutil {
 
   galleryfmwk::geo::DetId_t LArUtilitiesConfig::_detector = galleryfmwk::geo::kMicroBooNE;
 
+
   bool LArUtilitiesConfig::SetDetector(galleryfmwk::geo::DetId_t type)
   {
     if(_detector == type) return true;

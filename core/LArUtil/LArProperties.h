@@ -15,7 +15,7 @@
 #ifndef GALLERY_FMWK_LARPROPERTIES_H
 #define GALLERY_FMWK_LARPROPERTIES_H
 
-#include "LArUtilBase.h"
+#include "LArUtilitiesBase.h"
 #include "LArUtilException.h"
 #include "LArUtilConstants.h"
 #include <algorithm>
@@ -26,7 +26,7 @@ namespace larutil {
      \class LArProperties
 
   */
-  class LArProperties : public LArUtilBase{
+  class LArProperties : public LArUtilitiesBase{
 
   private:
 

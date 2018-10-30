@@ -18,9 +18,9 @@
 #pragma link C++ class larutil::LArUtilException+;
 #pragma link C++ class larutil::InvalidWireError+;
 //#pragma link C++ class larutil::LArUtilBase+;
-#pragma link C++ class larutil::Geometry+;
+#pragma link C++ class larutil::Geometria+;
 #pragma link C++ class larutil::LArProperties+;
-#pragma link C++ class larutil::DetectorProperties+;
+#pragma link C++ class larutil::DetProperties+;
 #pragma link C++ class larutil::TimeService+;
 #pragma link C++ class larutil::ElecClock+;
 #pragma link C++ class larutil::PxPoint+;

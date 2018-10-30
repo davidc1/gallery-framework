@@ -113,18 +113,18 @@ class geometry(geoBase):
         self._defaultColorScheme = []
 
     def configure(self):
-        self._halfwidth = larutil.Geometry.GetME().DetHalfWidth()
-        self._halfheight = larutil.Geometry.GetME().DetHalfHeight()
-        self._length = larutil.Geometry.GetME().DetLength()      
+        self._halfwidth = larutil.Geometria.GetME().DetHalfWidth()
+        self._halfheight = larutil.Geometria.GetME().DetHalfHeight()
+        self._length = larutil.Geometria.GetME().DetLength()      
         self._time2Cm = larutil.GeometryHelper.GetME().TimeToCm()
         self._wire2Cm = larutil.GeometryHelper.GetME().WireToCm()
         self._aspectRatio = self._wire2Cm / self._time2Cm
-        self._nViews = larutil.Geometry.GetME().Nviews()
-        # self._tRange = larutil.DetectorProperties.GetME().ReadOutWindowSize()
+        self._nViews = larutil.Geometria.GetME().Nviews()
+        # self._tRange = larutil.DetProperties.GetME().ReadOutWindowSize()
         self._wRange = []
         self._offset = []
         for v in range(0, self._nViews):
-            self._wRange.append(larutil.Geometry.GetME().Nwires(v))
+            self._wRange.append(larutil.Geometria.GetME().Nwires(v))
 
     def colorMap(self, plane):
         return self._defaultColorScheme[plane]
@@ -157,8 +157,8 @@ class sbnd(geometry):
         self._readoutWindowSize = 3000
         self._planeOriginX = [0.0, -0.3, -0.6] 
         self._planeOriginXTicks = [0.0, -0.3/self._time2Cm, -0.6/self._time2Cm] 
-        # remove = larutil.DetectorProperties.GetME().TriggerOffset() \
-        #           * larutil.GeometryHelper.GetME().TimeToCm()
+        # remove = larutil.DetProperties.GetME().TriggerOffset() \
+        #           * larutil.GeometriaHelper.GetME().TimeToCm()
         # self._offset[:] = [x - remove for x in self._offset]
         self._defaultColorScheme = [(
             {'ticks': [(1, (22, 30, 151, 255)),
@@ -218,8 +218,8 @@ class microboone(geometry):
         self._readoutWindowSize = 9600
         self._planeOriginX = [0.0, -0.3, -0.6] 
         self._planeOriginXTicks = [0.0, -0.3/self._time2Cm, -0.6/self._time2Cm] 
-        # remove = larutil.DetectorProperties.GetME().TriggerOffset() \
-        #           * larutil.GeometryHelper.GetME().TimeToCm()
+        # remove = larutil.DetProperties.GetME().TriggerOffset() \
+        #           * larutil.GeometriaHelper.GetME().TimeToCm()
         # self._offset[:] = [x - remove for x in self._offset]
         self._defaultColorScheme = [(
             {'ticks': [(1, (22, 30, 151, 255)),

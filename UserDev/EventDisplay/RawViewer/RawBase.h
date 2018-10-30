@@ -16,8 +16,8 @@
 
 #include <iostream>
 #include <vector>
-#include "LArUtil/Geometry.h"
-#include "LArUtil/DetectorProperties.h"
+#include "LArUtil/Geometria.h"
+#include "LArUtil/DetProperties.h"
 
 
 struct _object;
@@ -91,8 +91,8 @@ namespace evd {
 
     std::vector<float> _pedestals;
 
-    const larutil::Geometry * geoService;
-    const larutil::DetectorProperties * detProp;
+    const larutil::Geometria * geoService;
+    const larutil::DetProperties * detProp;
 
     std::string _producer;
 

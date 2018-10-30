@@ -6,8 +6,8 @@
 namespace evd {
 
 RawBase::RawBase() {
-  geoService = larutil::Geometry::GetME();
-  detProp = larutil::DetectorProperties::GetME();
+  geoService = larutil::Geometria::GetME();
+  detProp = larutil::DetProperties::GetME();
   import_array();
 }
 

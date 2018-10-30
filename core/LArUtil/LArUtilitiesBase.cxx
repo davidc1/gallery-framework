@@ -1,22 +1,22 @@
 #ifndef GALLERY_FMWK_LARUTILBASE_CXX
 #define GALLERY_FMWK_LARUTILBASE_CXX
 
-#include "LArUtilBase.h"
+#include "LArUtilitiesBase.h"
 
 namespace larutil {
 
 //-----------------------------------------------------
-LArUtilBase::LArUtilBase()
+LArUtilitiesBase::LArUtilitiesBase()
   : _file_name(""),
     _tree_name("")
     //-----------------------------------------------------
 {
-  _name   = "LArUtilBase";
+  _name   = "LArUtilitiesBase";
   _loaded = false;
 }
 
 //-----------------------------------------------------
-bool LArUtilBase::LoadData(bool force_reload)
+bool LArUtilitiesBase::LoadData(bool force_reload)
 //-----------------------------------------------------
 {
   if (!force_reload && _loaded) return true;

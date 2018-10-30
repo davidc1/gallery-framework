@@ -17,7 +17,7 @@
 
 #include "Analysis/ana_base.h"
 #include "RecoBase.h"
-#include "LArUtil/Geometry.h"
+#include "LArUtil/Geometria.h"
 
 #include "lardataobj/RecoBase/Vertex.h"
 

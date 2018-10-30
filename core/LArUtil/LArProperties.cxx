@@ -7,7 +7,7 @@ namespace larutil {
 
 LArProperties* LArProperties::_me = 0;
 
-LArProperties::LArProperties(bool default_load) : LArUtilBase()
+LArProperties::LArProperties(bool default_load) : LArUtilitiesBase()
 {
     _name = "LArProperties";
     if (default_load) {
