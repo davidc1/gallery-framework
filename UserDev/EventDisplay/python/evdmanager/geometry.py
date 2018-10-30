@@ -116,8 +116,8 @@ class geometry(geoBase):
         self._halfwidth = larutil.Geometria.GetME().DetHalfWidth()
         self._halfheight = larutil.Geometria.GetME().DetHalfHeight()
         self._length = larutil.Geometria.GetME().DetLength()      
-        self._time2Cm = larutil.GeometryHelper.GetME().TimeToCm()
-        self._wire2Cm = larutil.GeometryHelper.GetME().WireToCm()
+        self._time2Cm = larutil.GeometriaHelper.GetME().TimeToCm()
+        self._wire2Cm = larutil.GeometriaHelper.GetME().WireToCm()
         self._aspectRatio = self._wire2Cm / self._time2Cm
         self._nViews = larutil.Geometria.GetME().Nviews()
         # self._tRange = larutil.DetProperties.GetME().ReadOutWindowSize()

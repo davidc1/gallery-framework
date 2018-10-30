@@ -51,14 +51,14 @@ bool LArUtilManager::ReconfigureUtilities()
 
   if (status) {
 
-    // GeometryHelper
-    galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring GeometryHelper...");
-    GeometryHelper* gser = (GeometryHelper*)(GeometryHelper::GetME());
+    // GeometriaHelper
+    galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring GeometriaHelper...");
+    GeometriaHelper* gser = (GeometriaHelper*)(GeometriaHelper::GetME());
     gser->Reconfigure();
 
-    // GeometryHelper
-    galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring GeometryHelper...");
-    GeometryHelper* ghelp = (GeometryHelper*)(GeometryHelper::GetME());
+    // GeometriaHelper
+    galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring GeometriaHelper...");
+    GeometriaHelper* ghelp = (GeometriaHelper*)(GeometriaHelper::GetME());
     ghelp->Reconfigure();
 
   }

@@ -1,9 +1,9 @@
 /**
- * \file GeometryHelper.h
+ * \file GeometriaHelper.h
  *
  * \ingroup LArUtil
  *
- * \brief Class def header for a class GeometryHelper
+ * \brief Class def header for a class GeometriaHelper
  *
  * @author cadams + david caratelli
  */
@@ -45,44 +45,44 @@ typedef PxHit Hit2D;
 typedef PxPoint Point2D;
 
 /**
-   \class GeometryHelper
+   \class GeometriaHelper
    This class is meant as an aide to reconstruction by handling geometrical operations.
    It includes functionality to go between 3D and 2D for points, lines, cones.
 
    In this class, all units are in centimeters and radians unless explicitly declared to be otherwise.
    To aide in doing the conversions, you may use the functions TimeToCm() and WireToCm() to convert wire/time
    to cm coordinates as such:
-     wire [cm] = wire [Number] * WireToCmConversion (GeometryHelper::WireToCm() )
+     wire [cm] = wire [Number] * WireToCmConversion (GeometriaHelper::WireToCm() )
 
  */
 
 
-class GeometryHelper  {
+class GeometriaHelper  {
 
 private:
 
     /**
      * @brief Constructor
-     * @details Constructor is private.  To access this class, get a pointer using the GeometryHelper::GetME() function
+     * @details Constructor is private.  To access this class, get a pointer using the GeometriaHelper::GetME() function
      */
-    GeometryHelper() {}
+    GeometriaHelper() {}
 
     /// Default destructor
-    ~GeometryHelper() {}
+    ~GeometriaHelper() {}
 
     // Pointer to sole instance of this object
-    static GeometryHelper* _me;
+    static GeometriaHelper* _me;
 
 public:
 
     /**
      * @brief Singleton Getter
      * @details Returns a pointer to the sole instance of this class
-     * @return Pointer to GeometryHelper
+     * @return Pointer to GeometriaHelper
      */
-    static const GeometryHelper* GetME() {
+    static const GeometriaHelper* GetME() {
         if (!_me) {
-            _me = new GeometryHelper;
+            _me = new GeometriaHelper;
             _me -> Reconfigure();
         }
         return _me;

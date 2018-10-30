@@ -7,7 +7,7 @@ namespace evd {
 
 Track2D DrawTrack::getTrack2D(recob::Track track, unsigned int plane) {
   Track2D result;
-  auto geoHelper = larutil::GeometryHelper::GetME();
+  auto geoHelper = larutil::GeometriaHelper::GetME();
   result._track.reserve(track.NumberTrajectoryPoints());
   for (unsigned int i = 0; i < track.NumberTrajectoryPoints(); i++) {
     // project a point into 2D:

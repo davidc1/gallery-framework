@@ -18,7 +18,7 @@
 #include "Geometria.h"
 #include "LArProp.h"
 #include "DetProperties.h"
-#include "GeometryHelper.h"
+#include "GeometriaHelper.h"
 
 #include "Base/messenger.h"
 

@@ -2,7 +2,7 @@
 #define EVD_DRAWSPACEPOINT_CXX
 
 #include "DrawSpacepoint.h"
-#include "LArUtil/GeometryHelper.h"
+#include "LArUtil/GeometriaHelper.h"
 
 namespace evd {
 
@@ -28,7 +28,7 @@ bool DrawSpacepoint::analyze(gallery::Event * ev) {
   auto const & spacepointHandle
         = ev -> getValidHandle<std::vector <recob::SpacePoint> >(sps_tag);
 
-  geoHelper = larutil::GeometryHelper::GetME();
+  geoHelper = larutil::GeometriaHelper::GetME();
 
   // Clear out the data but reserve some space
   for (unsigned int p = 0; p < geoService -> Nviews(); p ++) {

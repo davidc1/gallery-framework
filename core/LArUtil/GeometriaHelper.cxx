@@ -1,15 +1,15 @@
 #ifndef GALLERY_FMWK_GEOMETRYHELPER_CXX
 #define GALLERY_FMWK_GEOMETRYHELPER_CXX
 
-#include "GeometryHelper.h"
+#include "GeometriaHelper.h"
 
 namespace larutil {
 
-GeometryHelper* GeometryHelper::_me = 0;
+GeometriaHelper* GeometriaHelper::_me = 0;
 
 
 // Function to load any parameters for convenience :
-void GeometryHelper::Reconfigure()
+void GeometriaHelper::Reconfigure()
 {
 
   geom = (larutil::Geometria*)(larutil::Geometria::GetME());
@@ -29,7 +29,7 @@ void GeometryHelper::Reconfigure()
 
 // The next set of functions is the collection of functions to convert 3D Point to 2D point
 // The first function is maintained, and the rest convert their arguments and call it
-Point2D GeometryHelper::Point_3Dto2D(const TVector3 & _3D_position, unsigned int plane) const {
+Point2D GeometriaHelper::Point_3Dto2D(const TVector3 & _3D_position, unsigned int plane) const {
 
   // Make a check on the plane:
   if (plane > geom -> Nplanes()) {
@@ -83,34 +83,34 @@ Point2D GeometryHelper::Point_3Dto2D(const TVector3 & _3D_position, unsigned int
   return returnPoint;
 }
 
-Point2D GeometryHelper::Point_3Dto2D(double * xyz, unsigned int plane) const {
+Point2D GeometriaHelper::Point_3Dto2D(double * xyz, unsigned int plane) const {
   TVector3 vec(xyz);
   return Point_3Dto2D(vec, plane);
 }
-Point2D GeometryHelper::Point_3Dto2D(float * xyz, unsigned int plane) const {
+Point2D GeometriaHelper::Point_3Dto2D(float * xyz, unsigned int plane) const {
   TVector3 vec(xyz);
   return Point_3Dto2D(vec, plane);
 }
-Point2D GeometryHelper::Point_3Dto2D(float x, float y, float z, unsigned int plane) const {
+Point2D GeometriaHelper::Point_3Dto2D(float x, float y, float z, unsigned int plane) const {
   TVector3 vec(x, y, z);
   return Point_3Dto2D(vec, plane);
 }
-Point2D GeometryHelper::Point_3Dto2D(const std::vector<double> & xyz, unsigned int plane) const {
+Point2D GeometriaHelper::Point_3Dto2D(const std::vector<double> & xyz, unsigned int plane) const {
   TVector3 vec(&(xyz[0]));
   return Point_3Dto2D(vec, plane);
 }
-Point2D GeometryHelper::Point_3Dto2D(const std::vector<float> & xyz, unsigned int plane) const {
+Point2D GeometriaHelper::Point_3Dto2D(const std::vector<float> & xyz, unsigned int plane) const {
   TVector3 vec(&(xyz[0]));
   return Point_3Dto2D(vec, plane);
 }
 
-void GeometryHelper::Line_3Dto2D( const TVector3 & startPoint3D, const TVector3 & direction3D, unsigned int plane,
+void GeometriaHelper::Line_3Dto2D( const TVector3 & startPoint3D, const TVector3 & direction3D, unsigned int plane,
                                   Point2D & startPoint2D, Point2D & direction2D) const
 {
   // First step, project the start point into 2D
   startPoint2D = Point_3Dto2D(startPoint3D, plane);
   if (! Point_isInTPC( startPoint3D ) ) {
-    std::cerr << "ERROR - GeometryHelper::Line_3Dto2D: StartPoint3D must be in the TPC.\n";
+    std::cerr << "ERROR - GeometriaHelper::Line_3Dto2D: StartPoint3D must be in the TPC.\n";
     return;
   }
   // Next, get a second point in 3D:
@@ -142,7 +142,7 @@ void GeometryHelper::Line_3Dto2D( const TVector3 & startPoint3D, const TVector3 
   return;
 }
 
-float GeometryHelper::Slope_3Dto2D(const TVector3 & inputVector, unsigned int plane) const {
+float GeometriaHelper::Slope_3Dto2D(const TVector3 & inputVector, unsigned int plane) const {
   // Do this by projecting the line:
   // Generate a start point right in the middle of the detector:
   TVector3 startPoint3D(0, 0, 0);
@@ -153,7 +153,7 @@ float GeometryHelper::Slope_3Dto2D(const TVector3 & inputVector, unsigned int pl
 }
 
 
-TVector3 GeometryHelper::Project_3DLine_OnPlane(const TVector3& inputVector, const TVector3& planeNormal) const {
+TVector3 GeometriaHelper::Project_3DLine_OnPlane(const TVector3& inputVector, const TVector3& planeNormal) const {
 
   // calculate the equivalent vector projected on the plane of interest
 
@@ -168,7 +168,7 @@ TVector3 GeometryHelper::Project_3DLine_OnPlane(const TVector3& inputVector, con
 }
 
 
-TVector3 GeometryHelper::Project_3DLine_OnPlane(const TVector3& inputVector, const int& pl) const {
+TVector3 GeometriaHelper::Project_3DLine_OnPlane(const TVector3& inputVector, const int& pl) const {
 
   // NOTE: use 0.866025404 for sqrt(3)/2 to avoid sqrt computation
   TVector3 plane(1., 1., 1.);
@@ -187,7 +187,7 @@ TVector3 GeometryHelper::Project_3DLine_OnPlane(const TVector3& inputVector, con
 }
 
 
-std::vector<double> GeometryHelper::Project_3DLine_OnPlane(const std::vector<double>& V, const std::vector<double>& N) const {
+std::vector<double> GeometriaHelper::Project_3DLine_OnPlane(const std::vector<double>& V, const std::vector<double>& N) const {
 
   if ( (V.size() != 3) or (N.size() != 3) )
     throw LArUtilException("Project_3DLine_OnPlane failed due to unrecognized vector size");
@@ -205,7 +205,7 @@ std::vector<double> GeometryHelper::Project_3DLine_OnPlane(const std::vector<dou
   return ret;
 }
 
-std::vector<double> GeometryHelper::Project_3DLine_OnPlane(const std::vector<double>& V, const int& pl) const {
+std::vector<double> GeometriaHelper::Project_3DLine_OnPlane(const std::vector<double>& V, const int& pl) const {
 
   // NOTE: use 0.866025404 for sqrt(3)/2 to avoid sqrt computation
 
@@ -225,7 +225,7 @@ std::vector<double> GeometryHelper::Project_3DLine_OnPlane(const std::vector<dou
 }
 
 
-float GeometryHelper::DistanceToLine2D( const Point2D & pointOnLine, const Point2D & directionOfLine,
+float GeometriaHelper::DistanceToLine2D( const Point2D & pointOnLine, const Point2D & directionOfLine,
                                         const Point2D & targetPoint) const
 {
 
@@ -237,7 +237,7 @@ float GeometryHelper::DistanceToLine2D( const Point2D & pointOnLine, const Point
   return DistanceToLine3D(_pointOnLine, _directionOfLine, _targetPoint);
 }
 
-float GeometryHelper::DistanceToLine2D( const Point2D & pointOnLine, const Point2D & directionOfLine,
+float GeometriaHelper::DistanceToLine2D( const Point2D & pointOnLine, const Point2D & directionOfLine,
                                         const Hit2D & targetPoint) const
 {
 
@@ -249,7 +249,7 @@ float GeometryHelper::DistanceToLine2D( const Point2D & pointOnLine, const Point
   return DistanceToLine3D(_pointOnLine, _directionOfLine, _targetPoint);
 }
 
-float GeometryHelper::DistanceToLine2D( const TVector2 & pointOnLine, const TVector2 & directionOfLine,
+float GeometriaHelper::DistanceToLine2D( const TVector2 & pointOnLine, const TVector2 & directionOfLine,
                                         const TVector2 & targetPoint) const
 {
   // Utilize the 3D function to make it easier to maintain
@@ -260,7 +260,7 @@ float GeometryHelper::DistanceToLine2D( const TVector2 & pointOnLine, const TVec
   return DistanceToLine3D(_pointOnLine, _directionOfLine, _targetPoint);
 }
 
-float GeometryHelper::DistanceToLine3D( const TVector3 & pointOnLine, const TVector3 & directionOfLine,
+float GeometriaHelper::DistanceToLine3D( const TVector3 & pointOnLine, const TVector3 & directionOfLine,
                                         const TVector3 & targetPoint) const
 {
   // This algorithm finds the distance between a point and a line by finding the closest point on the line
@@ -287,7 +287,7 @@ float GeometryHelper::DistanceToLine3D( const TVector3 & pointOnLine, const TVec
 
 }
 
-float GeometryHelper::DistanceAlongLine3D(
+float GeometriaHelper::DistanceAlongLine3D(
   const TVector3 & pointOnLine, const TVector3 & directionOfLine,
   const TVector3 & targetPoint) const
 {
@@ -311,18 +311,18 @@ float GeometryHelper::DistanceAlongLine3D(
 
 }
 
-float GeometryHelper::Get2DDistanceSqrd(const Point2D& point1, const Point2D& point2) const
+float GeometriaHelper::Get2DDistanceSqrd(const Point2D& point1, const Point2D& point2) const
 {
   return (point1.w - point2.w) * (point1.w - point2.w) + (point1.t - point2.t) * (point1.t - point2.t);
 }
 
 
-float GeometryHelper::Get2DDistance(const Point2D& point1, const Point2D& point2) const
+float GeometriaHelper::Get2DDistance(const Point2D& point1, const Point2D& point2) const
 {
   return TMath::Sqrt(Get2DDistanceSqrd(point1, point2));
 }
 
-int GeometryHelper::GetPointOnLine(const double& slope,
+int GeometriaHelper::GetPointOnLine(const double& slope,
                                    const Point2D &startpoint,
                                    const Point2D &point1,
                                    Point2D& pointout) const
@@ -347,7 +347,7 @@ int GeometryHelper::GetPointOnLine(const double& slope,
   return 0;
 }
 
-double GeometryHelper::GetPitch(const TVector3& direction, const int& pl) const
+double GeometriaHelper::GetPitch(const TVector3& direction, const int& pl) const
 {
 
   // prepare a direction vector for the plane
@@ -383,7 +383,7 @@ double GeometryHelper::GetPitch(const TVector3& direction, const int& pl) const
 }
 
 
-double GeometryHelper::CalculatePitch(UInt_t pl, double phi, double theta) const
+double GeometriaHelper::CalculatePitch(UInt_t pl, double phi, double theta) const
 {
 
   double pitch = -1.;
@@ -413,7 +413,7 @@ double GeometryHelper::CalculatePitch(UInt_t pl, double phi, double theta) const
   return pitch;
 }
 
-double GeometryHelper::PitchInView(UInt_t plane, double phi, double theta) const
+double GeometriaHelper::PitchInView(UInt_t plane, double phi, double theta) const
 {
 
   Double_t dirs[3] = {0.};
@@ -438,7 +438,7 @@ double GeometryHelper::PitchInView(UInt_t plane, double phi, double theta) const
   return wirePitch / cosgamma;
 }
 
-void GeometryHelper::GetDirectionCosines(double phi, double theta, Double_t *dirs) const
+void GeometriaHelper::GetDirectionCosines(double phi, double theta, Double_t *dirs) const
 
 {
   theta *= (TMath::Pi() / 180);
@@ -450,14 +450,14 @@ void GeometryHelper::GetDirectionCosines(double phi, double theta, Double_t *dir
   return;
 }
 
-double GeometryHelper::GetCosAngleBetweenLines(const double& s1, const double& s2) const
+double GeometriaHelper::GetCosAngleBetweenLines(const double& s1, const double& s2) const
 {
 
   double den = sqrt(1 + s1 * s1) + sqrt(1 + s2 * s2);
   return (s1 * s2 + 1) / den;
 }
 
-double GeometryHelper::GetCosAngleBetweenLines(const Point2D& p1, const Point2D& p2, const Point2D& p3) const
+double GeometriaHelper::GetCosAngleBetweenLines(const Point2D& p1, const Point2D& p2, const Point2D& p3) const
 {
 
   if ( ( (p1.w == p2.w) and (p1.t == p2.t) ) or
@@ -471,7 +471,7 @@ double GeometryHelper::GetCosAngleBetweenLines(const Point2D& p1, const Point2D&
 }
 
 
-double GeometryHelper::GetCosAngleBetweenLines(const Point2D& p1, const Point2D& p2,
+double GeometriaHelper::GetCosAngleBetweenLines(const Point2D& p1, const Point2D& p2,
     const Point2D& p3, const Point2D& p4) const
 {
 
@@ -485,7 +485,7 @@ double GeometryHelper::GetCosAngleBetweenLines(const Point2D& p1, const Point2D&
   return ( (p2.w - p1.w) * (p4.w - p3.w) + (p2.t - p1.t) * (p4.t - p3.t) ) / den;
 }
 
-double GeometryHelper::GetTanAngleBetweenLines(const double& s1, const double& s2) const
+double GeometriaHelper::GetTanAngleBetweenLines(const double& s1, const double& s2) const
 {
 
   // see this: http://planetmath.org/anglebetweentwolines
@@ -499,7 +499,7 @@ double GeometryHelper::GetTanAngleBetweenLines(const double& s1, const double& s
 }
 
 
-void GeometryHelper::SelectPolygonHitList(const std::vector<Hit2D> &inputHits,
+void GeometriaHelper::SelectPolygonHitList(const std::vector<Hit2D> &inputHits,
     std::vector <const Hit2D*> &edgeHits,
     double frac) const
 {
@@ -681,7 +681,7 @@ void GeometryHelper::SelectPolygonHitList(const std::vector<Hit2D> &inputHits,
 }
 
 
-std::vector<size_t>  GeometryHelper::OrderPolygonEdges( std::vector<const Hit2D*> ordered_hits ,
+std::vector<size_t>  GeometriaHelper::OrderPolygonEdges( std::vector<const Hit2D*> ordered_hits ,
     std::vector<size_t> candidate_polygon) const
 {
 
@@ -719,7 +719,7 @@ std::vector<size_t>  GeometryHelper::OrderPolygonEdges( std::vector<const Hit2D*
   return candidate_polygon;
 }
 
-bool GeometryHelper::Clockwise(const double& Ax, const double& Ay,
+bool GeometriaHelper::Clockwise(const double& Ax, const double& Ay,
                                const double& Bx, const double& By,
                                const double& Cx, const double& Cy) const
 {
@@ -727,7 +727,7 @@ bool GeometryHelper::Clockwise(const double& Ax, const double& Ay,
   return (Cy - Ay) * (Bx - Ax) > (By - Ay) * (Cx - Ax);
 }
 
-double GeometryHelper::PerpendicularDistance(const Point2D& pt,
+double GeometriaHelper::PerpendicularDistance(const Point2D& pt,
     const double& slope,
     const double& intercept) const
 {
@@ -743,7 +743,7 @@ double GeometryHelper::PerpendicularDistance(const Point2D& pt,
   return d_perp;
 }
 
-double GeometryHelper::PerpendicularDistance(const Point2D& pt,
+double GeometriaHelper::PerpendicularDistance(const Point2D& pt,
     const double& slope,
     const Point2D& anchor) const
 {
@@ -753,7 +753,7 @@ double GeometryHelper::PerpendicularDistance(const Point2D& pt,
   return PerpendicularDistance(pt, slope, intercept);
 }
 
-bool GeometryHelper::Point_isInTPC(const TVector3 & pointIn3D) const {
+bool GeometriaHelper::Point_isInTPC(const TVector3 & pointIn3D) const {
 
   // Check against the 3 coordinates:
   if (pointIn3D.X() > geom -> DetHalfWidth() + detp -> TriggerOffset() * TimeToCm()
@@ -773,7 +773,7 @@ bool GeometryHelper::Point_isInTPC(const TVector3 & pointIn3D) const {
 }
 
 
-std::vector<unsigned int> GeometryHelper::SelectLocalPointList( const std::vector<Hit2D> & inputHits,
+std::vector<unsigned int> GeometriaHelper::SelectLocalPointList( const std::vector<Hit2D> & inputHits,
     const Hit2D & startingHit,
     const float & distanceAlongLine,
     const float & distancePerpToLine,
@@ -833,7 +833,7 @@ std::vector<unsigned int> GeometryHelper::SelectLocalPointList( const std::vecto
   return returnIndexes;
 }
 
-int GeometryHelper::Get3DAxisN(const int& iplane0, const int& iplane1,
+int GeometriaHelper::Get3DAxisN(const int& iplane0, const int& iplane1,
                                const double& omega0, const double& omega1,
                                double& phi, double& theta) const {
 
@@ -968,7 +968,7 @@ int GeometryHelper::Get3DAxisN(const int& iplane0, const int& iplane1,
 }
 
 
-int GeometryHelper::GetXYZ(const Point2D *p0, const Point2D *p1, Double_t* xyz) const
+int GeometriaHelper::GetXYZ(const Point2D *p0, const Point2D *p1, Double_t* xyz) const
 {
 
   Double_t pos[3] = {0.};
@@ -987,7 +987,7 @@ int GeometryHelper::GetXYZ(const Point2D *p0, const Point2D *p1, Double_t* xyz) 
 }
 
 
-int GeometryHelper::GetYZ(const Point2D *p0, const Point2D *p1, Double_t* yz) const
+int GeometriaHelper::GetYZ(const Point2D *p0, const Point2D *p1, Double_t* yz) const
 {
 
   Double_t y, z;
@@ -996,28 +996,28 @@ int GeometryHelper::GetYZ(const Point2D *p0, const Point2D *p1, Double_t* yz) co
   int z0 = p0->w / fWireToCm;
   int z1 = p1-> w / fWireToCm;
   if (z0 < 0) {
-    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometryHelper::GetYZ>>\033[00m" << std::endl
+    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometriaHelper::GetYZ>>\033[00m" << std::endl
               << " 2D wire position " << p0->w << " [cm] corresponds to negative wire number." << std::endl
               << " Forcing it to wire=0..." << std::endl
               << "\033[93mWarning ends...\033[00m" << std::endl;
     z0 = 0;
   }
   else if (z0 >= (int)(geom->Nwires(p0->plane))) {
-    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometryHelper::GetYZ>>\033[00m" << std::endl
+    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometriaHelper::GetYZ>>\033[00m" << std::endl
               << " 2D wire position " << p0->w << " [cm] exceeds max wire number " << (geom->Nwires(p0->plane) - 1) << std::endl
               << " Forcing it to the max wire number..." << std::endl
               << "\033[93mWarning ends...\033[00m" << std::endl;
     z0 = geom->Nwires(p0->plane) - 1;
   }
   if (z1 < 0) {
-    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometryHelper::GetYZ>>\033[00m" << std::endl
+    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometriaHelper::GetYZ>>\033[00m" << std::endl
               << " 2D wire position " << p1->w << " [cm] corresponds to negative wire number." << std::endl
               << " Forcing it to wire=0..." << std::endl
               << "\033[93mWarning ends...\033[00m" << std::endl;
     z1 = 0;
   }
   if (z1 >= (int)(geom->Nwires(p1->plane))) {
-    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometryHelper::GetYZ>>\033[00m" << std::endl
+    std::cout << "\033[93mWarning\033[00m \033[95m<<GeometriaHelper::GetYZ>>\033[00m" << std::endl
               << " 2D wire position " << p1->w << " [cm] exceeds max wire number " << (geom->Nwires(p0->plane) - 1) << std::endl
               << " Forcing it to the max wire number..." << std::endl
               << "\033[93mWarning ends...\033[00m" << std::endl;
@@ -1037,7 +1037,7 @@ int GeometryHelper::GetYZ(const Point2D *p0, const Point2D *p1, Double_t* yz) co
   return 0;
 }
 
-  bool GeometryHelper::ContainedYZ(const double& y, const double& z) const {
+  bool GeometriaHelper::ContainedYZ(const double& y, const double& z) const {
 
     // if y out of bounds
     if ( (y < -geom->DetHalfHeight()) or (y> geom->DetHalfHeight()) )
@@ -1050,7 +1050,7 @@ int GeometryHelper::GetYZ(const Point2D *p0, const Point2D *p1, Double_t* yz) co
     return true;
   }
   
-  bool GeometryHelper::Contained(const double& x, const double& y, const double& z) const {
+  bool GeometriaHelper::Contained(const double& x, const double& y, const double& z) const {
 
     // if x out of bounds
     if ( (x < 0) or (x > 2*geom->DetHalfWidth()) )

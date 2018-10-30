@@ -7,7 +7,7 @@ namespace evd {
 
 MCTrack2D DrawMCTrack::getMCTrack2D(sim::MCTrack track, unsigned int plane) {
   MCTrack2D result;
-  auto geoHelper = larutil::GeometryHelper::GetME();
+  auto geoHelper = larutil::GeometriaHelper::GetME();
   result._track.reserve(track.size());
   for (unsigned int i = 0; i < track.size(); i++) {
     // project a point into 2D:

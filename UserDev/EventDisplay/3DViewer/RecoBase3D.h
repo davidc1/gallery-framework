@@ -25,7 +25,7 @@ typedef _object PyObject;
 // #endif
 
 #include "LArUtil/Geometria.h"
-#include "LArUtil/GeometryHelper.h"
+#include "LArUtil/GeometriaHelper.h"
 #include "LArUtil/DetProperties.h"
 
 
@@ -61,7 +61,7 @@ protected:
   void _init_base();
 
   const larutil::Geometria * geoService;
-  const larutil::GeometryHelper * geoHelper;
+  const larutil::GeometriaHelper * geoHelper;
   const larutil::DetProperties * detProp;
 
   std::string _producer;
@@ -82,7 +82,7 @@ protected:
 template <class DATA_TYPE>
 RecoBase3D <DATA_TYPE>::RecoBase3D() {
   geoService = larutil::Geometria::GetME();
-  geoHelper = larutil::GeometryHelper::GetME();
+  geoHelper = larutil::GeometriaHelper::GetME();
   detProp = larutil::DetProperties::GetME();
   // Set up default values of the _wire and _time range
   _xRange.first  = 0;
