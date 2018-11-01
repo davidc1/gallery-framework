@@ -1,5 +1,5 @@
 /**
- * \file ana_base.h
+ * \file anabase.h
  *
  * \ingroup Analysis
  * 
@@ -12,8 +12,8 @@
 
     @{*/
 
-#ifndef GALLERY_FMWK_ANA_BASE_H
-#define GALLERY_FMWK_ANA_BASE_H
+#ifndef GALLERY_FMWK_ANABASE_H
+#define GALLERY_FMWK_ANABASE_H
 
 
 #include "gallery/Event.h"
@@ -22,19 +22,19 @@
 
 namespace galleryfmwk {
   /**
-     \class ana_base
+     \class anabase
      A base class for analysis modules to be operated with event_waveform
      data class instance. 
   */
-  class ana_base  {
+  class anabase  {
     
   public:
     
     /// Default constructor
-    ana_base() {_fout = 0;}
+    anabase() {_fout = 0;}
     
     /// Default destructor
-    virtual ~ana_base(){}
+    virtual ~anabase(){}
     
     /// Initialization method to be called before analyze any data
     virtual bool initialize(){return true;}

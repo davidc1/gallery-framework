@@ -19,7 +19,7 @@
 #include "Base/messenger.h"
 #include "TString.h"
 
-// /* DAVIDC
+ /* DAVIDC
 namespace galleryfmwk{
   
   namespace geo {
@@ -39,7 +39,7 @@ namespace galleryfmwk{
     };
   };
 };
-//  DAVIDC */ 
+  DAVIDC */ 
 
 namespace larutil {
   /**

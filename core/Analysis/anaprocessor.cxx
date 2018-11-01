@@ -1,11 +1,11 @@
-#ifndef GALLERY_FMWK_ANA_PROCESSOR_CXX
-#define GALLERY_FMWK_ANA_PROCESSOR_CXX
+#ifndef GALLERY_FMWK_ANAPROCESSOR_CXX
+#define GALLERY_FMWK_ANAPROCESSOR_CXX
 
-#include "ana_processor.h"
+#include "anaprocessor.h"
 
 namespace galleryfmwk {
 
-ana_processor::ana_processor() {
+anaprocessor::anaprocessor() {
   _ofile_name = "";
   _event = nullptr;
   //_storage=storage_manager::get();=
@@ -15,11 +15,11 @@ ana_processor::ana_processor() {
   _ana_unit_status = true;
 }
 
-void ana_processor::set_verbosity(msg::Level level) {
+void anaprocessor::set_verbosity(msg::Level level) {
 
   _verbosity_level = level;
 
-  for (std::vector<ana_base*>::iterator iter(_analyzers.begin());
+  for (std::vector<anabase*>::iterator iter(_analyzers.begin());
        iter != _analyzers.end();
        ++iter)
 
@@ -27,7 +27,7 @@ void ana_processor::set_verbosity(msg::Level level) {
 
 }
 
-void ana_processor::reset() {
+void anaprocessor::reset() {
 
   // if (_verbosity[msg::kDEBUG])
   //   Message::send(msg::kDEBUG, __PRETTY_FUNCTION__, "called...");
@@ -53,12 +53,12 @@ void ana_processor::reset() {
   _process = kINIT;
 }
 
-void ana_processor::add_input_file(std::string name) {
+void anaprocessor::add_input_file(std::string name) {
 
   _input_files.push_back(name);
 }
 
-bool ana_processor::initialize() {
+bool anaprocessor::initialize() {
 
   set_verbosity(_verbosity_level);
 
@@ -116,7 +116,7 @@ bool ana_processor::initialize() {
   return status;
 }
 
-bool ana_processor::process_event() {
+bool anaprocessor::process_event() {
 
 
   if (_process == kINIT) {
@@ -178,7 +178,7 @@ bool ana_processor::process_event() {
 
 }
 
-bool ana_processor::run(unsigned int nevents) {
+bool anaprocessor::run(unsigned int nevents) {
 
   int nfiles = _input_files.size();
 
@@ -244,7 +244,7 @@ bool ana_processor::run(unsigned int nevents) {
 
 }
 
-bool ana_processor::finalize() {
+bool anaprocessor::finalize() {
 
   if (_verbosity_level == msg::kDEBUG)
     Message::send(msg::kDEBUG, __PRETTY_FUNCTION__, "called...");
@@ -269,9 +269,9 @@ bool ana_processor::finalize() {
   return status;
 }
 
-bool ana_processor::get_ana_status(ana_base* ptr) const {
+bool anaprocessor::get_ana_status(anabase* ptr) const {
 
-  std::map<ana_base*, size_t>::const_iterator iter(_ana_index.find(ptr));
+  std::map<anabase*, size_t>::const_iterator iter(_ana_index.find(ptr));
   if (iter == _ana_index.end()) return false;
 
   else return _ana_status[(*iter).second];

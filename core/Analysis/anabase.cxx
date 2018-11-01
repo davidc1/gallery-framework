@@ -1,11 +1,11 @@
-#ifndef GALLERY_FMWK_ANA_BASE_CXX
-#define GALLERY_FMWK_ANA_BASE_CXX
+#ifndef GALLERY_FMWK_ANABASE_CXX
+#define GALLERY_FMWK_ANABASE_CXX
 
-#include "ana_base.h"
+#include "anabase.h"
 
 namespace galleryfmwk {
 //#####################################################
-void ana_base::set_verbosity(msg::Level level)
+void anabase::set_verbosity(msg::Level level)
 //#####################################################
 {
 
