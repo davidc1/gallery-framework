@@ -51,10 +51,10 @@ namespace galleryfmwk {
     };
     
     /// Static method to send message out.
-    static void send(msg::Level level, std::string msg);
+    static void send(message::Level level, std::string msg);
     
     /// Extra argument "where" is used to indicate function/class name.
-    static void send(msg::Level level, std::string where, std::string msg);
+    static void send(message::Level level, std::string where, std::string msg);
     
   };
 }

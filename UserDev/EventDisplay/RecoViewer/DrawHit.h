@@ -15,7 +15,7 @@
 #define EVD_DRAWHIT_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "RecoBase.h"
 
 #include "lardataobj/RecoBase/Hit.h"
@@ -66,7 +66,7 @@ public:
     int   plane()  {return _plane;}
 };
 
-class DrawHit : public galleryfmwk::ana_base, public RecoBase<Hit2D> {
+class DrawHit : public galleryfmwk::anabase, public RecoBase<Hit2D> {
 
 public:
 

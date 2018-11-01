@@ -15,7 +15,7 @@
 #define EVD_DRAWPFPARTICLE3D_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/SpacePoint.h"
 #include "lardataobj/RecoBase/PFParticle.h"
 #include "lardataobj/RecoBase/Seed.h"
@@ -51,7 +51,7 @@ private:
 };
 
 
-class DrawPFParticle3D : public galleryfmwk::ana_base, public RecoBase3D<PFPart3D> {
+class DrawPFParticle3D : public galleryfmwk::anabase, public RecoBase3D<PFPart3D> {
 
 public:
 

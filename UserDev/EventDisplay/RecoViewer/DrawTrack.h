@@ -14,7 +14,7 @@
 #ifndef EVD_DRAWTRACK_H
 #define EVD_DRAWTRACK_H
 
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/Track.h"
 #include <iostream>
 
@@ -47,7 +47,7 @@ protected:
 
 // typedef std::vector<std::pair<float, float> > Track2D;
 
-class DrawTrack : public galleryfmwk::ana_base, public RecoBase<Track2D> {
+class DrawTrack : public galleryfmwk::anabase, public RecoBase<Track2D> {
 
 public:
   /// Default constructor

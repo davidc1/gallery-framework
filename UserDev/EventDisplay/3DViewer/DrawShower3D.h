@@ -15,7 +15,7 @@
 #define EVD_DRAWSHOWER3D_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/Shower.h"
 
 #include "RecoBase3D.h"
@@ -50,7 +50,7 @@ protected:
 };
 
 
-class DrawShower3D : public galleryfmwk::ana_base, public RecoBase3D<Shower3D> {
+class DrawShower3D : public galleryfmwk::anabase, public RecoBase3D<Shower3D> {
 
 public:
 

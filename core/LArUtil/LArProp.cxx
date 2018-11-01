@@ -318,7 +318,7 @@ Double_t LArProp::DriftVelocity(Double_t efield, Double_t temperature) const {
             << " kV/cm is outside of range covered by drift"
             << " velocity parameterization. Returned value"
             << " may not be correct";
-        galleryfmwk::Message::send(galleryfmwk::msg::kWARNING, __FUNCTION__, msg.str());
+        galleryfmwk::Message::send(galleryfmwk::message::kWARNING, __FUNCTION__, msg.str());
     }
 
     // Default temperature use internal value.
@@ -332,7 +332,7 @@ Double_t LArProp::DriftVelocity(Double_t efield, Double_t temperature) const {
             << " K is outside of range covered by drift velocity"
             << " parameterization. Returned value may not be"
             << " correct";
-        galleryfmwk::Message::send(galleryfmwk::msg::kWARNING, __FUNCTION__, msg.str());
+        galleryfmwk::Message::send(galleryfmwk::message::kWARNING, __FUNCTION__, msg.str());
     }
 
     Double_t tshift = -87.203 + temperature;

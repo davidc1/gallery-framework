@@ -390,11 +390,11 @@ double GeometriaHelper::CalculatePitch(UInt_t pl, double phi, double theta) cons
 
   if (geom->PlaneToView(pl) == galleryfmwk::geo::kUnknown ||
       geom->PlaneToView(pl) == galleryfmwk::geo::k3D) {
-    galleryfmwk::Message::send(galleryfmwk::msg::kERROR, __FUNCTION__, Form("Warning :  no Pitch foreseen for view %d", geom->PlaneToView(pl)));
+    galleryfmwk::Message::send(galleryfmwk::message::kERROR, __FUNCTION__, Form("Warning :  no Pitch foreseen for view %d", geom->PlaneToView(pl)));
     return pitch;
   }
   else if ( pl >= geom->Nplanes() ) {
-    galleryfmwk::Message::send(galleryfmwk::msg::kERROR, __FUNCTION__, "Plane number larger than max. number of planes");
+    galleryfmwk::Message::send(galleryfmwk::message::kERROR, __FUNCTION__, "Plane number larger than max. number of planes");
     return pitch;
   }
   else {

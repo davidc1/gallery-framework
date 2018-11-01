@@ -15,7 +15,7 @@ anaprocessor::anaprocessor() {
   _ana_unit_status = true;
 }
 
-void anaprocessor::set_verbosity(msg::Level level) {
+void anaprocessor::set_verbosity(message::Level level) {
 
   _verbosity_level = level;
 
@@ -29,8 +29,8 @@ void anaprocessor::set_verbosity(msg::Level level) {
 
 void anaprocessor::reset() {
 
-  // if (_verbosity[msg::kDEBUG])
-  //   Message::send(msg::kDEBUG, __PRETTY_FUNCTION__, "called...");
+  // if (_verbosity[message::kDEBUG])
+  //   Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "called...");
 
   if (_fout) {
     _fout->Close();
@@ -63,7 +63,7 @@ bool anaprocessor::initialize() {
   set_verbosity(_verbosity_level);
 
   if (_process != kINIT) {
-    Message::send(msg::kERROR, __FUNCTION__,
+    Message::send(message::kERROR, __FUNCTION__,
                   "Logic error: the function should not be called.");
     return false;
   }
@@ -72,7 +72,7 @@ bool anaprocessor::initialize() {
   _event = new gallery::Event(_input_files);
   if (!_event->isValid()) {
 
-    Message::send(msg::kERROR, __FUNCTION__, "File I/O failure...");
+    Message::send(message::kERROR, __FUNCTION__, "File I/O failure...");
 
     return false;
 
@@ -80,7 +80,7 @@ bool anaprocessor::initialize() {
 
   if (_ofile_name.size() == 0)
 
-    Message::send(msg::kWARNING, __FUNCTION__,
+    Message::send(message::kWARNING, __FUNCTION__,
                   "Analysis output file will not be created for this time...");
 
   else
@@ -100,7 +100,7 @@ bool anaprocessor::initialize() {
 
     if (!_ana_status[i]) {
 
-      Message::send(msg::kERROR, __PRETTY_FUNCTION__,
+      Message::send(message::kERROR, __PRETTY_FUNCTION__,
                     Form("Failed to initialize: %s", _analyzers[i]->name().c_str()));
 
       status = false;
@@ -111,8 +111,8 @@ bool anaprocessor::initialize() {
   _process = kREADY;
   _index = 0;
   _nevents = 0;
-  if (_verbosity_level == msg::kDEBUG )
-    Message::send(msg::kDEBUG, __PRETTY_FUNCTION__, "ends...");
+  if (_verbosity_level == message::kDEBUG )
+    Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "ends...");
   return status;
 }
 
@@ -122,7 +122,7 @@ bool anaprocessor::process_event() {
   if (_process == kINIT) {
 
     if (!initialize()) {
-      Message::send(msg::kERROR, __FUNCTION__, "Aborting.");
+      Message::send(message::kERROR, __FUNCTION__, "Aborting.");
       return false;
     }
   }
@@ -182,8 +182,8 @@ bool anaprocessor::run(unsigned int nevents) {
 
   int nfiles = _input_files.size();
 
-  if (_verbosity_level == msg::kDEBUG)
-    Message::send(msg::kDEBUG, __PRETTY_FUNCTION__, "called...");
+  if (_verbosity_level == message::kDEBUG)
+    Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "called...");
 
   bool status = true;
 
@@ -191,14 +191,14 @@ bool anaprocessor::run(unsigned int nevents) {
 
   if (!status) {
 
-    Message::send(msg::kERROR, __PRETTY_FUNCTION__, "Aborting.");
+    Message::send(message::kERROR, __PRETTY_FUNCTION__, "Aborting.");
 
     return false;
   }
 
   char _buf[200];
   sprintf(_buf, "Processing %d events from entry %d...", nevents, 0);
-  Message::send(msg::kNORMAL, __FUNCTION__, _buf);
+  Message::send(message::kNORMAL, __FUNCTION__, _buf);
 
   int ten_percent_ctr = 0;
 
@@ -219,13 +219,13 @@ bool anaprocessor::run(unsigned int nevents) {
 
       if (ten_percent_ctr) {
         sprintf(_buf, " ... %3d%% done ...", ten_percent_ctr * 10);
-        Message::send(msg::kNORMAL, __FUNCTION__, _buf);
+        Message::send(message::kNORMAL, __FUNCTION__, _buf);
       }
       ten_percent_ctr++;
     }
 
     if (nevents && nevents == _nevents) {
-      Message::send(msg::kNORMAL, __FUNCTION__, Form("Processed %d/%d events! Aborting...", _nevents, nevents));
+      Message::send(message::kNORMAL, __FUNCTION__, Form("Processed %d/%d events! Aborting...", _nevents, nevents));
       break;
     }
 
@@ -246,11 +246,11 @@ bool anaprocessor::run(unsigned int nevents) {
 
 bool anaprocessor::finalize() {
 
-  if (_verbosity_level == msg::kDEBUG)
-    Message::send(msg::kDEBUG, __PRETTY_FUNCTION__, "called...");
+  if (_verbosity_level == message::kDEBUG)
+    Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "called...");
 
   if (_process != kPROCESSING && _process != kREADY) {
-    Message::send(msg::kERROR, __FUNCTION__,
+    Message::send(message::kERROR, __FUNCTION__,
                   "Logic error: the function should not be called.");
     return false;
   }

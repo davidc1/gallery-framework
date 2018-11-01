@@ -15,7 +15,7 @@
 #define LARLITE_DRAWEMPTY_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "LArUtil/Geometry.h"
 
 #include "RecoBase.h"
@@ -30,7 +30,7 @@ public:
 
 // typedef std::vector<std::pair<float, float> > Empty2D;
 
-class DrawEmpty : public larlite::ana_base, public RecoBase<Empty2D> {
+class DrawEmpty : public larlite::anabase, public RecoBase<Empty2D> {
 
 public:
 

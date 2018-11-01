@@ -15,7 +15,7 @@
 #define EVD_DRAWSIMCH_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/Simulation/SimChannel.h"
 
 
@@ -32,7 +32,7 @@ namespace evd {
 
 typedef larutil::Point3D SimChannel3D;
 
-class DrawSimChannel3D : public galleryfmwk::ana_base, public RecoBase3D<SimChannel3D> {
+class DrawSimChannel3D : public galleryfmwk::anabase, public RecoBase3D<SimChannel3D> {
 
 public:
 

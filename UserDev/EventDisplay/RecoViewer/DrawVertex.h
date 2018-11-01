@@ -15,7 +15,7 @@
 #ifndef EVD_DRAWVERTEX_H
 #define EVD_DRAWVERTEX_H
 
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "RecoBase.h"
 #include "LArUtil/Geometria.h"
 
@@ -30,7 +30,7 @@ namespace evd {
    \class DrawVertex
    User custom analysis class made by SHELL_USER_NAME
  */
-class DrawVertex : public galleryfmwk::ana_base, public RecoBase<Vertex2D> {
+class DrawVertex : public galleryfmwk::anabase, public RecoBase<Vertex2D> {
 
 public:
 

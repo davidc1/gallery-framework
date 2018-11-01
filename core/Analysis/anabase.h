@@ -20,6 +20,22 @@
 #include "Base/messenger.h"
 #include "TFile.h"
 
+  /* DAVID C
+namespace message {
+
+
+/// Defines message level
+enum Level {
+  kDEBUG = 0,    ///< Message level ... useful to debug a crash
+  kINFO,         ///< Debug info but not the lowest level
+  kNORMAL,       ///< Normal stdout
+  kWARNING,      ///< notify a user in the standard operation mode for an important finding.
+  kERROR,        ///< notify a user when something is clearly wrong
+  kMSG_TYPE_MAX
+};
+}
+  */
+
 namespace galleryfmwk {
   /**
      \class anabase
@@ -55,7 +71,7 @@ namespace galleryfmwk {
     void set_output_file(TFile* fout){_fout=fout;}
     
     /// Setter for the verbosity level 
-    virtual void set_verbosity(msg::Level level);
+    virtual void set_verbosity(message::Level level);
     
     inline const std::string name() const {return _name;}
 
@@ -63,7 +79,7 @@ namespace galleryfmwk {
     
     TFile* _fout; ///< Analysis output file pointer
     std::string _name;             ///< class name holder
-    msg::Level _verbosity_level;   ///< holder for specified verbosity level
+    message::Level _verbosity_level;   ///< holder for specified verbosity level
   };
 }
 #endif

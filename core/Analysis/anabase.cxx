@@ -5,27 +5,27 @@
 
 namespace galleryfmwk {
 //#####################################################
-void anabase::set_verbosity(msg::Level level)
+void anabase::set_verbosity(message::Level level)
 //#####################################################
 {
 
   _verbosity_level = level;
 
-  // for (size_t i = (size_t)(msg::kDEBUG); i < (size_t)(msg::kMSG_TYPE_MAX); ++i)
+  // for (size_t i = (size_t)(message::kDEBUG); i < (size_t)(msg::kMSG_TYPE_MAX); ++i)
   //   _verbosity[i] = false;
 
   // switch (level) {
-  // case msg::kDEBUG:
-  //   _verbosity[msg::kDEBUG] = true;
-  // case msg::kINFO:
-  //   _verbosity[msg::kINFO] = true;
-  // case msg::kNORMAL:
-  //   _verbosity[msg::kNORMAL] = true;
-  // case msg::kWARNING:
-  //   _verbosity[msg::kWARNING] = true;
-  // case msg::kERROR:
-  //   _verbosity[msg::kERROR] = true;
-  // case msg::kMSG_TYPE_MAX:
+  // case message::kDEBUG:
+  //   _verbosity[message::kDEBUG] = true;
+  // case message::kINFO:
+  //   _verbosity[message::kINFO] = true;
+  // case message::kNORMAL:
+  //   _verbosity[message::kNORMAL] = true;
+  // case message::kWARNING:
+  //   _verbosity[message::kWARNING] = true;
+  // case message::kERROR:
+  //   _verbosity[message::kERROR] = true;
+  // case message::kMSG_TYPE_MAX:
   //   break;
   // }
 

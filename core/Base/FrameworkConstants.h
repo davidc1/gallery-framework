@@ -34,7 +34,7 @@ const float  kINVALID_FLOAT  = std::numeric_limits<float>::max();
 }
 
 /// Defines constants for Message utility
-namespace msg {
+namespace message {
 
 /// Defines message level
 enum Level {

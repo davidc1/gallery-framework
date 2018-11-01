@@ -11,7 +11,7 @@
 
 // #pragma link C++ class evd::RecoBase+;
 // Link all the classes that are "interactive" - for use in evd
-#pragma link C++ class galleryfmwk::ana_base+;
+#pragma link C++ class galleryfmwk::anabase+;
 
 #pragma link C++ class evd::Shower2D+;
 #pragma link C++ class std::vector<::evd::Shower2D>+;

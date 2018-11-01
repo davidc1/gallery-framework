@@ -23,7 +23,7 @@ bool LArUtilManager::ReconfigureUtilities()
   bool status = true;
 
   // Geometry
-  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring Geometry");
+  galleryfmwk::Message::send(galleryfmwk::message::kNORMAL, __FUNCTION__, "Reconfiguring Geometry");
   Geometria* geom = (Geometria*)(Geometria::GetME(false));
   geom->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
@@ -32,7 +32,7 @@ bool LArUtilManager::ReconfigureUtilities()
   status = status && geom->LoadData(true);
 
   // LArProp
-  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring LArProp");
+  galleryfmwk::Message::send(galleryfmwk::message::kNORMAL, __FUNCTION__, "Reconfiguring LArProp");
   LArProp* larp = (LArProp*)(LArProp::GetME(false));
   larp->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
@@ -41,7 +41,7 @@ bool LArUtilManager::ReconfigureUtilities()
   status = status && larp->LoadData(true);
 
   // DetProperties
-  galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring DetProperties");
+  galleryfmwk::Message::send(galleryfmwk::message::kNORMAL, __FUNCTION__, "Reconfiguring DetProperties");
   DetProperties* detp = (DetProperties*)(DetProperties::GetME(false));
   detp->SetFileName(Form("%s/LArUtil/dat/%s",
                          getenv("GALLERY_FMWK_COREDIR"),
@@ -52,12 +52,12 @@ bool LArUtilManager::ReconfigureUtilities()
   if (status) {
 
     // GeometriaHelper
-    galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring GeometriaHelper...");
+    galleryfmwk::Message::send(galleryfmwk::message::kNORMAL, __FUNCTION__, "Reconfiguring GeometriaHelper...");
     GeometriaHelper* gser = (GeometriaHelper*)(GeometriaHelper::GetME());
     gser->Reconfigure();
 
     // GeometriaHelper
-    galleryfmwk::Message::send(galleryfmwk::msg::kNORMAL, __FUNCTION__, "Reconfiguring GeometriaHelper...");
+    galleryfmwk::Message::send(galleryfmwk::message::kNORMAL, __FUNCTION__, "Reconfiguring GeometriaHelper...");
     GeometriaHelper* ghelp = (GeometriaHelper*)(GeometriaHelper::GetME());
     ghelp->Reconfigure();
 
