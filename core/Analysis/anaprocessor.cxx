@@ -15,17 +15,6 @@ anaprocessor::anaprocessor() {
   _ana_unit_status = true;
 }
 
-void anaprocessor::set_verbosity(message::Level level) {
-
-  _verbosity_level = level;
-
-  for (std::vector<anabase*>::iterator iter(_analyzers.begin());
-       iter != _analyzers.end();
-       ++iter)
-
-    (*iter)->set_verbosity(level);
-
-}
 
 void anaprocessor::reset() {
 
@@ -60,10 +49,8 @@ void anaprocessor::add_input_file(std::string name) {
 
 bool anaprocessor::initialize() {
 
-  set_verbosity(_verbosity_level);
-
   if (_process != kINIT) {
-    Message::send(message::kERROR, __FUNCTION__,
+    Message::send(  __FUNCTION__,
                   "Logic error: the function should not be called.");
     return false;
   }
@@ -72,7 +59,7 @@ bool anaprocessor::initialize() {
   _event = new gallery::Event(_input_files);
   if (!_event->isValid()) {
 
-    Message::send(message::kERROR, __FUNCTION__, "File I/O failure...");
+    Message::send(  __FUNCTION__, "File I/O failure...");
 
     return false;
 
@@ -80,7 +67,7 @@ bool anaprocessor::initialize() {
 
   if (_ofile_name.size() == 0)
 
-    Message::send(message::kWARNING, __FUNCTION__,
+    Message::send( __FUNCTION__,
                   "Analysis output file will not be created for this time...");
 
   else
@@ -100,7 +87,7 @@ bool anaprocessor::initialize() {
 
     if (!_ana_status[i]) {
 
-      Message::send(message::kERROR, __PRETTY_FUNCTION__,
+      Message::send(  __PRETTY_FUNCTION__,
                     Form("Failed to initialize: %s", _analyzers[i]->name().c_str()));
 
       status = false;
@@ -111,8 +98,7 @@ bool anaprocessor::initialize() {
   _process = kREADY;
   _index = 0;
   _nevents = 0;
-  if (_verbosity_level == message::kDEBUG )
-    Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "ends...");
+
   return status;
 }
 
@@ -122,7 +108,7 @@ bool anaprocessor::process_event() {
   if (_process == kINIT) {
 
     if (!initialize()) {
-      Message::send(message::kERROR, __FUNCTION__, "Aborting.");
+      Message::send(  __FUNCTION__, "Aborting.");
       return false;
     }
   }
@@ -182,8 +168,6 @@ bool anaprocessor::run(unsigned int nevents) {
 
   int nfiles = _input_files.size();
 
-  if (_verbosity_level == message::kDEBUG)
-    Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "called...");
 
   bool status = true;
 
@@ -191,14 +175,14 @@ bool anaprocessor::run(unsigned int nevents) {
 
   if (!status) {
 
-    Message::send(message::kERROR, __PRETTY_FUNCTION__, "Aborting.");
+    Message::send(  __PRETTY_FUNCTION__, "Aborting.");
 
     return false;
   }
 
   char _buf[200];
   sprintf(_buf, "Processing %d events from entry %d...", nevents, 0);
-  Message::send(message::kNORMAL, __FUNCTION__, _buf);
+  Message::send(__FUNCTION__, _buf);
 
   int ten_percent_ctr = 0;
 
@@ -219,13 +203,13 @@ bool anaprocessor::run(unsigned int nevents) {
 
       if (ten_percent_ctr) {
         sprintf(_buf, " ... %3d%% done ...", ten_percent_ctr * 10);
-        Message::send(message::kNORMAL, __FUNCTION__, _buf);
+        Message::send(__FUNCTION__, _buf);
       }
       ten_percent_ctr++;
     }
 
     if (nevents && nevents == _nevents) {
-      Message::send(message::kNORMAL, __FUNCTION__, Form("Processed %d/%d events! Aborting...", _nevents, nevents));
+      Message::send(__FUNCTION__, Form("Processed %d/%d events! Aborting...", _nevents, nevents));
       break;
     }
 
@@ -246,11 +230,9 @@ bool anaprocessor::run(unsigned int nevents) {
 
 bool anaprocessor::finalize() {
 
-  if (_verbosity_level == message::kDEBUG)
-    Message::send(message::kDEBUG, __PRETTY_FUNCTION__, "called...");
 
   if (_process != kPROCESSING && _process != kREADY) {
-    Message::send(message::kERROR, __FUNCTION__,
+    Message::send(  __FUNCTION__,
                   "Logic error: the function should not be called.");
     return false;
   }

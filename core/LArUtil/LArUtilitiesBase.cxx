@@ -21,7 +21,7 @@ bool LArUtilitiesBase::LoadData(bool force_reload)
 {
   if (!force_reload && _loaded) return true;
 
-  galleryfmwk::Message::send(galleryfmwk::message::kINFO, __FUNCTION__,
+  galleryfmwk::Message::send( __FUNCTION__,
         Form("Reading-in data for %s", _name.c_str()));
 
   if (_file_name.empty() || _tree_name.empty()) {
@@ -34,7 +34,7 @@ bool LArUtilitiesBase::LoadData(bool force_reload)
   bool status = false;
   try {
 
-    galleryfmwk::Message::send(galleryfmwk::message::kNORMAL, __FUNCTION__,
+    galleryfmwk::Message::send(__FUNCTION__,
           Form("Loading data for %s...\n     file=%s ", _name.c_str(), _file_name.c_str()));
     ClearData();
     status = ReadTree();
@@ -43,10 +43,10 @@ bool LArUtilitiesBase::LoadData(bool force_reload)
   }
   catch (LArUtilException &e) {
 
-    galleryfmwk::Message::send(galleryfmwk::message::kERROR, __FUNCTION__,
+    galleryfmwk::Message::send(__FUNCTION__,
           Form("Failed loading data for %s...", _name.c_str()));
 
-    galleryfmwk::Message::send(galleryfmwk::message::kERROR, __FUNCTION__,
+    galleryfmwk::Message::send( __FUNCTION__,
           e.what());
 
     throw e;

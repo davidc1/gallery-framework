@@ -44,11 +44,6 @@ public:
   virtual ~anaprocessor() {if (_event) delete _event;}
 
   /// Override a method to set verbosity
-  /**
-     It changes the verbosity level of not just this class but also owned
-     other class instances.
-  */
-  virtual void set_verbosity(message::Level level);
 
   /// Setter for an input data file name
   void add_input_file(std::string name);
@@ -114,8 +109,6 @@ private:
   bool _ana_unit_status;
 
   std::string _name;             ///< class name holder
-
-  message::Level _verbosity_level;   ///< holder for specified verbosity level
 
   size_t _last_run_id;
   size_t _last_subrun_id;

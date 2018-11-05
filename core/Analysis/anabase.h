@@ -70,8 +70,6 @@ namespace galleryfmwk {
     /// A setter for analysis output file poitner
     void set_output_file(TFile* fout){_fout=fout;}
     
-    /// Setter for the verbosity level 
-    virtual void set_verbosity(message::Level level);
     
     inline const std::string name() const {return _name;}
 
@@ -79,7 +77,6 @@ namespace galleryfmwk {
     
     TFile* _fout; ///< Analysis output file pointer
     std::string _name;             ///< class name holder
-    message::Level _verbosity_level;   ///< holder for specified verbosity level
   };
 }
 #endif
