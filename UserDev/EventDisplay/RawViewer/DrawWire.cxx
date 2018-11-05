@@ -10,7 +10,7 @@ namespace evd {
 
 DrawWire::DrawWire() {
   _name = "DrawWire";
-  _producer = "caldata";
+  _producer = "butcher";
 
 }
 

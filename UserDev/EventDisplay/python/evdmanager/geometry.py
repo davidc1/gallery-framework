@@ -141,7 +141,7 @@ class sbnd(geometry):
         # self._colorScheme =
         # self._time2Cm = 0.05515
         self._pedestals = [2048, 2048, 400]
-        self._levels = [[-100, 10], [-10, 100], [-10, 200]]
+        self._levels = [[-2, 20], [-2, 20], [-1, 20]]
         for i in xrange(len(self._pedestals)):
             self._levels[i][0] += self._pedestals[i]
             self._levels[i][1] += self._pedestals[i]
@@ -203,7 +203,7 @@ class microboone(geometry):
         super(microboone, self).__init__()
         larutil.LArUtilManager.Reconfigure(galleryfmwk.geo.kMicroBooNE)
         self.configure()
-        self._levels = [(-100, 10), (-10, 100), (-10, 200)]
+        self._levels = [(20, -2), (-2, 20), (-1, 20)]
         # self._colorScheme =
         # self._time2Cm = 0.05515
         self._pedestals = [2000, 2000, 440]
