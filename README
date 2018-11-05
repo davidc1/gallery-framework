@@ -41,6 +41,4 @@ How to build and install
 
 9) make -j
 
-10) From the top directory, in the file 'core/LArUtil/LArUtilitiesConfig.h', comment out the lines where DAVIDC is found in able to make the ENUM definition visible. This is needed for the EVD to load.
-
-11) evd.py -T /uboone/data/users/davidc/MCC9/BNBEXT_data_MCC9.root
+10) evd.py -T /uboone/data/users/davidc/MCC9/BNBEXT_data_MCC9.root
