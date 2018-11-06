@@ -35,10 +35,4 @@ How to build and install
 
 6) make -j
 
-7) cd UserDev/EventDisplay
-
-8) source setup_evd.sh
-
-9) make -j
-
-10) evd.py -T /uboone/data/users/davidc/MCC9/BNBEXT_data_MCC9.root
+7) evd.py -T /uboone/data/users/davidc/MCC9/BNBEXT_data_MCC9.root
