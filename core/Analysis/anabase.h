@@ -1,5 +1,5 @@
 /**
- * \file ana_base.h
+ * \file anabase.h
  *
  * \ingroup Analysis
  * 
@@ -12,29 +12,45 @@
 
     @{*/
 
-#ifndef GALLERY_FMWK_ANA_BASE_H
-#define GALLERY_FMWK_ANA_BASE_H
+#ifndef GALLERY_FMWK_ANABASE_H
+#define GALLERY_FMWK_ANABASE_H
 
 
 #include "gallery/Event.h"
 #include "Base/messenger.h"
 #include "TFile.h"
 
+  /* DAVID C
+namespace message {
+
+
+/// Defines message level
+enum Level {
+  kDEBUG = 0,    ///< Message level ... useful to debug a crash
+  kINFO,         ///< Debug info but not the lowest level
+  kNORMAL,       ///< Normal stdout
+  kWARNING,      ///< notify a user in the standard operation mode for an important finding.
+  kERROR,        ///< notify a user when something is clearly wrong
+  kMSG_TYPE_MAX
+};
+}
+  */
+
 namespace galleryfmwk {
   /**
-     \class ana_base
+     \class anabase
      A base class for analysis modules to be operated with event_waveform
      data class instance. 
   */
-  class ana_base  {
+  class anabase  {
     
   public:
     
     /// Default constructor
-    ana_base() {_fout = 0;}
+    anabase() {_fout = 0;}
     
     /// Default destructor
-    virtual ~ana_base(){}
+    virtual ~anabase(){}
     
     /// Initialization method to be called before analyze any data
     virtual bool initialize(){return true;}
@@ -54,8 +70,6 @@ namespace galleryfmwk {
     /// A setter for analysis output file poitner
     void set_output_file(TFile* fout){_fout=fout;}
     
-    /// Setter for the verbosity level 
-    virtual void set_verbosity(msg::Level level);
     
     inline const std::string name() const {return _name;}
 
@@ -63,7 +77,6 @@ namespace galleryfmwk {
     
     TFile* _fout; ///< Analysis output file pointer
     std::string _name;             ///< class name holder
-    msg::Level _verbosity_level;   ///< holder for specified verbosity level
   };
 }
 #endif

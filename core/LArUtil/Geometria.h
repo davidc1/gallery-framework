@@ -1,9 +1,9 @@
 /**
- * \file Geometry.h
+ * \file Geometria.h
  *
  * \ingroup LArUtil
  *
- * \brief Class def header for a class Geometry
+ * \brief Class def header for a class Geometria
  *
  * @author kazuhiro
  */
@@ -14,7 +14,7 @@
 #ifndef GALLERY_FMWK_GEOMETRY_H
 #define GALLERY_FMWK_GEOMETRY_H
 
-#include "LArUtilBase.h"
+#include "LArUtilitiesBase.h"
 #include "Base/GeoTypes.h"
 
 #include <TMath.h>
@@ -23,26 +23,26 @@
 
 namespace larutil {
 /**
-   \class Geometry
+   \class Geometria
 */
-class Geometry : public LArUtilBase {
+class Geometria : public LArUtilitiesBase {
 
 private:
 
     /// Singleton constructor
-    Geometry(bool default_load = true);
+    Geometria(bool default_load = true);
 
     /// Default destructor
-    virtual ~Geometry() {};
+    virtual ~Geometria() {};
 
-    static Geometry* _me;
+    static Geometria* _me;
 
 public:
 
     /// Singleton getter
-    static const Geometry* GetME(bool default_load = true)
+    static const Geometria* GetME(bool default_load = true)
     {
-        if (!_me) _me = new Geometry(default_load);
+        if (!_me) _me = new Geometria(default_load);
         return _me;
     }
 

@@ -1,7 +1,7 @@
 #ifndef NOISEFILTER_TYPES_H
 #define NOISEFILTER_TYPES_H
 
-#include "LArUtil/Geometry.h"
+#include "LArUtil/Geometria.h"
 
 
 namespace ub_noise_filter {

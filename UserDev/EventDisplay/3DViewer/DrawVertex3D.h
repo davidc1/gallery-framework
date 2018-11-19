@@ -15,7 +15,7 @@
 #define EVD_DRAWVERTEX3D_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/Vertex.h"
 #include "RecoBase3D.h"
 /**
@@ -44,7 +44,7 @@ private:
 };
 
 
-class DrawVertex3D : public galleryfmwk::ana_base, public RecoBase3D<Vertex3D> {
+class DrawVertex3D : public galleryfmwk::anabase, public RecoBase3D<Vertex3D> {
 
 public:
 

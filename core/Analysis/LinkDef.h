@@ -9,9 +9,9 @@
 #pragma link off all classes;
 #pragma link off all functions;
 
-#pragma link C++ class galleryfmwk::ana_base+;
-#pragma link C++ class std::vector<galleryfmwk::ana_base*>+;
-#pragma link C++ class galleryfmwk::ana_processor+;
+#pragma link C++ class galleryfmwk::anabase+;
+#pragma link C++ class std::vector<galleryfmwk::anabase*>+;
+#pragma link C++ class galleryfmwk::anaprocessor+;
 //ADD_NEW_CLASS ... do not change this line
 #endif
 

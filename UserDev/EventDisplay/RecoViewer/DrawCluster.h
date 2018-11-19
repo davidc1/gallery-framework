@@ -15,7 +15,7 @@
 #ifndef EVD_DRAWCLUSTER_H
 #define EVD_DRAWCLUSTER_H
 
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/Cluster.h"
 #include "lardataobj/RecoBase/Hit.h"
 #include "canvas/Persistency/Common/FindMany.h"
@@ -40,7 +40,7 @@ public:
   bool is_good() {return _is_good;}
 };
 
-class DrawCluster : public galleryfmwk::ana_base, public RecoBase<Cluster2D> {
+class DrawCluster : public galleryfmwk::anabase, public RecoBase<Cluster2D> {
 
 public:
 

@@ -166,7 +166,7 @@ void detPropFetcher::init(){
   _wire_scales[1].resize(2400);
   _wire_scales[2].resize(3456);
 
-  auto geom = larutil::Geometry::GetME();
+  auto geom = larutil::Geometria::GetME();
 
 
   for (int wire = 0; wire < 2400; wire ++) {

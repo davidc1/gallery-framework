@@ -15,8 +15,8 @@
 #ifndef EVD_DRAWRAWWIRE_H
 #define EVD_DRAWRAWWIRE_H
 
-#include "Analysis/ana_base.h"
-#include "LArUtil/Geometry.h"
+#include "Analysis/anabase.h"
+#include "LArUtil/Geometria.h"
 #include "RawBase.h"
 
 #include "canvas/Persistency/Common/FindMany.h"
@@ -43,7 +43,7 @@ namespace evd {
      \class DrawWire
      User custom analysis class made by SHELL_USER_NAME
    */
-  class DrawWire : public galleryfmwk::ana_base, public RawBase{
+  class DrawWire : public galleryfmwk::anabase, public RawBase{
   
   public:
 

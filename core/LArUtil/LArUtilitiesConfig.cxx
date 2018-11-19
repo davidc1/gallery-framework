@@ -1,13 +1,14 @@
 #ifndef GALLERY_FMWK_LARUTILCONFIG_CXX
 #define GALLERY_FMWK_LARUTILCONFIG_CXX
 
-#include "LArUtilConfig.h"
+#include "LArUtilitiesConfig.h"
 
 namespace larutil {
 
-  galleryfmwk::geo::DetId_t LArUtilConfig::_detector = galleryfmwk::geo::kMicroBooNE;
+  galleryfmwk::geo::DetId_t LArUtilitiesConfig::_detector = galleryfmwk::geo::kMicroBooNE;
 
-  bool LArUtilConfig::SetDetector(galleryfmwk::geo::DetId_t type)
+
+  bool LArUtilitiesConfig::SetDetector(galleryfmwk::geo::DetId_t type)
   {
     if(_detector == type) return true;
     bool status = true;
@@ -26,7 +27,7 @@ namespace larutil {
     case galleryfmwk::geo::kLArIAT:
     case galleryfmwk::geo::kICARUS:
     case galleryfmwk::geo::kDetIdMax:
-      galleryfmwk::Message::send(galleryfmwk::msg::kERROR,__FUNCTION__,
+      galleryfmwk::Message::send(__FUNCTION__,
 			      Form("Detector type: %d not supported!",type));
       status = false;
     }

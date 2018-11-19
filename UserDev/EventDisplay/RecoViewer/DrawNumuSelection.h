@@ -14,7 +14,7 @@
 #ifndef EVD_DRAWNUMUSELECTION_H
 #define EVD_DRAWNUMUSELECTION_H
 
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/Track.h"
 #include "lardataobj/RecoBase/Vertex.h"
 #include "canvas/Persistency/Common/FindMany.h"
@@ -51,7 +51,7 @@ protected:
 
 // typedef std::vector<std::pair<float, float> > NumuSelection2D;
 
-class DrawNumuSelection : public galleryfmwk::ana_base, public RecoBase<NumuSelection2D> {
+class DrawNumuSelection : public galleryfmwk::anabase, public RecoBase<NumuSelection2D> {
 
 public:
   /// Default constructor

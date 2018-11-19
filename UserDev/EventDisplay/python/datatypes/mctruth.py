@@ -44,7 +44,7 @@ class mctruth(recoBase):
 
             offset = geom.offset(view.plane())
 
-            vertexPoint = larutil.GeometryHelper.GetME().Point_3Dto2D(
+            vertexPoint = larutil.GeometriaHelper.GetME().Point_3Dto2D(
                 vertex, view.plane())
 
             # print "VertexPoint in plane {plane}: ({w},{t})".format(

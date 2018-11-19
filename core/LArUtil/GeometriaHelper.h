@@ -1,9 +1,9 @@
 /**
- * \file GeometryHelper.h
+ * \file GeometriaHelper.h
  *
  * \ingroup LArUtil
  *
- * \brief Class def header for a class GeometryHelper
+ * \brief Class def header for a class GeometriaHelper
  *
  * @author cadams + david caratelli
  */
@@ -16,73 +16,73 @@
 
 #include <iostream>
 #include "PxUtils.h"
-#include "Geometry.h"
+#include "Geometria.h"
 #include <climits>
 #include <limits>
 
-#include "DetectorProperties.h"
-#include "LArProperties.h"
+#include "DetProperties.h"
+#include "LArProp.h"
 
 namespace larutil {
 
 
 /// Utility: maximum value for double
-const double kDOUBLE_MAX = std::numeric_limits<double>::max();
+const double jDOUBLE_MAX = std::numeric_limits<double>::max();
 
 /// Utility: minimum value for double
-const double kDOUBLE_MIN = std::numeric_limits<double>::min();
+const double jDOUBLE_MIN = std::numeric_limits<double>::min();
 
 /// Utility: maximum value for int
-const int    kINT_MAX    = std::numeric_limits<int>::max();
+const int    jINT_MAX    = std::numeric_limits<int>::max();
 
 /// Utility: maximum value for unsigned int
-const unsigned int kUINT_MAX    = std::numeric_limits<unsigned int>::max();
+const unsigned int jUINT_MAX    = std::numeric_limits<unsigned int>::max();
 
 /// Utility: maximum value for size_t
-const size_t kSIZE_MAX   = std::numeric_limits<size_t>::max();
+const size_t jSIZE_MAX   = std::numeric_limits<size_t>::max();
 
 typedef PxHit Hit2D;
 typedef PxPoint Point2D;
 
 /**
-   \class GeometryHelper
+   \class GeometriaHelper
    This class is meant as an aide to reconstruction by handling geometrical operations.
    It includes functionality to go between 3D and 2D for points, lines, cones.
 
    In this class, all units are in centimeters and radians unless explicitly declared to be otherwise.
    To aide in doing the conversions, you may use the functions TimeToCm() and WireToCm() to convert wire/time
    to cm coordinates as such:
-     wire [cm] = wire [Number] * WireToCmConversion (GeometryHelper::WireToCm() )
+     wire [cm] = wire [Number] * WireToCmConversion (GeometriaHelper::WireToCm() )
 
  */
 
 
-class GeometryHelper  {
+class GeometriaHelper  {
 
 private:
 
     /**
      * @brief Constructor
-     * @details Constructor is private.  To access this class, get a pointer using the GeometryHelper::GetME() function
+     * @details Constructor is private.  To access this class, get a pointer using the GeometriaHelper::GetME() function
      */
-    GeometryHelper() {}
+    GeometriaHelper() {}
 
     /// Default destructor
-    ~GeometryHelper() {}
+    ~GeometriaHelper() {}
 
     // Pointer to sole instance of this object
-    static GeometryHelper* _me;
+    static GeometriaHelper* _me;
 
 public:
 
     /**
      * @brief Singleton Getter
      * @details Returns a pointer to the sole instance of this class
-     * @return Pointer to GeometryHelper
+     * @return Pointer to GeometriaHelper
      */
-    static const GeometryHelper* GetME() {
+    static const GeometriaHelper* GetME() {
         if (!_me) {
-            _me = new GeometryHelper;
+            _me = new GeometriaHelper;
             _me -> Reconfigure();
         }
         return _me;
@@ -532,9 +532,9 @@ public:
 private:
 
     // services to be used
-    larutil::Geometry* geom;
-    larutil::DetectorProperties* detp;
-    larutil::LArProperties* larp;
+    larutil::Geometria* geom;
+    larutil::DetProperties* detp;
+    larutil::LArProp* larp;
 
     float fTimeToCm;
     float fWireToCm;

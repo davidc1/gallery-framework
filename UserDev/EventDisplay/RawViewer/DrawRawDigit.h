@@ -15,8 +15,8 @@
 #ifndef EVD_DRAWRAWDIGIT_H
 #define EVD_DRAWRAWDIGIT_H
 
-#include "Analysis/ana_base.h"
-#include "LArUtil/Geometry.h"
+#include "Analysis/anabase.h"
+#include "LArUtil/Geometria.h"
 #include "RawBase.h"
 #include "UbooneNoiseFilter/UbooneNoiseFilter.h"
 
@@ -47,7 +47,7 @@ namespace evd {
    \class DrawRawDigit
    User custom analysis class made by SHELL_USER_NAME
  */
-class DrawRawDigit : public galleryfmwk::ana_base, public RawBase {
+class DrawRawDigit : public galleryfmwk::anabase, public RawBase {
 
 public:
 

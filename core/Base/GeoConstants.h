@@ -21,6 +21,7 @@ namespace galleryfmwk{
   
   namespace geo {
 
+    /*(
     enum DetId_t {
       kBo,         ///< Bo id
       kArgoNeuT,   ///< ArgoNeuT id
@@ -34,6 +35,7 @@ namespace galleryfmwk{
       kICARUS,     ///< ICARUS T600 id
       kDetIdMax 
     };
+    */
     
     /// Enumerate the possible plane projections
     enum View_t {

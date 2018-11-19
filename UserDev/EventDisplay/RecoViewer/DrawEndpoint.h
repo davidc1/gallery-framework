@@ -15,7 +15,7 @@
 #ifndef EVD_DRAWENDPOINT_H
 #define EVD_DRAWENDPOINT_H
 
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "RecoBase.h"
 
 #include "lardataobj/RecoBase/EndPoint2D.h"
@@ -50,7 +50,7 @@ private:
    \class DrawEndpoint
    User custom analysis class made by SHELL_USER_NAME
  */
-class DrawEndpoint : public galleryfmwk::ana_base, public RecoBase<Endpoint2D> {
+class DrawEndpoint : public galleryfmwk::anabase, public RecoBase<Endpoint2D> {
 
 public:
 

@@ -1,5 +1,5 @@
 /**
- * \file ana_processor.h
+ * \file anaprocessor.h
  *
  * \ingroup Analysis
  *
@@ -11,21 +11,21 @@
 /** \addtogroup Analysis
 
     @{*/
-#ifndef GALLERY_FMWK_ANA_PROCESSOR_H
-#define GALLERY_FMWK_ANA_PROCESSOR_H
+#ifndef GALLERY_FMWK_ANAPROCESSOR_H
+#define GALLERY_FMWK_ANAPROCESSOR_H
 
 #include <vector>
-#include "ana_base.h"
+#include "anabase.h"
 #include "TFile.h"
 
 namespace galleryfmwk {
 /**
-   \class ana_processor
-   A class to be loaded with arbitrary number of ana_base inherited analysis
+   \class anaprocessor
+   A class to be loaded with arbitrary number of anabase inherited analysis
    modules. This class process data by applying loaded analysis modules in
    consecutive order.
 */
-class ana_processor {
+class anaprocessor {
 
 public:
 
@@ -38,17 +38,12 @@ public:
   };
 
   /// Default constructor
-  ana_processor();
+  anaprocessor();
 
   /// Default destructor
-  virtual ~ana_processor() {if (_event) delete _event;}
+  virtual ~anaprocessor() {if (_event) delete _event;}
 
   /// Override a method to set verbosity
-  /**
-     It changes the verbosity level of not just this class but also owned
-     other class instances.
-  */
-  virtual void set_verbosity(msg::Level level);
 
   /// Setter for an input data file name
   void add_input_file(std::string name);
@@ -57,7 +52,7 @@ public:
   void set_ana_output_file(std::string name) {_ofile_name = name;}
 
   /// Getter of running analysis status
-  bool get_ana_status(ana_base* ptr) const;
+  bool get_ana_status(anabase* ptr) const;
 
   /// A method to run a batch process
   bool run(unsigned int nevents = 0);
@@ -66,7 +61,7 @@ public:
   bool process_event();
 
   /// A method to append analysis class instance. Returns index number.
-  size_t add_process(ana_base* ana, bool filter = false)
+  size_t add_process(anabase* ana, bool filter = false)
   {
     _ana_index.insert(std::make_pair(ana, _analyzers.size()));
     _analyzers.push_back(ana);
@@ -77,7 +72,7 @@ public:
   bool remove_process(size_t, bool finalize = true);
 
   /// A method to inquire attached analysis class instance.
-  ana_base* get_process(size_t loc) {return (_analyzers.size() > loc) ? _analyzers[loc] : 0;}
+  anabase* get_process(size_t loc) {return (_analyzers.size() > loc) ? _analyzers[loc] : 0;}
 
   /// A method to inquire the process status
   ProcessFlag_t get_process_status() {return _process;}
@@ -97,10 +92,10 @@ private:
   /// A method to finalize data processing
   bool finalize();
 
-  std::vector<ana_base*>   _analyzers;  ///< A vector of analysis modules
+  std::vector<anabase*>   _analyzers;  ///< A vector of analysis modules
   std::vector<bool>        _ana_status; ///< A vector of analysis modules' status
   std::vector<bool>   _filter_marker_v; ///< A vector to mark specific analysis unit as a filter
-  std::map<ana_base*, size_t> _ana_index; ///< A map of analysis module status
+  std::map<anabase*, size_t> _ana_index; ///< A map of analysis module status
 
   std::vector<std::string> _input_files;
 
@@ -114,8 +109,6 @@ private:
   bool _ana_unit_status;
 
   std::string _name;             ///< class name holder
-
-  msg::Level _verbosity_level;   ///< holder for specified verbosity level
 
   size_t _last_run_id;
   size_t _last_subrun_id;

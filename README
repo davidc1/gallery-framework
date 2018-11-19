@@ -4,11 +4,7 @@ README
 What is this?
 ---------------------------------------
 
-This is a light framework that interfaces with gallery to read art-root files.  You have probably used larlite, which gives a light framework for reading and writing larlite format root files.  Gallery is a system to read art-root files, but doesn't provide any of the other useful tools you're used to.  You have to write your own event loop, build your code yourself, make sure to get all the linked libraries correct, etc.
-
-This framework tries to help with that.  It interfaces with gallery to provide a larlite-style interface.  You write classes that extend from ana_base.h, just like in larlite.  Instead of receiving storage_manager, you receive gallery::Event.  You still have access to a lot of tools from larlite like GeometryHelper and LArUtils in general.
-
-An event display will arrive pretty soon, certainly.  This will let you build just a little code, and then view larsoft format files without any conversion to larlite.
+This is a light framework that interfaces with gallery to read art-root files. This tool serves as a 2D event display for McroBooNE data and MC.
 
 ---------------------------------------
 Requirements
@@ -27,10 +23,16 @@ Requirements
 How to build and install
 ---------------------------------------
 
-1) Set up gallery and larsoftobj.
+0) on a microboone interactive machine (gpvm): git clone https://github.com/davidc1/gallery-framework UBEVD
 
-2) Source the setup script: source config/setup.sh
+1) cd UBEVD
 
-3) make from the top area: make -j8
+2) source config/setup.sh
 
-4) Develop in the user dev area.
+4) python config/change_ld_library_path.py
+
+5) source config/change_ld_library_path.sh
+
+6) make -j
+
+7) evd.py -T /uboone/data/users/davidc/MCC9/BNBEXT_data_MCC9.root

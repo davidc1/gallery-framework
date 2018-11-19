@@ -34,37 +34,27 @@ const float  kINVALID_FLOAT  = std::numeric_limits<float>::max();
 }
 
 /// Defines constants for Message utility
-namespace msg {
+namespace message {
 
-/// Defines message level
-enum Level {
-  kDEBUG = 0,    ///< Message level ... useful to debug a crash
-  kINFO,         ///< Debug info but not the lowest level
-  kNORMAL,       ///< Normal stdout
-  kWARNING,      ///< notify a user in the standard operation mode for an important finding.
-  kERROR,        ///< notify a user when something is clearly wrong
-  kMSG_TYPE_MAX
-};
-
-const std::string ColorPrefix[kMSG_TYPE_MAX] =
-{
-  "\033[94m", ///< blue ... DEBUG
-  "\033[92m", ///< green ... INFO
-  "\033[95m", ///< magenta ... NORMAL
-  "\033[93m", ///< yellow ... WARNING
-  "\033[91m"  ///< red ... ERROR
-};
-///< Color coding of message
-
-const std::string StringPrefix[kMSG_TYPE_MAX] =
-{
-  "     [DEBUG]  ", ///< DEBUG message prefix
-  "      [INFO]  ", ///< INFO message prefix
-  "    [NORMAL]  ", ///< NORMAL message prefix
-  "   [WARNING]  ", ///< WARNING message prefix
-  "     [ERROR]  "  ///< ERROR message prefix
-};
-///< Prefix of message
+  const std::string ColorPrefix[5] =
+    {
+      "\033[94m", ///< blue ... DEBUG
+      "\033[92m", ///< green ... INFO
+      "\033[95m", ///< magenta ... NORMAL
+      "\033[93m", ///< yellow ... WARNING
+      "\033[91m"  ///< red ... ERROR
+    };
+  ///< Color coding of message
+  
+  const std::string StringPrefix[5] =
+    {
+      "     [DEBUG]  ", ///< DEBUG message prefix
+      "      [INFO]  ", ///< INFO message prefix
+      "    [NORMAL]  ", ///< NORMAL message prefix
+      "   [WARNING]  ", ///< WARNING message prefix
+      "     [ERROR]  "  ///< ERROR message prefix
+    };
+  ///< Prefix of message
 }
 
 }

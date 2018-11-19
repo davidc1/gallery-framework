@@ -1,13 +1,13 @@
 #ifndef GALLERY_FMWK_GEOMETRY_CXX
 #define GALLERY_FMWK_GEOMETRY_CXX
 
-#include "Geometry.h"
+#include "Geometria.h"
 #include "InvalidWireError.h"
 namespace larutil {
 
-Geometry* Geometry::_me = 0;
+Geometria* Geometria::_me = 0;
 
-void Geometry::CryostatBoundaries(Double_t* boundaries) const
+void Geometria::CryostatBoundaries(Double_t* boundaries) const
 {
   if ( fCryostatBoundaries.size() != 6 )
     throw LArUtilException("CryostatBoundaries not loaded (length != 6)... ");
@@ -19,20 +19,20 @@ void Geometry::CryostatBoundaries(Double_t* boundaries) const
     boundaries[i] = fCryostatBoundaries[i];
 }
 
-Geometry::Geometry(bool default_load) : LArUtilBase()
+Geometria::Geometria(bool default_load) : LArUtilitiesBase()
 {
   if (default_load) {
     _file_name = Form("%s/LArUtil/dat/%s",
                       getenv("GALLERY_FMWK_COREDIR"),
-                      kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str());
+                      kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str());
     _tree_name = kTREENAME_GEOMETRY;
     LoadData();
   }
 }
 
-bool Geometry::LoadData(bool force_reload)
+bool Geometria::LoadData(bool force_reload)
 {
-  bool status = LArUtilBase::LoadData(force_reload);
+  bool status = LArUtilitiesBase::LoadData(force_reload);
 
   if (!status) return status;
 
@@ -76,7 +76,7 @@ bool Geometry::LoadData(bool force_reload)
   return status;
 }
 
-void Geometry::ClearData()
+void Geometria::ClearData()
 {
   fDetLength = galleryfmwk::data::kINVALID_DOUBLE;
   fDetHalfWidth = galleryfmwk::data::kINVALID_DOUBLE;
@@ -106,7 +106,7 @@ void Geometry::ClearData()
   fPlaneOriginVtx.clear();
 }
 
-bool Geometry::ReadTree()
+bool Geometria::ReadTree()
 {
   ClearData();
 
@@ -122,7 +122,7 @@ bool Geometry::ReadTree()
   if (!(ch->GetBranch("fCryoHalfWidth")))  error_msg += "      fCryoHalfWidth\n";
   if (!(ch->GetBranch("fCryoHalfHeight"))) error_msg += "      fCryoHalfHeight\n";
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     if (!(ch->GetBranch("fCryostatBoundaries"))) error_msg += "       fCryostatBoundaries\n";
   }
   if (!(ch->GetBranch("fChannelToPlaneMap")))     error_msg += "      fChannelToPlaneMap\n";
@@ -141,7 +141,7 @@ bool Geometry::ReadTree()
 
   if (!(ch->GetBranch("fWirePitch")))       error_msg += "      fWirePitch\n";
   if (!(ch->GetBranch("fWireAngle")))       error_msg += "      fWireAngle\n";
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     if (!(ch->GetBranch("fOpChannelVtx")))    error_msg += "      fOpChannelVtx\n";
     if (!(ch->GetBranch("fOpChannel2OpDet"))) error_msg += "      fOpChannel2OpDet\n";
     if (!(ch->GetBranch("fOpDetVtx")))     error_msg += "      fOpDetVtx\n";
@@ -189,7 +189,7 @@ bool Geometry::ReadTree()
   ch->SetBranchAddress("fCryoHalfWidth", &fCryoHalfWidth);
   ch->SetBranchAddress("fCryoHalfHeight", &fCryoHalfHeight);
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     ch->SetBranchAddress("fCryostatBoundaries", &pCryostatBoundaries);
   }
 
@@ -210,7 +210,7 @@ bool Geometry::ReadTree()
   ch->SetBranchAddress("fWirePitch", &pWirePitch);
   ch->SetBranchAddress("fWireAngle", &pWireAngle);
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     ch->SetBranchAddress("fOpChannelVtx", &pOpChannelVtx);
     ch->SetBranchAddress("fOpDetVtx", &pOpDetVtx);
     ch->SetBranchAddress("fOpChannel2OpDet", &pOpChannel2OpDet);
@@ -218,7 +218,7 @@ bool Geometry::ReadTree()
   ch->GetEntry(0);
 
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     fCryostatBoundaries.resize(pCryostatBoundaries->size());
 
     for (size_t i = 0; i < pCryostatBoundaries->size(); ++i)
@@ -268,7 +268,7 @@ bool Geometry::ReadTree()
     fWireAngle.push_back(pWireAngle->at(i));
   }
 
-  if (LArUtilConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
+  if (LArUtilitiesConfig::Detector() != galleryfmwk::geo::kArgoNeuT) {
     // Copy op-channel-wise variables
     size_t n_opchannel = pOpChannelVtx->size();
     fOpChannelVtx.reserve(n_opchannel);
@@ -291,7 +291,7 @@ bool Geometry::ReadTree()
 }
 
 
-UInt_t Geometry::Nwires(UInt_t p) const
+UInt_t Geometria::Nwires(UInt_t p) const
 {
   if (Nplanes() <= p) {
     throw LArUtilException(Form("Invalid plane ID :%d", p));
@@ -301,7 +301,7 @@ UInt_t Geometry::Nwires(UInt_t p) const
   return fPlaneWireToChannelMap.at(p).size();
 }
 
-UChar_t  Geometry::ChannelToPlane(const UInt_t ch) const
+UChar_t  Geometria::ChannelToPlane(const UInt_t ch) const
 {
   if (ch >= fChannelToPlaneMap.size()) {
     throw LArUtilException(Form("Invalid channel number: %d", ch));
@@ -310,7 +310,7 @@ UChar_t  Geometry::ChannelToPlane(const UInt_t ch) const
   return fChannelToPlaneMap.at(ch);
 }
 
-UInt_t   Geometry::ChannelToWire(const UInt_t ch)const
+UInt_t   Geometria::ChannelToWire(const UInt_t ch)const
 {
   if (ch >= fChannelToWireMap.size()) {
     throw LArUtilException(Form("Invalid channel number: %d", ch));
@@ -320,7 +320,7 @@ UInt_t   Geometry::ChannelToWire(const UInt_t ch)const
 }
 
 
-galleryfmwk::geo::WireID Geometry::ChannelToWireID(const UInt_t ch)const
+galleryfmwk::geo::WireID Geometria::ChannelToWireID(const UInt_t ch)const
 {
   if (ch >= fChannelToWireMap.size()) {
     throw LArUtilException(Form("Invalid channel number: %d", ch));
@@ -335,7 +335,7 @@ galleryfmwk::geo::WireID Geometry::ChannelToWireID(const UInt_t ch)const
   return wireID;
 }
 
-galleryfmwk::geo::SigType_t Geometry::SignalType(const UInt_t ch) const
+galleryfmwk::geo::SigType_t Geometria::SignalType(const UInt_t ch) const
 {
   if (ch >= fChannelToPlaneMap.size()) {
     throw LArUtilException(Form("Invalid Channel number :%d", ch));
@@ -345,7 +345,7 @@ galleryfmwk::geo::SigType_t Geometry::SignalType(const UInt_t ch) const
   return fSignalType.at(fChannelToPlaneMap.at(ch));
 }
 
-galleryfmwk::geo::SigType_t Geometry::PlaneToSignalType(const UChar_t plane) const
+galleryfmwk::geo::SigType_t Geometria::PlaneToSignalType(const UChar_t plane) const
 {
   if (plane >= fSignalType.size()) {
     throw LArUtilException(Form("Invalid Plane number: %d", plane));
@@ -355,7 +355,7 @@ galleryfmwk::geo::SigType_t Geometry::PlaneToSignalType(const UChar_t plane) con
   return fSignalType.at(plane);
 }
 
-galleryfmwk::geo::View_t Geometry::View(const UInt_t ch) const
+galleryfmwk::geo::View_t Geometria::View(const UInt_t ch) const
 {
   if (ch >= fChannelToPlaneMap.size()) {
     throw LArUtilException(Form("Invalid Channel number :%d", ch));
@@ -365,7 +365,7 @@ galleryfmwk::geo::View_t Geometry::View(const UInt_t ch) const
   return fViewType.at(fChannelToPlaneMap.at(ch));
 }
 
-galleryfmwk::geo::View_t Geometry::PlaneToView(const UChar_t plane) const
+galleryfmwk::geo::View_t Geometria::PlaneToView(const UChar_t plane) const
 {
   if (plane >= fViewType.size()) {
     throw LArUtilException(Form("Invalid Plane number: %d", plane));
@@ -375,14 +375,14 @@ galleryfmwk::geo::View_t Geometry::PlaneToView(const UChar_t plane) const
   return fViewType.at(plane);
 }
 
-std::set<galleryfmwk::geo::View_t> const Geometry::Views() const
+std::set<galleryfmwk::geo::View_t> const Geometria::Views() const
 {
   std::set<galleryfmwk::geo::View_t> views;
   for (auto const v : fViewType) views.insert(v);
   return views;
 }
 
-UInt_t Geometry::PlaneWireToChannel(const UInt_t plane,
+UInt_t Geometria::PlaneWireToChannel(const UInt_t plane,
                                     const UInt_t wire) const
 {
 
@@ -393,39 +393,39 @@ UInt_t Geometry::PlaneWireToChannel(const UInt_t plane,
   return fPlaneWireToChannelMap.at(plane).at(wire);
 }
 
-UInt_t Geometry::NearestChannel(const Double_t worldLoc[3],
+UInt_t Geometria::NearestChannel(const Double_t worldLoc[3],
                                 const UInt_t PlaneNo) const
 {
   return PlaneWireToChannel(PlaneNo, NearestWire(worldLoc, PlaneNo));
 }
 
-UInt_t Geometry::NearestChannel(const std::vector<Double_t> &worldLoc,
+UInt_t Geometria::NearestChannel(const std::vector<Double_t> &worldLoc,
                                 const UInt_t PlaneNo) const
 {
   return PlaneWireToChannel(PlaneNo, NearestWire(worldLoc, PlaneNo));
 }
 
-UInt_t Geometry::NearestChannel(const TVector3 &worldLoc,
+UInt_t Geometria::NearestChannel(const TVector3 &worldLoc,
                                 const UInt_t PlaneNo) const
 {
   return PlaneWireToChannel(PlaneNo, NearestWire(worldLoc, PlaneNo));
 }
 
-UInt_t Geometry::NearestWire(const Double_t worldLoc[3],
+UInt_t Geometria::NearestWire(const Double_t worldLoc[3],
                              const UInt_t PlaneNo) const
 {
   TVector3 loc(worldLoc);
   return NearestWire(loc, PlaneNo);
 }
 
-UInt_t Geometry::NearestWire(const std::vector<Double_t> &worldLoc,
+UInt_t Geometria::NearestWire(const std::vector<Double_t> &worldLoc,
                              const UInt_t PlaneNo) const
 {
   TVector3 loc(&worldLoc[0]);
   return NearestWire(loc, PlaneNo);
 }
 
-UInt_t Geometry::NearestWire(const TVector3 &worldLoc,
+UInt_t Geometria::NearestWire(const TVector3 &worldLoc,
                              const UInt_t PlaneNo) const
 {
   int NearestWireNumber = int(nearbyint(worldLoc[1] * fOrthVectorsY.at(PlaneNo)
@@ -460,7 +460,7 @@ UInt_t Geometry::NearestWire(const TVector3 &worldLoc,
 }
 
 /// exact wire coordinate (fractional wire) to input world coordinates
-Double_t Geometry::WireCoordinate(const Double_t worldLoc[3],
+Double_t Geometria::WireCoordinate(const Double_t worldLoc[3],
                                   const UInt_t   PlaneNo) const
 {
   TVector3 loc(worldLoc);
@@ -468,7 +468,7 @@ Double_t Geometry::WireCoordinate(const Double_t worldLoc[3],
 }
 
 /// exact wire coordinate (fractional wire) to input world coordinate
-Double_t Geometry::WireCoordinate(const std::vector<Double_t> &worldLoc,
+Double_t Geometria::WireCoordinate(const std::vector<Double_t> &worldLoc,
                                   const UInt_t  PlaneNo) const
 {
   TVector3 loc(&worldLoc[0]);
@@ -476,7 +476,7 @@ Double_t Geometry::WireCoordinate(const std::vector<Double_t> &worldLoc,
 }
 
 /// exact wire coordinate (fractional wire) to input world coordinates
-Double_t Geometry::WireCoordinate(const TVector3& worldLoc,
+Double_t Geometria::WireCoordinate(const TVector3& worldLoc,
                                   const UInt_t PlaneNo) const
 {
 
@@ -500,7 +500,7 @@ Double_t Geometry::WireCoordinate(const TVector3& worldLoc,
 
 
 // distance between planes p1 < p2
-Double_t Geometry::PlanePitch(const UChar_t p1, const UChar_t p2) const
+Double_t Geometria::PlanePitch(const UChar_t p1, const UChar_t p2) const
 {
   if ( p1 == p2 ) return 0;
   else if ( (p1 == 0 && p2 == 1) || (p1 == 1 && p2 == 0) ) return fPlanePitch.at(0);
@@ -512,7 +512,7 @@ Double_t Geometry::PlanePitch(const UChar_t p1, const UChar_t p2) const
   }
 }
 
-Double_t Geometry::WirePitch(const UInt_t  w1,
+Double_t Geometria::WirePitch(const UInt_t  w1,
                              const UInt_t  w2,
                              const UChar_t plane) const
 {
@@ -529,7 +529,7 @@ Double_t Geometry::WirePitch(const UInt_t  w1,
 }
 
 /// assumes all planes in a view have the same pitch
-Double_t   Geometry::WirePitch(const galleryfmwk::geo::View_t view) const
+Double_t   Geometria::WirePitch(const galleryfmwk::geo::View_t view) const
 {
   if ((size_t)view > Nviews()) {
     throw LArUtilException(Form("Invalid view: %d", view));
@@ -539,7 +539,7 @@ Double_t   Geometry::WirePitch(const galleryfmwk::geo::View_t view) const
   return fWirePitch.at((size_t)view);
 }
 
-Double_t   Geometry::WireAngleToVertical(galleryfmwk::geo::View_t view) const
+Double_t   Geometria::WireAngleToVertical(galleryfmwk::geo::View_t view) const
 {
   if ((size_t)view > Nviews()) {
     throw LArUtilException(Form("Invalid view: %d", view));
@@ -550,7 +550,7 @@ Double_t   Geometry::WireAngleToVertical(galleryfmwk::geo::View_t view) const
 }
 
 
-void Geometry::WireEndPoints(const UChar_t plane,
+void Geometria::WireEndPoints(const UChar_t plane,
                              const UInt_t wire,
                              Double_t *xyzStart, Double_t *xyzEnd) const
 {
@@ -573,7 +573,7 @@ void Geometry::WireEndPoints(const UChar_t plane,
 
 }
 
-bool Geometry::ChannelsIntersect(const UInt_t c1,
+bool Geometria::ChannelsIntersect(const UInt_t c1,
                                  const UInt_t c2,
                                  Double_t &y, Double_t &z) const
 {
@@ -645,7 +645,7 @@ bool Geometry::ChannelsIntersect(const UInt_t c1,
 
 }
 
-void Geometry::IntersectionPoint(const UInt_t  wire1,  const UInt_t  wire2,
+void Geometria::IntersectionPoint(const UInt_t  wire1,  const UInt_t  wire2,
                                  const UChar_t plane1, const UChar_t plane2,
                                  Double_t start_w1[3], Double_t end_w1[3],
                                  Double_t start_w2[3], Double_t end_w2[3],
@@ -734,7 +734,7 @@ void Geometry::IntersectionPoint(const UInt_t  wire1,  const UInt_t  wire2,
 //  - whether to use this or the full function depends on optimization of your
 //    particular algorithm.  Ben J, Oct 2011
 //--------------------------------------------------------------------
-void Geometry::IntersectionPoint(const UInt_t  wire1,  const UInt_t  wire2,
+void Geometria::IntersectionPoint(const UInt_t  wire1,  const UInt_t  wire2,
                                  const UChar_t plane1, const UChar_t plane2,
                                  Double_t &y, Double_t &z) const
 
@@ -751,7 +751,7 @@ void Geometry::IntersectionPoint(const UInt_t  wire1,  const UInt_t  wire2,
                           WireStart2, WireEnd2, y, z);
 }
 
-UInt_t Geometry::GetClosestOpDet(const Double_t *xyz) const
+UInt_t Geometria::GetClosestOpDet(const Double_t *xyz) const
 {
   Double_t dist2      = 0;
   Double_t min_dist2  = galleryfmwk::data::kINVALID_DOUBLE;
@@ -774,7 +774,7 @@ UInt_t Geometry::GetClosestOpDet(const Double_t *xyz) const
   return closest_ch;
 }
 
-UInt_t Geometry::GetClosestOpDet(const Double_t *xyz, Double_t &dist) const
+UInt_t Geometria::GetClosestOpDet(const Double_t *xyz, Double_t &dist) const
 {
   Double_t min_dist2  = galleryfmwk::data::kINVALID_DOUBLE;
   UInt_t   closest_ch = galleryfmwk::data::kINVALID_UINT;
@@ -796,14 +796,14 @@ UInt_t Geometry::GetClosestOpDet(const Double_t *xyz, Double_t &dist) const
   return closest_ch;
 }
 
-UInt_t Geometry::OpDetFromOpChannel(UInt_t ch) const
+UInt_t Geometria::OpDetFromOpChannel(UInt_t ch) const
 {
   if (ch >= fOpChannel2OpDet.size())
     throw LArUtilException(Form("Invalid OpChannel: %d", ch));
   return fOpChannel2OpDet[ch];
 }
 
-void Geometry::GetOpChannelPosition(const UInt_t i, Double_t *xyz) const
+void Geometria::GetOpChannelPosition(const UInt_t i, Double_t *xyz) const
 {
   if ( i >= fOpChannelVtx.size() ) {
     throw LArUtilException(Form("Invalid PMT channel number: %d", i));
@@ -819,7 +819,7 @@ void Geometry::GetOpChannelPosition(const UInt_t i, Double_t *xyz) const
   return;
 }
 
-void Geometry::GetOpDetPosition(const UInt_t i, Double_t *xyz) const
+void Geometria::GetOpDetPosition(const UInt_t i, Double_t *xyz) const
 {
   if ( i >= fOpDetVtx.size() ) {
     throw LArUtilException(Form("Invalid PMT channel number: %d", i));
@@ -835,7 +835,7 @@ void Geometry::GetOpDetPosition(const UInt_t i, Double_t *xyz) const
   return;
 }
 
-const std::vector<Double_t>& Geometry::PlaneOriginVtx(UChar_t plane)
+const std::vector<Double_t>& Geometria::PlaneOriginVtx(UChar_t plane)
 {
   if (plane >= fPlaneOriginVtx.size()) {
     throw LArUtilException(Form("Invalid plane number: %d", plane));
@@ -846,7 +846,7 @@ const std::vector<Double_t>& Geometry::PlaneOriginVtx(UChar_t plane)
   return fPlaneOriginVtx.at(plane);
 }
 
-void Geometry::PlaneOriginVtx(UChar_t plane, Double_t *vtx) const
+void Geometria::PlaneOriginVtx(UChar_t plane, Double_t *vtx) const
 {
   vtx[0] = fPlaneOriginVtx.at(plane)[0];
   vtx[1] = fPlaneOriginVtx.at(plane)[1];

@@ -15,7 +15,7 @@
 #define EVD_DRAWOPFLASH3D_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/OpFlash.h"
 #include "TVector3.h"
 
@@ -53,7 +53,7 @@ private:
 };
 
 
-class DrawOpflash3D : public galleryfmwk::ana_base, public RecoBase3D<Opflash3D> {
+class DrawOpflash3D : public galleryfmwk::anabase, public RecoBase3D<Opflash3D> {
 
 public:
 

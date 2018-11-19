@@ -7,7 +7,8 @@
 namespace larutil {
 
 /// Geometry default data file
-const std::string kUTIL_DATA_FILENAME[galleryfmwk::geo::kDetIdMax] =
+// DAVIDC 102918 const std::string kUTIL_DATA_FILENAME[galleryfmwk::geo::kDetIdMax] =
+const std::string kUTIL_DATA_FILENAME[10] =
 { "",                        // Bo
   "larutil_argoneut.root",   // ArgoNeuT
   "larutil_microboone.root", // MicroBoone

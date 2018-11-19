@@ -7,13 +7,13 @@ namespace larutil {
 
   TimeService* TimeService::_me = 0;
 
-  TimeService::TimeService(bool default_load) : LArUtilBase()
+  TimeService::TimeService(bool default_load) : LArUtilitiesBase()
   {
     ClearData();
     if(default_load) {
       _file_name = Form("%s/LArUtil/dat/%s",
 			getenv("GALLERY_FMWK_COREDIR"),
-			kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str());
+			kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str());
       _tree_name = kTREENAME_DETECTORPROPERTIES;
       LoadData();
     }

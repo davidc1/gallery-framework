@@ -1,24 +1,24 @@
 #ifndef GALLERY_FMWK_DETECTORPROPERTIES_CXX
 #define GALLERY_FMWK_DETECTORPROPERTIES_CXX
 
-#include "DetectorProperties.h"
+#include "DetProperties.h"
 
 namespace larutil {
 
-  DetectorProperties* DetectorProperties::_me = 0;
+  DetProperties* DetProperties::_me = 0;
 
-  DetectorProperties::DetectorProperties(bool default_load) : LArUtilBase()
+  DetProperties::DetProperties(bool default_load) : LArUtilitiesBase()
   {
     if(default_load) {
       _file_name = Form("%s/LArUtil/dat/%s",
 			getenv("GALLERY_FMWK_COREDIR"),
-			kUTIL_DATA_FILENAME[LArUtilConfig::Detector()].c_str());
+			kUTIL_DATA_FILENAME[LArUtilitiesConfig::Detector()].c_str());
       _tree_name = kTREENAME_DETECTORPROPERTIES;
       LoadData();
     }
   }
 
-  void DetectorProperties::ClearData()
+  void DetProperties::ClearData()
   {
     fSamplingRate = galleryfmwk::data::kINVALID_DOUBLE;
     fTriggerOffset = galleryfmwk::data::kINVALID_INT;
@@ -35,7 +35,7 @@ namespace larutil {
 
   }
 
-  bool DetectorProperties::ReadTree()
+  bool DetProperties::ReadTree()
   {
 
     ClearData();

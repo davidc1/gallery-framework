@@ -14,7 +14,7 @@
 #ifndef EVD_DRAWMCTRACK_H
 #define EVD_DRAWMCTRACK_H
 
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/MCBase/MCStep.h"
 #include "lardataobj/MCBase/MCTrack.h"
 #include <iostream>
@@ -41,7 +41,7 @@ protected:
                // 3=supernova neutrino, 4=single particle
 };
 
-class DrawMCTrack : public galleryfmwk::ana_base, public RecoBase<MCTrack2D> {
+class DrawMCTrack : public galleryfmwk::anabase, public RecoBase<MCTrack2D> {
 
 public:
   /// Default constructor

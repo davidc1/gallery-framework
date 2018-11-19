@@ -1,9 +1,9 @@
 /**
- * \file DetectorProperties.h
+ * \file DetProperties.h
  *
  * \ingroup LArUtil
  * 
- * \brief Class def header for a class DetectorProperties
+ * \brief Class def header for a class DetProperties
  *
  * @author kazuhiro
  */
@@ -14,34 +14,34 @@
 #ifndef GALLERY_FMWK_DETECTORPROPERTIES_H
 #define GALLERY_FMWK_DETECTORPROPERTIES_H
 
-#include "LArUtilBase.h"
+#include "LArUtilitiesBase.h"
 
 namespace larutil {
   /**
-     \class DetectorProperties
-     LArSoft's DetectorProperties service. Database part is currently not implemented.
+     \class DetProperties
+     LArSoft's DetProperties service. Database part is currently not implemented.
      Also we ignore the idea of "inherit properties from history": as that does not seem to be
      a convincing solution yet adding quite a bit of complexity.
      Once we have DB, Kazu will implement a simple DBI one can use from command line.
   */
-  class DetectorProperties : public LArUtilBase {
+  class DetProperties : public LArUtilitiesBase {
 
   private:
 
     /// Singleton constructor
-    DetectorProperties(bool default_load=true);
+    DetProperties(bool default_load=true);
 
     /// Default destructor
-    virtual ~DetectorProperties(){};
+    virtual ~DetProperties(){};
 
-    static DetectorProperties* _me;
+    static DetProperties* _me;
     
   public:
 
     /// Singleton getter
-    static const DetectorProperties* GetME(bool default_load=true)
+    static const DetProperties* GetME(bool default_load=true)
     {
-      if(!_me) _me = new DetectorProperties(default_load);
+      if(!_me) _me = new DetProperties(default_load);
       return _me;
     }
 

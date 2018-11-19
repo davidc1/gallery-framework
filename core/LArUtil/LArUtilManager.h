@@ -15,10 +15,10 @@
 #define LARUTILMANAGER_H
 
 #include <iostream>
-#include "Geometry.h"
-#include "LArProperties.h"
-#include "DetectorProperties.h"
-#include "GeometryHelper.h"
+#include "Geometria.h"
+#include "LArProp.h"
+#include "DetProperties.h"
+#include "GeometriaHelper.h"
 
 #include "Base/messenger.h"
 

@@ -31,6 +31,7 @@ class track(recoBase):
         self._process = evd.DrawTrack()
         self.init()
 
+
     def drawObjects(self, view_manager):
         geom = view_manager._geometry
 
@@ -76,6 +77,23 @@ try:
             self._process = evd.DrawTrack3D()
             self.init()
 
+            # Defining the cluster colors:
+            self._trackColors = [
+                (0, 147, 147, 100),  # dark teal
+                (0, 0, 252, 100),   # bright blue
+                (156, 0, 156, 100),  # purple
+                (255, 0, 255, 100),  # pink
+                (255, 0, 0, 100),  # red
+                (175, 0, 0, 100),  # red/brown
+                (252, 127, 0, 100),  # orange
+                (102, 51, 0, 100),  # brown
+                (127, 127, 127, 100),  # dark gray
+                (210, 210, 210, 100),  # gray
+                (100, 253, 0, 100)  # bright green
+                ] 
+            
+
+
 
         def drawObjects(self, view_manager):
             geom = view_manager._geometry
@@ -83,6 +101,8 @@ try:
 
             self
             tracks = self._process.getData()
+
+            trkctr = 0
 
             for track in tracks:
 
@@ -102,9 +122,11 @@ try:
 
                 pts = np.vstack([x,y,z]).transpose()
                 pen = pg.mkPen((255,0,0), width=2)
-                line = gl.GLLinePlotItem(pos=pts,color=(255,0,0,255), width=4)
+                line = gl.GLLinePlotItem(pos=pts,color=self._trackColors[ trkctr % len(self._trackColors) ], width=4)
                 view.addItem(line)
                 self._drawnObjects.append(line)
+
+                trkctr += 1
 
     
 

@@ -15,7 +15,7 @@
 #define EVD_DRAWSPACEPOINT_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 #include "lardataobj/RecoBase/SpacePoint.h"
 
 #include "RecoBase.h"
@@ -30,7 +30,7 @@
 namespace evd {
 
 
-  class DrawSpacepoint : public galleryfmwk::ana_base, public RecoBase<larutil::Point2D> {
+  class DrawSpacepoint : public galleryfmwk::anabase, public RecoBase<larutil::Point2D> {
 
 public:
 

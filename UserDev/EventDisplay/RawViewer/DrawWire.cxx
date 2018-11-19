@@ -4,13 +4,13 @@
 
 
 #include "DrawWire.h"
-#include "LArUtil/DetectorProperties.h"
+#include "LArUtil/DetProperties.h"
 
 namespace evd {
 
 DrawWire::DrawWire() {
   _name = "DrawWire";
-  _producer = "caldata";
+  _producer = "butcher";
 
 }
 

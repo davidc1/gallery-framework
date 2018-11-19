@@ -15,7 +15,7 @@
 #define EVD_DRAWSHOWER_H
 
 #include <iostream>
-#include "Analysis/ana_base.h"
+#include "Analysis/anabase.h"
 
 #include "RecoBase.h"
 
@@ -63,7 +63,7 @@ public:
 };
 
 
-class DrawShower : public galleryfmwk::ana_base, public RecoBase<Shower2D> {
+class DrawShower : public galleryfmwk::anabase, public RecoBase<Shower2D> {
 
 public:
 

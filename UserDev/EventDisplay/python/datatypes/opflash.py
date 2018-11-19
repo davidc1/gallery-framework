@@ -25,9 +25,9 @@ try:
             self._process = evd.DrawOpflash3D()
             self.init()
             self._triggerOffset \
-                = larutil.DetectorProperties.GetME().TriggerOffset()
+                = larutil.DetProperties.GetME().TriggerOffset()
             self._readOutWindowSize \
-                = larutil.DetectorProperties.GetME().ReadOutWindowSize()
+                = larutil.DetProperties.GetME().ReadOutWindowSize()
 
         def drawObjects(self, view_manager):
 
