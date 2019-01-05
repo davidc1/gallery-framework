@@ -84,8 +84,11 @@ Track3D DrawTrack3D::getTrack3d(const recob::Track &track) {
     // project a point into 2D:
     try {
       if (track.HasValidPoint(i)) {
-
-        result._track.push_back(track.LocationAtPoint(i));
+	continue;
+	//auto loc = track.LocationAtPoint(i);
+	//TVector3 xyz(loc.X(),loc.Y(),loc.Z());
+        //auto point = geoHelper->Point_3Dto2D(xyz, plane);
+        //result._track.push_back(track.LocationAtPoint(i));
       }
     } catch (...) {
       continue;
