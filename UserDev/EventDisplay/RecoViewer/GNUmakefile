@@ -17,6 +17,9 @@ INCFLAGS += $(shell gallery-fmwk-config --includes)
 INCFLAGS += $(shell python-config --includes)
 INCFLAGS += -I$(shell python -c "import numpy; print numpy.get_include()")
 INCFLAGS += '-I/cvmfs/larsoft.opensciencegrid.org/products/larcorealg/v07_03_00/include/'
+#INCFLAGS += '-I/cvmfs/larsoft.opensciencegrid.org/products/lardata/v07_01_01/include/'
+#INCFLAGS += '-I/cvmfs/larsoft.opensciencegrid.org/products/art/v2_11_03/include/'
+#INCFLAGS += '-I/cvmfs/larsoft.opensciencegrid.org/products/clhep/v2_3_4_6/Linux64bit+2.6-2.12-e17-prof/include/'
 
 # Add -p flag to CINT compilation
 CINTFLAGS += -p
