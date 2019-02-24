@@ -5,39 +5,56 @@ from pyqtgraph.Qt import QtGui, QtCore
 import math as mt
 from connectedObjects import boxCollection
 
+# add shower polygon Qt object
+class shower_polygon(QtGui.QGraphicsPolygonItem):
 
-# # add shower polygon Qt object
-# class shower_polygon(QtGui.QGraphicsPolygonItem):
+    # Provide some signals to communicate with cluster params
+    mouseEnter = QtCore.pyqtSignal(QtGui.QGraphicsSceneHoverEvent)
+    mouseExit = QtCore.pyqtSignal( QtGui.QGraphicsSceneHoverEvent)
+    highlightChange = QtCore.pyqtSignal()
 
-#     # Provide some signals to communicate with cluster params
-#     mouseEnter = QtCore.pyqtSignal(QtGui.QGraphicsSceneHoverEvent)
-#     mouseExit = QtCore.pyqtSignal( QtGui.QGraphicsSceneHoverEvent)
-#     highlightChange = QtCore.pyqtSignal()
+    def __init__(self, *args, **kwargs):
+        super(shower_polygon, self).__init__(*args)
+        self.setAcceptHoverEvents(True)
+        self._isHighlighted = False
+        self._ownerToolTip  = None
+        self._ownerHoverEnter = None
+        self._ownerHoverExit  = None
+        self._energy = None
+        self._dedx   = None
 
-#     def __init__(self, *args, **kwargs):
-#         super(shower_polygon, self).__init__(*args)
-#         self.setAcceptHoverEvents(True)
-#         self._isHighlighted = False
-#         self._ownerToolTip  = None
-#         self._larliteshower = None
+    def passlarliteshower(self, shower):
+        self._larliteshower = shower
 
-#     def passlarliteshower(self, shower):
-#         self._larliteshower = shower
+    def hoverEnterEvent(self, e):
+        self.setToolTip(self._ownerToolTip())
+        self._ownerHoverEnter(e)
 
-#     def hoverEnterEvent(self, e):
-#         self.setToolTip(self._ownerToolTip())
+    def hoverLeaveEvent(self, e):
+        self._ownerHoverExit(e)
 
-#     def hoverLeaveEvent(self, e):
-#         return
+    #def connectToggleHighlight(self, ownerTH):
+    #    self._toggleHighlight = ownerTH
+    def connectOwnerHoverEnter(self, ownerHoverEnter):
+        self._ownerHoverEnter = ownerHoverEnter
 
-#     def connectToolTip(self, ownerToolTip):
-#         self._ownerToolTip = ownerToolTip
+    def connectOwnerHoverExit(self, ownerHoverExit):
+        self._ownerHoverExit = ownerHoverExit
 
-#     def genToolTip(self):
-#         tip = ''
-#         if (self._larliteshower != None):
-#             tip += 'Energy %i MeV'%(int(self._larliteshower.energy()))
-#         return tip
+    def connectToggleHighlight(self, ownerTH):
+        self._toggleHighlight = ownerTH
+
+    def connectToolTip(self, ownerToolTip):
+        self._ownerToolTip = ownerToolTip
+
+    def genToolTip(self):
+        tip = ''
+        if (self._energy != None):
+            tip += 'Energy %i MeV \n'%(int(self._energy))
+        if (self._dedx != None):
+            tip += 'dE/dx %.01f MeV/cm'%(self._dedx)
+        print tip
+        return tip
 
 # Shower drawing is currently "experimental"
 class shower(recoBase):
@@ -148,7 +165,11 @@ class shower(recoBase):
                 thisPolyF = QtGui.QPolygonF(points)
                 
                 self.shower_poly = QtGui.QGraphicsPolygonItem( thisPolyF )
+                self.shower_poly = shower_polygon( thisPolyF )
                 #thisPoly = QtGui.QGraphicsPolygonItem(thisPolyF)
+
+                self.shower_poly._energy = shower.energy()
+                self.shower_poly._dedx   = shower.dedx()
 
                 self.shower_poly.setPen(pg.mkPen(None))
                 self.shower_poly.setBrush(pg.mkColor(color))
@@ -158,6 +179,9 @@ class shower(recoBase):
                 #self.shower_poly.connectOwnerHoverExit (self.shower_poly.hoverExit)
                 #self.shower_poly.connectToggleHighlight(self.shower_poly.toggleHighlight)
                 # self.shower_poly.connectToolTip(self.shower_poly.genToolTip)
+                #self.shower_poly.connectOwnerHoverEnter(self.shower_poly._ownerHoverEnter)
+                #self.shower_poly.connectOwnerHoverExit(self.shower_poly._ownerHoverExit)
+                #self.shower_poly.connectToolTip(self.shower_poly.genToolTip)
 
                 view._view.addItem(self.shower_poly)
                 self._drawnObjects[view.plane()].append(self.shower_poly)
@@ -165,8 +189,31 @@ class shower(recoBase):
                 # if view.plane() == 0:
                 #   print "dedx: ", shower.dedx()
 
+                # now add cluster too
+                plane = view.plane()
+                cluster = shower._showerCluster_v[plane]
+                self._clusters[plane].append( boxCollection() )
+                self._clusters[plane][-1].setColor( color )
+                self._clusters[plane][-1].setPlane( plane )
+                self._clusters[plane][-1].drawHits( view, cluster, geom )
+
             
                 i_color += 1
+
+    def clearDrawnObjects(self, view_manager):
+        
+        # clear any clusters that may be present
+        for view in view_manager.getViewPorts():
+            plane = view.plane()
+            clusters = self._clusters[plane]
+            for cluster in clusters:
+                cluster.clearHits(view)
+            if len(self._drawnObjects) > plane:
+                for item in self._drawnObjects[plane]:
+                    view._view.removeItem(item)
+
+        # clear the list:
+        self._drawnObjects = []
 
 
 from database import recoBase3D

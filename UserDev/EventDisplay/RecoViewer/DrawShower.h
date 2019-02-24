@@ -18,6 +18,7 @@
 #include "Analysis/anabase.h"
 
 #include "RecoBase.h"
+#include "DrawCluster.h"
 
 #include "lardataobj/RecoBase/Shower.h"
 /**
@@ -59,6 +60,9 @@ public:
     float _energy;             ///< Energy in MeV
     bool _is_good;             ///< Whether or not the projection succeeded
     float _dedx;                ///< dedx in collection plane, for printout
+
+    // cluster collection
+    std::vector<evd::Cluster2D> _showerCluster_v;
 
 };
 

@@ -31,6 +31,10 @@ bool DrawShower::analyze(gallery::Event * ev) {
   auto const & showerHandle
     = ev -> getValidHandle<std::vector <recob::Shower> >(shower_tag);
 
+  // draw associated hits too
+  art::InputTag assn_tag(_producer);
+  art::FindMany<recob::Hit> hits_for_shower(showerHandle, *ev, assn_tag);
+
 
   if (showerHandle -> size() == 0) {
     std::cout << "No showers available to draw by producer "
@@ -57,13 +61,46 @@ bool DrawShower::analyze(gallery::Event * ev) {
 
     auto const& shower = showerHandle->at(s);
 
+    std::vector<recob::Hit const*> hits;
+    hits_for_shower.get(s, hits);
+
     for (unsigned int view = 0; view < geoService -> Nviews(); view++) {
       // get the reconstructed shower for this plane
       auto shr2D = getShower2d(shower, view);
+
+      shr2D._showerCluster_v.resize(3);
+
+      // create empty cluster
+      evd::Cluster2D clus;
+      clus._is_good = true;
+
+      // loop through hits and figure out if any are from this plane
+      for (auto const& hit : hits) {
+	
+	if (hit->WireID().Plane != view) continue;
+	
+	Hit2D hit2d(hit->WireID().Wire,
+		  hit->PeakTime(),
+		  hit->Integral(),
+		  hit->RMS(),
+		  hit->StartTick(),
+		  hit->PeakTime(),
+		  hit->EndTick(),
+		  hit->PeakAmplitude(),
+		  view);
+
+	clus.push_back(hit2d);
+	
+      }// for all hits
+
+      if (clus.size())
+	shr2D._showerCluster_v[view] = clus;
+
+
       _dataByPlane.at(view).push_back( shr2D );
 
-    }
-  }
+    }// for all planes
+  }// for all showers
 
 
   return true;
