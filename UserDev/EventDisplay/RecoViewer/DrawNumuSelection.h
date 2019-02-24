@@ -15,11 +15,13 @@
 #define EVD_DRAWNUMUSELECTION_H
 
 #include "Analysis/anabase.h"
+#include "lardataobj/RecoBase/PFParticle.h"
 #include "lardataobj/RecoBase/Track.h"
+#include "lardataobj/RecoBase/Shower.h"
 #include "lardataobj/RecoBase/Vertex.h"
-#include "canvas/Persistency/Common/FindMany.h"
 #include <iostream>
 
+#include "DrawShower.h"
 #include "RecoBase.h"
 #include "DrawTrack.h"
 #include "DrawVertex.h"
@@ -67,7 +69,11 @@ public:
   virtual bool finalize();
 
 private:
-  NumuSelection2D getNumuSelection2D(recob::Vertex vtx, std::vector<recob::Track> tracks, unsigned int plane);
+  NumuSelection2D getNumuSelection2D(const recob::Vertex vtx,const std::vector<recob::Track> tracks, unsigned int plane);
+
+  // a map linking the PFP Self() attribute used for hierarchy building to the PFP index in the event record
+  std::map<unsigned int, unsigned int> _pfpmap;
+
 };
 
 } // evd
