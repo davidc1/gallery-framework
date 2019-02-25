@@ -38,11 +38,11 @@ class drawableItems(object):
         self._drawableClasses.update({'Track': [track.track,"recob::Track"]})
         self._drawableClasses.update({'MCTrack': [mctrack.mctrack,"sim::MCTrack"]})
         # # self._drawableClasses.update({'Neutrino': [neutrino.neutrino,"ass"]})
-        self._drawableClasses.update({'Endpoint 2D': [endpoint2d.endpoint2d,"recob::EndPoint2D"]})
+        #self._drawableClasses.update({'Endpoint 2D': [endpoint2d.endpoint2d,"recob::EndPoint2D"]})
         self._drawableClasses.update({'Vertex': [vertex.vertex,"recob::Vertex"]})
-        self._drawableClasses.update({'SPS': [spacepoint.spacepoint,"recob::SpacePoint"]})
+        #self._drawableClasses.update({'SPS': [spacepoint.spacepoint,"recob::SpacePoint"]})
         #self._drawableClasses.update({'Numu Selection': [numuselection.numuselection, "recob::Trackrecob::Vertexvoidart::Assn"]})
-        self._drawableClasses.update({'Numu Selection': [numuselection.numuselection, "recob::PFParticle"]})
+        self._drawableClasses.update({'Neutrino Slice': [numuselection.numuselection, "recob::PFParticle"]})
         self._drawableClasses.update({'Cosmic Tag': [cosmictag.cosmictag, "anab::CosmicTag"]})
 
     def getListOfTitles(self):

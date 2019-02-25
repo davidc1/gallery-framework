@@ -69,8 +69,10 @@ class numuselection(recoBase):
                     #Change the color here:
                     if j == numus[i].muon_index():
                         # Do something special with the muon
+                        print '\t the muon!'
                         pen = pg.mkPen((238,130,238), width=2)
                     else:
+                        print '\t other tracks!'
                         pen = pg.mkPen((139,0,139), width=2)
 
                     thisPoly.setPen(pen)

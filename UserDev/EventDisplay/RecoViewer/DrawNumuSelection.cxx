@@ -136,15 +136,15 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
 	  continue;
 	}
 	
-	const auto daughter = pfpHandle->at( _pfpmap.at(daughterid) );
-	//const art::Ptr<recob::PFParticle> daughter_ptr(pfpHandle, _pfpmap.at(daughterid) );
+	const auto daughter = pfpHandle->at( _pfpmap[daughterid] );
 
-	auto daughterkey = _pfpmap.at(daughterid);
 	// if there is a track associated to the PFParticle, add it
-	auto const& ass_trk_v = pfp_track_assn_v.at( daughterkey );
-	if (ass_trk_v.size() == 1) sliceTracks.push_back( *(ass_trk_v.at(0)) );
+	auto const& ass_trk_v = pfp_track_assn_v.at( _pfpmap[daughterid] );
+	if (ass_trk_v.size() == 1) {
+	  sliceTracks.push_back( *(ass_trk_v.at(0)) );
+	}
 	// if there is a shower associated to the PFParticle, add it
-	auto const& ass_shr_v = pfp_shower_assn_v.at( daughterkey );
+	auto const& ass_shr_v = pfp_shower_assn_v.at( _pfpmap[daughterid] );
 	if (ass_shr_v.size() == 1) sliceShowers.push_back( *(ass_shr_v.at(0)) );
       }// for all PFParticles in the slice
       
