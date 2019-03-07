@@ -33,6 +33,7 @@ public:
   friend class DrawTrack;
   friend class DrawNumuSelection;
   friend class DrawCosmicTag;
+  friend class DrawT0Tag;
 
   Track2D(){}
   Track2D(std::vector<std::pair<float, float>> _track){

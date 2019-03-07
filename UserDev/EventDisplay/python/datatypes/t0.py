@@ -23,13 +23,13 @@ class polyLine(QtGui.QGraphicsPathItem):
         self.setPath(path)
 
 
-class cosmictag(recoBase):
+class t0(recoBase):
 
     def __init__(self):
-        super(cosmictag, self).__init__()
-        self._productName = 'cosmictag'
+        super(t0, self).__init__()
+        self._productName = 't0'
         evd.DrawTrack()
-        self._process = evd.DrawCosmicTag()
+        self._process = evd.DrawT0Tag()
         self.init()
 
 
@@ -56,7 +56,7 @@ class cosmictag(recoBase):
                 # self._drawnObjects[view.plane()].append(thisPoly)
 
                 thisPoly = polyLine(points)
-                pen = pg.mkPen((130,0,0), width=2)
+                pen = pg.mkPen((255,255,0), width=2)
                 thisPoly.setPen(pen)
                 # polyLine.draw(view._view)
             
@@ -84,6 +84,7 @@ try:
                 (0, 0, 252, 100),   # bright blue
                 (156, 0, 156, 100),  # purple
                 (255, 0, 255, 100),  # pink
+                (255, 255, 0, 100),  #yellow
                 (255, 0, 0, 100),  # red
                 (175, 0, 0, 100),  # red/brown
                 (252, 127, 0, 100),  # orange
@@ -100,8 +101,8 @@ try:
             geom = view_manager._geometry
             view = view_manager.getView()
 
-            print 'cosmictag -------------------------------------------'
-
+            print 't0 ------------------------------------------------'
+            
             self
             tracks = self._process.getData()
 
@@ -124,7 +125,8 @@ try:
                     i+= 1
 
                 pts = np.vstack([x,y,z]).transpose()
-                pen = pg.mkPen((255,0,0), width=2)
+                pen = pg.mkPen((255,255,0), width=2) # Track Color
+                print trkctr , " ----------------------------------- "
                 line = gl.GLLinePlotItem(pos=pts,color=self._trackColors[ trkctr % len(self._trackColors) ], width=4)
                 view.addItem(line)
                 self._drawnObjects.append(line)

@@ -16,6 +16,7 @@ import pfpart
 #import neutrino
 import numuselection
 import cosmictag
+import t0
 
 # This is the class that maintains the list of drawable items.
 # If your class isn't here, it can't be drawn
@@ -44,6 +45,7 @@ class drawableItems(object):
         #self._drawableClasses.update({'Numu Selection': [numuselection.numuselection, "recob::Trackrecob::Vertexvoidart::Assn"]})
         self._drawableClasses.update({'Neutrino Slice': [numuselection.numuselection, "recob::PFParticle"]})
         self._drawableClasses.update({'Cosmic Tag': [cosmictag.cosmictag, "anab::CosmicTag"]})
+        self._drawableClasses.update({'T0 Tag': [t0.t0, "anab::T0"]})
 
     def getListOfTitles(self):
         return self._drawableClasses.keys()

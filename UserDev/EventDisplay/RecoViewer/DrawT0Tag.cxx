@@ -1,12 +1,12 @@
-#ifndef EVD_DRAWCOSMICTAG_CXX
-#define EVD_DRAWCOSMICTAG_CXX
+#ifndef EVD_DRAWT0TAG_CXX
+#define EVD_DRAWT0TAG_CXX
 
-#include "DrawCosmicTag.h"
+#include "DrawT0Tag.h"
 
 namespace evd {
 
-  CosmicTag DrawCosmicTag::getTrack2D(recob::Track track, unsigned int plane) {
-    CosmicTag result;
+  T0Tag DrawT0Tag::getTrack2D(recob::Track track, unsigned int plane) {
+    T0Tag result;
     auto geoHelper = larutil::GeometriaHelper::GetME();
     result._track.reserve(track.NumberTrajectoryPoints());
     for (unsigned int i = 0; i < track.NumberTrajectoryPoints(); i++) {
@@ -26,12 +26,12 @@ namespace evd {
     return result;
   }
 
-DrawCosmicTag::DrawCosmicTag() {
-  _name = "DrawCosmicTag";
+DrawT0Tag::DrawT0Tag() {
+  _name = "DrawT0Tag";
   _fout = 0;
 }
 
-bool DrawCosmicTag::initialize() {
+bool DrawT0Tag::initialize() {
 
   // Resize data holder
   if (_dataByPlane.size() != geoService->Nviews()) {
@@ -40,26 +40,29 @@ bool DrawCosmicTag::initialize() {
   return true;
 }
 
-bool DrawCosmicTag::analyze(gallery::Event *ev) {
+bool DrawT0Tag::analyze(gallery::Event *ev) {
 
-  std::vector<anab::CosmicTag> ctags;
+  std::cout << "ENTERED T0 DRAW CLASS" << std::endl;
+
+  std::vector<anab::T0>        t0tags; 
   std::vector<recob::Track>    tracks;
 
-  ctags .clear();
+  t0tags.clear();
   tracks.clear();
 
   // get handle to the association
-  auto const& assoc_handle   = ev->getValidHandle<art::Assns<recob::Track, anab::CosmicTag>>(_producer);
+  auto const& assoc_handle   = ev->getValidHandle<art::Assns<recob::Track, anab::T0       >>(_producer);
+
   
   if (assoc_handle->size() == 0)
-    return true; // no cosmic tag
+    return true; // no t0 tag
 
   for (auto &ass : *assoc_handle) {
 
-    art::Ptr<recob::Track> t = ass.first;
-    art::Ptr<anab::CosmicTag> ct = ass.second;
+    art::Ptr<recob::Track> t     = ass.first;
+    art::Ptr<anab::T0>     time0 = ass.second;
     
-    ctags.emplace_back(*ct);
+    t0tags.emplace_back(*time0);
     tracks.emplace_back(*t);
 
   }
@@ -85,7 +88,7 @@ bool DrawCosmicTag::analyze(gallery::Event *ev) {
   return true;
 }
 
-bool DrawCosmicTag::finalize() {
+bool DrawT0Tag::finalize() {
 
   // This function is called at the end of event loop.
   // Do all variable finalization you wish to do here.
@@ -103,7 +106,7 @@ bool DrawCosmicTag::finalize() {
   return true;
 }
 
-DrawCosmicTag::~DrawCosmicTag() {}
+DrawT0Tag::~DrawT0Tag() {}
 
 } // larlite
 
