@@ -14,6 +14,7 @@ OBJECTS = $(SOURCES:.cxx=.o)
 INCFLAGS  = -I. 
 INCFLAGS += $(shell gallery-config --includes)
 INCFLAGS += -I$(GALLERY_FMWK_COREDIR)
+INCFLAGS += -I$(HEP_CONCURRENCY_INC)
 
 # platform-specific options
 OSNAME          = $(shell uname -s)

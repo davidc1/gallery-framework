@@ -2,10 +2,11 @@
 
 source /grid/fermiapp/products/uboone/setup_uboone.sh
 echo "Setting up uboonecode"
-setup uboonecode v07_13_00 -q e17:prof
+#setup uboonecode v07_13_00 -q e17:prof
 #setup uboonecode v07_05_00_02 -q e17:prof
-echo "Setting up larsoftobj"
-setup larsoftobj v07_08_00 -q e17:prof
+#echo "Setting up larsoftobj"
+#setup larsoftobj v07_08_00 -q e17:prof
+setup uboonecode v08_00_00_08 -qe17:prof
 source /uboone/app/users/cadams/pystack2/setup.sh
 
 # # clean up previously set env

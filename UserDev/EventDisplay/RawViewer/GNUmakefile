@@ -18,6 +18,7 @@ INCFLAGS += $(shell python-config --includes)
 INCFLAGS += -I$(shell python -c "import numpy; print numpy.get_include()")
 INCFLAGS += $(shell gallery-config --includes)
 INCFLAGS += $(shell gallery-fmwk-config --includes)
+INCFLAGS += -I$(HEP_CONCURRENCY_INC)
 
 # platform-specific options
 OSNAME          = $(shell uname -s)
