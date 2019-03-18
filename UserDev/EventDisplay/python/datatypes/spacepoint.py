@@ -27,8 +27,8 @@ class spacepoint(recoBase):
             spts = self._process.getDataByPlane(thisPlane)
 
 
-            radBigW = 0.2 / view_manager._geometry.wire2cm()
-            radBigT = (0.2) / view_manager._geometry.time2cm()
+            radBigW = 1.0 / view_manager._geometry.wire2cm()
+            radBigT = (1.0) / view_manager._geometry.time2cm()
             offset = view_manager._geometry.offset(
                 thisPlane) / view_manager._geometry.time2cm()
 
@@ -84,7 +84,7 @@ try:
                 points[i][1] = thisPoint.Y()
                 points[i][2] = thisPoint.Z()
 
-            glPointsCollection = gl.GLScatterPlotItem(pos=points, size=5)
+            glPointsCollection = gl.GLScatterPlotItem(pos=points, size=10)
 
             view.addItem(glPointsCollection)
 
