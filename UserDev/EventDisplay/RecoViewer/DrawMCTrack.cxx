@@ -5,22 +5,26 @@
 
 namespace evd {
 
-MCTrack2D DrawMCTrack::getMCTrack2D(sim::MCTrack track, unsigned int plane) {
+MCTrack2D DrawMCTrack::getMCTrack2D(simb::MCParticle track, unsigned int plane) {
   MCTrack2D result;
   auto geoHelper = larutil::GeometriaHelper::GetME();
-  result._track.reserve(track.size());
-  for (unsigned int i = 0; i < track.size(); i++) {
+  result._track.reserve(track.NumberTrajectoryPoints());
+  auto vtxtrk = track.Position(0);
+  //std::cout << "new track with " << track.NumberTrajectoryPoints() << " points and vertex @ " 
+  //	    << "[ " << vtxtrk.X() << ", " << vtxtrk.Y() << ", " << vtxtrk.Z() << " ]" << std::endl;
+  for (unsigned int i = 0; i < track.NumberTrajectoryPoints(); i++) {
     // project a point into 2D:
     try {
-      auto point = geoHelper->Point_3Dto2D(track[i].X(), track[i].Y(),
-                                           track[i].Z(), plane);
+      auto pointtrk = track.Position(i);
+      auto point = geoHelper->Point_3Dto2D(pointtrk.X(), pointtrk.Y(),
+                                           pointtrk.Z(), plane);
       result._track.push_back(std::make_pair(point.w, point.t));
     } catch (...) {
       continue;
     }
   }
 
-  result._origin = track.Origin();
+  //result._origin = track.Origin();
 
   return result;
 }
@@ -61,7 +65,9 @@ bool DrawMCTrack::analyze(gallery::Event *ev) {
   // get a handle to the tracks
   art::InputTag tracks_tag(_producer);
   auto const &trackHandle =
-      ev->getValidHandle<std::vector<sim::MCTrack>>(tracks_tag);
+      ev->getValidHandle<std::vector<simb::MCParticle>>(tracks_tag);
+
+  //std::cout << "there are " << trackHandle->size() << " mctracks" << std::endl;
 
   // Clear out the data but reserve some space for the tracks
   for (unsigned int p = 0; p < geoService->Nviews(); p++) {
@@ -76,7 +82,8 @@ bool DrawMCTrack::analyze(gallery::Event *ev) {
   // Populate the track vector:
   for (auto &track : *trackHandle) {
     for (unsigned int view = 0; view < geoService->Nviews(); view++) {
-      _dataByPlane.at(view).push_back(getMCTrack2D(track, view));
+      if ( (fabs(track.PdgCode()) == 13) || (fabs(track.PdgCode()) == 2212) || (fabs(track.PdgCode()) == 211) )
+	_dataByPlane.at(view).push_back(getMCTrack2D(track, view));
     }
   }
 

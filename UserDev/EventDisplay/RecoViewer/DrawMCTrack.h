@@ -17,6 +17,7 @@
 #include "Analysis/anabase.h"
 #include "lardataobj/MCBase/MCStep.h"
 #include "lardataobj/MCBase/MCTrack.h"
+//#include "lardataobj/SimulationBase/MCParticle.h"
 #include <iostream>
 
 #include "DrawTrack.h"
@@ -57,7 +58,7 @@ public:
   virtual bool finalize();
 
 private:
-  MCTrack2D getMCTrack2D(sim::MCTrack track, unsigned int plane);
+  MCTrack2D getMCTrack2D(simb::MCParticle track, unsigned int plane);
 };
 
 } // evd

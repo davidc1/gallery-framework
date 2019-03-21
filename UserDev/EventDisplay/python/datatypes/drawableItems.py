@@ -37,7 +37,7 @@ class drawableItems(object):
         # self._drawableClasses.update({'Match': [match.match,"pfpart"]})
         self._drawableClasses.update({'Shower': [shower.shower,"recob::Shower"]})
         self._drawableClasses.update({'Track': [track.track,"recob::Track"]})
-        self._drawableClasses.update({'MCTrack': [mctrack.mctrack,"sim::MCTrack"]})
+        self._drawableClasses.update({'MCTrack': [mctrack.mctrack,"simb::MCParticle"]})
         # # self._drawableClasses.update({'Neutrino': [neutrino.neutrino,"ass"]})
         #self._drawableClasses.update({'Endpoint 2D': [endpoint2d.endpoint2d,"recob::EndPoint2D"]})
         self._drawableClasses.update({'Vertex': [vertex.vertex,"recob::Vertex"]})
