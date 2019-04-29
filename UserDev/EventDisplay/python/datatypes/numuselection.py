@@ -29,9 +29,25 @@ class numuselection(recoBase):
 
             for i in xrange(len(numus)):
 
+                # draw the hits
+                hits = numus[i].hits();
+                print 'there are %i hits on plane %i'%(len(hits),thisPlane)
+                for ih in xrange(len(hits)):
+                    hit = hits[ih]
+                    #print '\t [w,t] -> [%.0f,%.0f]'%(hit.wire(),hit.time())
+                    # Draws a rectangle at (x,y,xlength, ylength)
+                    r = QtGui.QGraphicsRectItem(
+                        hit.wire(), hit.time() + geom.timeOffsetTicks(view.plane()), 1, 1*hit.rms())
+
+                    opacity = 0.5 # int(128 * hit.charge() / 100.) + 127
+                    # Old Way:
+                    r.setPen(pg.mkPen(None))
+                    r.setBrush(pg.mkColor(0,0,0,128))#,opacity))
+                    # r.setBrush((0,0,0,opacity))
+                    self._drawnObjects[thisPlane].append(r)
+                    view._view.addItem(r)
 
                 # Draw the vertex:
-
                 vertex = numus[i].vertex()
                 # Draws a circle at (x,y,radius = 0.5cm)
                 radBigW = 3 / view_manager._geometry.wire2cm()
@@ -44,11 +60,11 @@ class numuselection(recoBase):
                 sT = vertex.t / view_manager._geometry.time2cm() + offset
 
                 r = QtGui.QGraphicsEllipseItem(
-                    sW-radBigW, sT-radBigT, 2*radBigW, 2*radBigT)
+                    sW-radBigW, sT-radBigT, 1*radBigW, 1*radBigT)
 
 
                 r.setPen(pg.mkPen(None))
-                r.setBrush(pg.mkColor(139,0,139, 128))
+                r.setBrush(pg.mkColor(255,255,255, 128))
                 self._drawnObjects[thisPlane].append(r)
                 view._view.addItem(r)
 
@@ -71,10 +87,8 @@ class numuselection(recoBase):
                     #Change the color here:
                     if j == numus[i].muon_index():
                         # Do something special with the muon
-                        print '\t the muon!'
                         pen = pg.mkPen((238,130,238), width=2)
                     else:
-                        print '\t other tracks!'
                         pen = pg.mkPen((139,0,139), width=2)
 
                     thisPoly.setPen(pen)

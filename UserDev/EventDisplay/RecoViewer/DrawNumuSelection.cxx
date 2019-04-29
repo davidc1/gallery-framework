@@ -13,7 +13,8 @@ namespace evd {
   try {
     double pos[3];
     vtx.XYZ(pos);
-    std::cout << "vtx : [ " << pos[0] << ", " << pos[1] << ", " << pos[2] << "  ]" << std::endl;
+    if (plane == 2)
+      std::cout << "vtx : [ " << pos[0] << ", " << pos[1] << ", " << pos[2] << "  ]" << std::endl;
     auto point = geoHelper->Point_3Dto2D(pos, plane);
     result._vertex = point;
   } catch (...) {
@@ -57,8 +58,10 @@ namespace evd {
   if ( (muon_index >= 0) and (muon_index < tracks.size()) ) {
     auto mustart = tracks.at(muon_index).Vertex();
     auto muend   = tracks.at(muon_index).End();
-    std::cout << "muon start : [ " << mustart.X() << ", " << mustart.Y() << ", " << mustart.Z() << " ]" << std::endl;
-    std::cout << "muon end   : [ " << muend.X()   << ", " << muend.Y()   << ", " << muend.Z()   << " ]" << std::endl;
+    if (plane == 2) {
+      std::cout << "muon start : [ " << mustart.X() << ", " << mustart.Y() << ", " << mustart.Z() << " ]" << std::endl;
+      std::cout << "muon end   : [ " << muend.X()   << ", " << muend.Y()   << ", " << muend.Z()   << " ]" << std::endl;
+    }
   }
 
   result._tracks = track_v;
@@ -102,9 +105,13 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   art::InputTag vtx_tag(_producer);
   art::FindMany<recob::Vertex> pfp_vertex_assn_v(pfpHandle, *ev, vtx_tag);
   
-  // grab hits associated with PFParticles
-  //art::InputTag clus_tag(_producer);
-  //art::FindManyP<recob::Cluster> pfp_clus_assn_v(pfpHandle, *ev, clus_tag);
+  // grab clusters associated with PFParticles
+  art::InputTag clus_tag(_producer);
+  art::FindManyP<recob::Cluster> pfp_clus_assn_v(pfpHandle, *ev, clus_tag);
+  // grab clusters themselves
+  auto const& clusHandle = ev->getValidHandle<std::vector<recob::Cluster> >(clus_tag);
+  // get hits associated to clusters
+  art::FindMany<recob::Hit> clus_hit_assn_v(clusHandle, *ev, clus_tag);
   
   // grab showers associated with PFParticles
   art::FindMany<recob::Shower> pfp_shower_assn_v(pfpHandle, *ev, pfp_tag);
@@ -127,7 +134,7 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
     
     auto pfp = pfpHandle->at(p);
     //const art::Ptr<recob::PFParticle> pfp_ptr(pfpHandle, p );
-    
+
     // get metadata for this PFP
     //auto &pfParticleMetadataList(pfPartToMetadataAssoc.at(p));
     //const std::vector< art::Ptr<larpandoraobj::PFParticleMetadata> > &pfParticleMetadataList(pfPartToMetadataAssoc.at(p));
@@ -157,8 +164,17 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
 	
 	const auto daughter = pfpHandle->at( _pfpmap[daughterid] );
 
+	// find cluster associated to this PFP
+	auto const& ass_clus_v = pfp_clus_assn_v.at( _pfpmap[daughterid] );
+	// for each cluster, get associated hits
+	for (size_t c=0; c < ass_clus_v.size(); c++) {
+	  auto const& key = ass_clus_v[c].key();
+	  //auto clus_hits = 
+	  sliceHitIdx.push_back( key );
+	}
+
 	// keep track of index for PFP for hit association
-	sliceHitIdx.push_back( _pfpmap[daughterid] );
+	//sliceHitIdx.push_back( _pfpmap[daughterid] );
 
 	// if there is a track associated to the PFParticle, add it
 	auto const& ass_trk_v = pfp_track_assn_v.at( _pfpmap[daughterid] );
@@ -189,11 +205,11 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
     _dataByPlane.at(view).push_back(this->getNumuSelection2D(nuvtx, sliceTracks, sliceShowers, view));
   }
 
-  /*
   // loop through slice hits
   for (auto const& assidx : sliceHitIdx) {
     // get associated hits
-    auto const& ass_hits = pfp_hit_assn_v.at(assidx);
+    auto const& ass_hits = clus_hit_assn_v.at(assidx);
+    //auto const& ass_hits = pfp_hit_assn_v.at(assidx);
     for (size_t hitidx=0; hitidx < ass_hits.size(); hitidx++) {
       auto hit = *(ass_hits.at(hitidx));
       unsigned int view = hit.View();
@@ -210,7 +226,6 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
 							    ));
     }// for all hits associated to this PFP
   }// for all pfp -> hit association indices
-  */
   
   return true;
 }
