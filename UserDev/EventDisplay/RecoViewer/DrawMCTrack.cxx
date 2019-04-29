@@ -10,8 +10,8 @@ MCTrack2D DrawMCTrack::getMCTrack2D(simb::MCParticle track, unsigned int plane) 
   auto geoHelper = larutil::GeometriaHelper::GetME();
   result._track.reserve(track.NumberTrajectoryPoints());
   auto vtxtrk = track.Position(0);
-  //std::cout << "new track with " << track.NumberTrajectoryPoints() << " points and vertex @ " 
-  //	    << "[ " << vtxtrk.X() << ", " << vtxtrk.Y() << ", " << vtxtrk.Z() << " ]" << std::endl;
+  std::cout << "new track with " << track.NumberTrajectoryPoints() << " points and vertex @ " 
+    	    << "[ " << vtxtrk.X() << ", " << vtxtrk.Y() << ", " << vtxtrk.Z() << " ]" << std::endl;
   for (unsigned int i = 0; i < track.NumberTrajectoryPoints(); i++) {
     // project a point into 2D:
     try {
@@ -82,7 +82,7 @@ bool DrawMCTrack::analyze(gallery::Event *ev) {
   // Populate the track vector:
   for (auto &track : *trackHandle) {
     for (unsigned int view = 0; view < geoService->Nviews(); view++) {
-      if ( (fabs(track.PdgCode()) == 13) || (fabs(track.PdgCode()) == 2212) || (fabs(track.PdgCode()) == 211) )
+      if ( (fabs(track.PdgCode()) == 13) || (fabs(track.PdgCode()) == 2212) || (fabs(track.PdgCode()) == 211) || (fabs(track.PdgCode()) == 11) )
 	_dataByPlane.at(view).push_back(getMCTrack2D(track, view));
     }
   }

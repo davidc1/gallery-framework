@@ -5,7 +5,7 @@
 
 namespace evd {
 
-  NumuSelection2D DrawNumuSelection::getNumuSelection2D(const recob::Vertex vtx,const std::vector<recob::Track> tracks, unsigned int plane) {
+  NumuSelection2D DrawNumuSelection::getNumuSelection2D(const recob::Vertex vtx,const std::vector<recob::Track> tracks, const std::vector<recob::Shower> showers, unsigned int plane) {
 
   NumuSelection2D result;
 
@@ -13,6 +13,7 @@ namespace evd {
   try {
     double pos[3];
     vtx.XYZ(pos);
+    std::cout << "vtx : [ " << pos[0] << ", " << pos[1] << ", " << pos[2] << "  ]" << std::endl;
     auto point = geoHelper->Point_3Dto2D(pos, plane);
     result._vertex = point;
   } catch (...) {
@@ -47,8 +48,21 @@ namespace evd {
       max_length = length;
     }
   }
+  // showers
+  std::vector<Shower2D> shower_v;
+  for (auto const& shr : showers) 
+    shower_v.push_back( getShower2d(shr, plane) );
+  
+  
+  if ( (muon_index >= 0) and (muon_index < tracks.size()) ) {
+    auto mustart = tracks.at(muon_index).Vertex();
+    auto muend   = tracks.at(muon_index).End();
+    std::cout << "muon start : [ " << mustart.X() << ", " << mustart.Y() << ", " << mustart.Z() << " ]" << std::endl;
+    std::cout << "muon end   : [ " << muend.X()   << ", " << muend.Y()   << ", " << muend.Z()   << " ]" << std::endl;
+  }
 
   result._tracks = track_v;
+  result._showers = shower_v;
   result._muon_index = muon_index;
 
   return result;
@@ -88,6 +102,10 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   art::InputTag vtx_tag(_producer);
   art::FindMany<recob::Vertex> pfp_vertex_assn_v(pfpHandle, *ev, vtx_tag);
   
+  // grab hits associated with PFParticles
+  //art::InputTag clus_tag(_producer);
+  //art::FindManyP<recob::Cluster> pfp_clus_assn_v(pfpHandle, *ev, clus_tag);
+  
   // grab showers associated with PFParticles
   art::FindMany<recob::Shower> pfp_shower_assn_v(pfpHandle, *ev, pfp_tag);
 
@@ -97,6 +115,7 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   // create list of tracks and showers associated to neutrino candidate
   std::vector<recob::Track  > sliceTracks;
   std::vector<recob::Shower > sliceShowers;
+  std::vector<unsigned int> sliceHitIdx;
   // save  vertex  assocaited to neutrino candidate
   recob::Vertex nuvtx;
 
@@ -138,6 +157,9 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
 	
 	const auto daughter = pfpHandle->at( _pfpmap[daughterid] );
 
+	// keep track of index for PFP for hit association
+	sliceHitIdx.push_back( _pfpmap[daughterid] );
+
 	// if there is a track associated to the PFParticle, add it
 	auto const& ass_trk_v = pfp_track_assn_v.at( _pfpmap[daughterid] );
 	if (ass_trk_v.size() == 1) {
@@ -164,32 +186,91 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   }
 
   for (unsigned int view = 0; view < geoService->Nviews(); view++) {
-    _dataByPlane.at(view).push_back(this->getNumuSelection2D(nuvtx, sliceTracks, view));
+    _dataByPlane.at(view).push_back(this->getNumuSelection2D(nuvtx, sliceTracks, sliceShowers, view));
   }
+
+  /*
+  // loop through slice hits
+  for (auto const& assidx : sliceHitIdx) {
+    // get associated hits
+    auto const& ass_hits = pfp_hit_assn_v.at(assidx);
+    for (size_t hitidx=0; hitidx < ass_hits.size(); hitidx++) {
+      auto hit = *(ass_hits.at(hitidx));
+      unsigned int view = hit.View();
+      _dataByPlane.at(view).back()._hits.emplace_back(
+						      Hit2D(hit.WireID().Wire,
+							    hit.PeakTime(),
+							    hit.Integral(),
+							    hit.RMS(),
+							    hit.StartTick(),
+							    hit.PeakTime(),
+							    hit.EndTick(),
+							    hit.PeakAmplitude(),
+							    view
+							    ));
+    }// for all hits associated to this PFP
+  }// for all pfp -> hit association indices
+  */
   
   return true;
 }
 
+  evd::Shower2D DrawNumuSelection::getShower2d(recob::Shower shower, unsigned int plane) {
+    
+    Shower2D result;
+    result._is_good = false;
+    result._plane = plane;
+    // Fill out the parameters of the 2d shower
+    result._startPoint
+      = geoHelper -> Point_3Dto2D(shower.ShowerStart(), plane);
+    
+    // Next get the direction:
+    result._angleInPlane = geoHelper->Slope_3Dto2D(shower.Direction(), plane);
+    
+    // Get the opening Angle:
+    // result._openingAngle = shower.OpeningAngle();
+    result._openingAngle = 0.2;
+    
+    
+    auto secondPoint = shower.ShowerStart() + shower.Length() * shower.Direction();
+    
+    
+    result._endPoint
+      = geoHelper -> Point_3Dto2D(secondPoint, plane);
+    
+    result._length = sqrt(pow(result.startPoint().w - result.endPoint().w, 2) +
+			  pow(result.startPoint().t - result.endPoint().t, 2));
+    
+    if (shower.dEdx().size() > plane) {
+      result._dedx = shower.dEdx()[plane];
+    }
+    else {
+      result._dedx = 0.0;
+    }
+    
+    if (shower.Energy().size() > plane) {
+      result._energy = shower.Energy()[plane];
+    }
+    else {
+      result._energy = 0.0;
+    }
+    
+    result._is_good = true;
+    
+    return result;
+  }
+  
+
 bool DrawNumuSelection::finalize() {
 
-  // This function is called at the end of event loop.
-  // Do all variable finalization you wish to do here.
-  // If you need, you can store your ROOT class instance in the output
-  // file. You have an access to the output file through "_fout" pointer.
-  //
-  // Say you made a histogram pointer h1 to store. You can do this:
-  //
-  // if(_fout) { _fout->cd(); h1->Write(); }
-  //
-  // else
-  //   print(MSG::ERROR,__FUNCTION__,"Did not find an output file pointer!!!
-  //   File not opened?");
-  //
   return true;
 }
 
 DrawNumuSelection::~DrawNumuSelection() {}
 
 } // larlite
+
+
+
 
 #endif

@@ -38,6 +38,7 @@ public:
   friend class DrawNumuSelection;
 
   const std::vector<Track2D> &tracks() { return _tracks; }
+  const std::vector<Shower2D> &showers() { return _showers; }
   const Vertex2D &vertex() { return _vertex; }
 
   size_t muon_index(){return _muon_index;}
@@ -46,8 +47,10 @@ public:
 
 protected:
   std::vector<Track2D> _tracks;
+  std::vector<Shower2D> _showers;
   Vertex2D _vertex;
   size_t _muon_index;
+  std::vector<Hit2D> _hits;
 
 };
 
@@ -68,11 +71,16 @@ public:
 
   virtual bool finalize();
 
+  evd::Shower2D getShower2d(recob::Shower shower, unsigned int plane);
+
 private:
-  NumuSelection2D getNumuSelection2D(const recob::Vertex vtx,const std::vector<recob::Track> tracks, unsigned int plane);
+  NumuSelection2D getNumuSelection2D(const recob::Vertex vtx,const std::vector<recob::Track> tracks,
+				     const std::vector<recob::Shower> showers, unsigned int plane);
 
   // a map linking the PFP Self() attribute used for hierarchy building to the PFP index in the event record
   std::map<unsigned int, unsigned int> _pfpmap;
+
+
 
 };
 

@@ -63,6 +63,7 @@ bool DrawShower::analyze(gallery::Event * ev) {
 
     std::vector<recob::Hit const*> hits;
     hits_for_shower.get(s, hits);
+    std::cout << "There are " << hits.size() << " associated with this shower" << std::endl;
 
     for (unsigned int view = 0; view < geoService -> Nviews(); view++) {
       // get the reconstructed shower for this plane

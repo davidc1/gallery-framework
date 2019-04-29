@@ -29,14 +29,16 @@
 
 
 namespace evd {
-
-class Shower2D  {
-
-public:
-
+  
+  class Shower2D  {
+    
+  public:
+    
+    friend class DrawNumuSelection;
+    
     /// Default constructor
     Shower2D() {}
-
+    
     /// Default destructor
     ~Shower2D() {}
 
