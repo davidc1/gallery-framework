@@ -41,9 +41,9 @@ class spacepoint(recoBase):
                 sW = thisPoint.w / view_manager._geometry.wire2cm()
                 sT = thisPoint.t / view_manager._geometry.time2cm() + offset
                 r = QtGui.QGraphicsEllipseItem(
-                    sW -radBigW, sT-radBigT, 2*radBigW, 2*radBigT)
+                    sW -radBigW, sT-radBigT, 3*radBigW, 3*radBigT)
 
-                r.setPen(pg.mkPen(255,0,255))
+                r.setPen(pg.mkPen(255,255,255))
                 # r.setBrush(pg.mkColor(255,0,255))
                 # r.setBrush((0,0,0,opacity))
                 self._drawnObjects[thisPlane].append(r)
