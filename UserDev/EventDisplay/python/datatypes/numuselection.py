@@ -15,6 +15,19 @@ class numuselection(recoBase):
         self._brush = (0, 0, 0)
         self.init()
 
+        # Defining the cluster colors:
+        self._Colors = [
+            (252, 127, 0, 150),  # orange
+            (100, 253, 0, 150),  # bright green
+            (210, 210, 210, 150),  # gray
+            (156, 0, 156, 150),  # purple
+            (255, 0, 255, 150),  # pink
+            (255, 0, 0, 150),  # red
+            (175, 0, 0, 150),  # red/brown
+            (102, 51, 0, 150),  # brown
+            (127, 127, 127, 150)  # dark gray
+        ]
+
          
 
     # this is the function that actually draws the numu selection output.
@@ -30,22 +43,25 @@ class numuselection(recoBase):
             for i in xrange(len(numus)):
 
                 # draw the hits
-                hits = numus[i].hits();
-                print 'there are %i hits on plane %i'%(len(hits),thisPlane)
-                for ih in xrange(len(hits)):
-                    hit = hits[ih]
-                    #print '\t [w,t] -> [%.0f,%.0f]'%(hit.wire(),hit.time())
-                    # Draws a rectangle at (x,y,xlength, ylength)
-                    r = QtGui.QGraphicsRectItem(
-                        hit.wire(), hit.time() + geom.timeOffsetTicks(view.plane()), 1, 1*hit.rms())
+                hits_v = numus[i].hits();
+                for ic, hits in enumerate(hits_v):
+                    print 'there are %i hits on plane %i'%(len(hits),thisPlane)
+                    for ih in xrange(len(hits)):
+                        hit = hits[ih]
+                        #print '\t [w,t] -> [%.0f,%.0f]'%(hit.wire(),hit.time())
+                        # Draws a rectangle at (x,y,xlength, ylength)
+                        r = QtGui.QGraphicsRectItem(hit.wire(), 
+                                                    hit.time() + geom.timeOffsetTicks(view.plane()),
+                                                    2, 2*hit.rms())
 
-                    opacity = 0.5 # int(128 * hit.charge() / 100.) + 127
-                    # Old Way:
-                    r.setPen(pg.mkPen(None))
-                    r.setBrush(pg.mkColor(0,0,0,128))#,opacity))
-                    # r.setBrush((0,0,0,opacity))
-                    self._drawnObjects[thisPlane].append(r)
-                    view._view.addItem(r)
+                        opacity = 0.5 # int(128 * hit.charge() / 100.) + 127
+                        # Old Way:
+                        color = self._Colors[ ic % len(self._Colors) ]
+                        r.setPen(pg.mkPen(None))
+                        r.setBrush(pg.mkColor(color))#,opacity))
+                        # r.setBrush((0,0,0,opacity))
+                        self._drawnObjects[thisPlane].append(r)
+                        view._view.addItem(r)
 
                 # Draw the vertex:
                 vertex = numus[i].vertex()

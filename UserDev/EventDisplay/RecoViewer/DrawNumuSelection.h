@@ -40,7 +40,7 @@ public:
   const std::vector<Track2D> &tracks() { return _tracks; }
   const std::vector<Shower2D> &showers() { return _showers; }
   const Vertex2D &vertex() { return _vertex; }
-  const std::vector<Hit2D> &hits() { return _hits; }
+  const std::vector< std::vector<Hit2D> > &hits() { return _hits_v; }
 
   size_t muon_index(){return _muon_index;}
   const Track2D & muon(){return _tracks.at(_muon_index);}
@@ -51,7 +51,7 @@ protected:
   std::vector<Shower2D> _showers;
   Vertex2D _vertex;
   size_t _muon_index;
-  std::vector<Hit2D> _hits;
+  std::vector< std::vector<Hit2D> > _hits_v;
 
 };
 

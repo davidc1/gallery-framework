@@ -116,6 +116,8 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   // grab showers associated with PFParticles
   art::FindMany<recob::Shower> pfp_shower_assn_v(pfpHandle, *ev, pfp_tag);
 
+  // grab slice associated to pfparticles
+
   // grab associated metadata
   //art::FindMany< larpandoraobj::PFParticleMetadata > pfPartToMetadataAssoc(pfpHandle, ev, pfp_tag);
 
@@ -203,27 +205,29 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
 
   for (unsigned int view = 0; view < geoService->Nviews(); view++) {
     _dataByPlane.at(view).push_back(this->getNumuSelection2D(nuvtx, sliceTracks, sliceShowers, view));
+    _dataByPlane.at(view).back()._hits_v.resize(sliceHitIdx.size());
   }
 
   // loop through slice hits
-  for (auto const& assidx : sliceHitIdx) {
+  for (size_t si = 0; si < sliceHitIdx.size(); si++) {
+    auto const& assidx = sliceHitIdx.at(si);
     // get associated hits
     auto const& ass_hits = clus_hit_assn_v.at(assidx);
     //auto const& ass_hits = pfp_hit_assn_v.at(assidx);
     for (size_t hitidx=0; hitidx < ass_hits.size(); hitidx++) {
       auto hit = *(ass_hits.at(hitidx));
       unsigned int view = hit.View();
-      _dataByPlane.at(view).back()._hits.emplace_back(
-						      Hit2D(hit.WireID().Wire,
-							    hit.PeakTime(),
-							    hit.Integral(),
-							    hit.RMS(),
-							    hit.StartTick(),
-							    hit.PeakTime(),
-							    hit.EndTick(),
-							    hit.PeakAmplitude(),
-							    view
-							    ));
+      _dataByPlane.at(view).back()._hits_v[si].emplace_back(
+							    Hit2D(hit.WireID().Wire,
+								  hit.PeakTime(),
+								  hit.Integral(),
+								  hit.RMS(),
+								  hit.StartTick(),
+								  hit.PeakTime(),
+								  hit.EndTick(),
+								  hit.PeakAmplitude(),
+								  view
+								  ));
     }// for all hits associated to this PFP
   }// for all pfp -> hit association indices
   
