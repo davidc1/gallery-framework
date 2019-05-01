@@ -3,6 +3,12 @@
 
 #include "DrawNumuSelection.h"
 
+#include "canvas/Persistency/Common/FindManyP.h"
+#include "art/Persistency/Common/PtrMaker.h"
+
+#include "art/Framework/Principal/Handle.h"
+#include "art/Framework/Services/Registry/ServiceHandle.h"
+
 namespace evd {
 
   NumuSelection2D DrawNumuSelection::getNumuSelection2D(const recob::Vertex vtx,const std::vector<recob::Track> tracks, const std::vector<recob::Shower> showers, unsigned int plane) {
@@ -87,15 +93,34 @@ bool DrawNumuSelection::initialize() {
 
 bool DrawNumuSelection::analyze(gallery::Event *ev) {
 
-  // get a handle to the showers
+
   art::InputTag pfp_tag(_producer);
-  auto const & pfpHandle = 
-    ev -> getValidHandle<std::vector <recob::PFParticle> >(pfp_tag);
+
+  // get vertices and pfparticles associated just so that we have the PFP art::Ptrs
+  auto const& vtxHandle =  ev -> getValidHandle<std::vector <recob::Vertex> >(pfp_tag);
+  art::FindManyP<recob::PFParticle> vtx_pfp_assn_v(vtxHandle, *ev, pfp_tag);
+
+
+  // get a handle to the showers
+  auto const& pfpHandle =  ev -> getValidHandle<std::vector <recob::PFParticle> >(pfp_tag);
 
   // build PFParticle map  for this event
   _pfpmap.clear();
-  for (unsigned int p=0; p < pfpHandle->size(); p++)
-    _pfpmap[pfpHandle->at(p).Self()] = p;
+  // buid pfp self -> index map
+  std::map<size_t, size_t> PFP_self_key_map;
+  for (unsigned int p=0; p < pfpHandle->size(); p++) {
+    auto pfpself = pfpHandle->at(p).Self();
+    _pfpmap[pfpself] = p;
+    // find the PFP with the same self from the vector ass
+    for (size_t v0=0; v0 < vtx_pfp_assn_v.size(); v0++) {
+      auto vtx_pfp_ass = vtx_pfp_assn_v.at(v0);
+      for (size_t v1=0; v1 < vtx_pfp_ass.size(); v1++) {
+	auto pfpkey = vtx_pfp_ass[v1].key();
+	auto pfpself2 = vtx_pfp_ass[v1]->Self();
+	if (pfpself2 == pfpself) { PFP_self_key_map[ pfpself ] = pfpkey; }
+      }// for all pfps
+    }// for all vtx -> pfp associations
+  }
   
   // grab tracks associated with PFParticles
   art::InputTag trk_tag(_producer);
@@ -116,7 +141,14 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   // grab showers associated with PFParticles
   art::FindMany<recob::Shower> pfp_shower_assn_v(pfpHandle, *ev, pfp_tag);
 
-  // grab slice associated to pfparticles
+  // grab slice associated to slices
+  art::FindManyP<recob::Slice> pfp_slice_assn_v(pfpHandle, *ev, pfp_tag);
+  // grab slices themselves
+  auto const& sliceHandle = ev->getValidHandle<std::vector<recob::Slice> >(pfp_tag);
+  // grab hits associated to slices
+  art::FindMany<recob::Hit> slice_hit_assn_v(sliceHandle, *ev, pfp_tag);
+
+  //art::PtrMaker<recob::PFParticle> PFPPtrMaker(e);
 
   // grab associated metadata
   //art::FindMany< larpandoraobj::PFParticleMetadata > pfPartToMetadataAssoc(pfpHandle, ev, pfp_tag);
@@ -131,11 +163,16 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
   // count neutrino candidates
   size_t neutrinos = 0;
 
+  // key for neutrino slice in order to get hits 
+  size_t slicekey = 0;
+
   // loop through PFParticles
   for (size_t p=0; p < pfpHandle->size(); p++) {
     
     auto pfp = pfpHandle->at(p);
-    //const art::Ptr<recob::PFParticle> pfp_ptr(pfpHandle, p );
+    //art::Ptr<recob::PFParticle> pfp_ptr(pfpHandle, p );
+
+    //art::Ptr<recob::PFParticle> PFPptr(pfpHandle,p);
 
     // get metadata for this PFP
     //auto &pfParticleMetadataList(pfPartToMetadataAssoc.at(p));
@@ -149,7 +186,14 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
 
       neutrinos += 1;
 
-      auto pfpkey = p;
+      // grab hits associated to the slice
+      auto pfp_slice_ass = pfp_slice_assn_v.at( PFP_self_key_map[ pfp.Self() ] );//pfp_ptr.key() );
+      for (size_t si=0; si < pfp_slice_ass.size(); si++) {
+	// grab slice index
+	slicekey = pfp_slice_ass[si].key();
+	std::cout << "slice key is " << slicekey << std::endl;
+      }// for all slices associated to PFP
+
       auto ass_vtx_v  =pfp_vertex_assn_v.at( p );
       if (ass_vtx_v.size() != 1) 
 	std::cout << "ERROR. Neutrino not associated with a single vertex..." << std::endl;
@@ -208,6 +252,28 @@ bool DrawNumuSelection::analyze(gallery::Event *ev) {
     _dataByPlane.at(view).back()._hits_v.resize(sliceHitIdx.size());
   }
 
+  // grab slice -> hit ass vector
+  std::cout << "slice key is " << slicekey << std::endl;
+  auto slice_hit_ass = slice_hit_assn_v.at(slicekey);
+  // loop through slice hits and add to display
+  for (size_t slicehitidx = 0; slicehitidx < slice_hit_ass.size(); slicehitidx++) {
+    
+    auto hit = *(slice_hit_ass.at(slicehitidx));
+    unsigned int view = hit.View();
+    _dataByPlane.at(view).back()._slice_hits.emplace_back(
+							  Hit2D(hit.WireID().Wire,
+								hit.PeakTime(),
+								hit.Integral(),
+								hit.RMS(),
+								hit.StartTick(),
+								hit.PeakTime(),
+								hit.EndTick(),
+								hit.PeakAmplitude(),
+								view
+								));
+    
+  }// for all slice-hits
+  
   // loop through slice hits
   for (size_t si = 0; si < sliceHitIdx.size(); si++) {
     auto const& assidx = sliceHitIdx.at(si);

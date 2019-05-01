@@ -42,6 +42,23 @@ class numuselection(recoBase):
 
             for i in xrange(len(numus)):
 
+                # draw the slice hits
+                slice_hit_v =  numus[i].slicehits();
+                print 'there are %i hits for the full slice'%(len(slice_hit_v))
+                for ih in xrange(len(slice_hit_v)):
+                    hit = slice_hit_v[ih]
+                    r = QtGui.QGraphicsRectItem(hit.wire(), 
+                                                hit.time() + geom.timeOffsetTicks(view.plane()),
+                                                2, 2*hit.rms())
+
+                    opacity = 0.5 # int(128 * hit.charge() / 100.) + 127
+                    # Old Way:
+                    r.setPen(pg.mkPen(None))
+                    r.setBrush(pg.mkColor((0,0,0,200)))#,opacity))
+                    # r.setBrush((0,0,0,opacity))
+                    self._drawnObjects[thisPlane].append(r)
+                    view._view.addItem(r)
+
                 # draw the hits
                 hits_v = numus[i].hits();
                 for ic, hits in enumerate(hits_v):

@@ -19,6 +19,7 @@
 #include "lardataobj/RecoBase/Track.h"
 #include "lardataobj/RecoBase/Shower.h"
 #include "lardataobj/RecoBase/Vertex.h"
+#include "lardataobj/RecoBase/Slice.h"
 #include <iostream>
 
 #include "DrawShower.h"
@@ -41,6 +42,7 @@ public:
   const std::vector<Shower2D> &showers() { return _showers; }
   const Vertex2D &vertex() { return _vertex; }
   const std::vector< std::vector<Hit2D> > &hits() { return _hits_v; }
+  const std::vector<Hit2D> &slicehits() { return _slice_hits; }
 
   size_t muon_index(){return _muon_index;}
   const Track2D & muon(){return _tracks.at(_muon_index);}
@@ -52,6 +54,7 @@ protected:
   Vertex2D _vertex;
   size_t _muon_index;
   std::vector< std::vector<Hit2D> > _hits_v;
+  std::vector< Hit2D > _slice_hits;
 
 };
 
