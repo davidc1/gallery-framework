@@ -83,21 +83,22 @@ class numuselection(recoBase):
                 # Draw the vertex:
                 vertex = numus[i].vertex()
                 # Draws a circle at (x,y,radius = 0.5cm)
-                radBigW = 3 / view_manager._geometry.wire2cm()
-                radBigT = (3) / view_manager._geometry.time2cm()
+                radBigW = 1 / view_manager._geometry.wire2cm()
+                radBigT = (1) / view_manager._geometry.time2cm()
 
                 offset = view_manager._geometry.offset(
                     thisPlane) / view_manager._geometry.time2cm()
 
-                sW = vertex.w / view_manager._geometry.wire2cm()
-                sT = vertex.t / view_manager._geometry.time2cm() + offset
+                sW = vertex.w / view_manager._geometry.wire2cm() 
+                sT = vertex.t / view_manager._geometry.time2cm() + offset 
 
+                
                 r = QtGui.QGraphicsEllipseItem(
-                    sW-radBigW, sT-radBigT, 1*radBigW, 1*radBigT)
+                    sW-radBigW/2., sT-radBigT/2., 1*radBigW, 1*radBigT)
 
 
                 r.setPen(pg.mkPen(None))
-                r.setBrush(pg.mkColor(255,255,255, 128))
+                r.setBrush(pg.mkColor(255,255,255, 200))
                 self._drawnObjects[thisPlane].append(r)
                 view._view.addItem(r)
 
