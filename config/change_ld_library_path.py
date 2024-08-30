@@ -1,7 +1,7 @@
 import sys, os
 
 CMD = 'echo $LD_LIBRARY_PATH | tr \':\' \'\n\' > $GALLERY_FMWK_BASEDIR/config/ldpath.txt'
-print CMD
+print(CMD)
 os.system(CMD)
 
 fin = open("%s/config/ldpath.txt"%os.environ['GALLERY_FMWK_BASEDIR'],'r')
@@ -20,7 +20,7 @@ fout.write(varout)
 fin.close()
 fout.close()
 
-print varout
+print(varout)
 
 
 
