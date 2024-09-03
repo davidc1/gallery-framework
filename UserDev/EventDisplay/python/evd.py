@@ -46,6 +46,7 @@ def main():
                       action='store_true',
                       help="Run with the lariat geometry")
     parser.add_argument('file', nargs='*', help="Optional input file to use")
+    parser.add_argument('-i', '--eventindex', type=int, required=False, help="Jump to this specific event")
 
     args = parser.parse_args()
 
@@ -62,6 +63,9 @@ def main():
     else:
         geom = geometry.argoneut()
 
+    eventidx = args.eventindex
+    # sys.exit()
+
     # If a file was passed, give it to the manager:
 
     manager = evd_manager_2D(geom)
@@ -69,7 +73,8 @@ def main():
 
 
     thisgui = evdgui(geom, manager)
-    # manager.goToEvent(0)
+    if eventidx is not None:
+        manager.goToEvent(eventidx)
 
     signal.signal(signal.SIGINT, sigintHandler)
     timer = QtCore.QTimer()
